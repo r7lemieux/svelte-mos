@@ -1,0 +1,42 @@
+import { Mo } from './Mo';
+import { FieldDefinition } from '../../services/common/validation/FieldDefinition';
+import type { MoMetaInterface } from './MoMetaInterface';
+import type { DataSource } from '../../services/db/DataSource';
+export declare class MoMeta extends Mo implements MoMetaInterface {
+    name: string;
+    dbName: string;
+    displayName?: string;
+    keyFieldnames: string[][];
+    fieldDefs: Map<string, FieldDefinition<any>>;
+    gridFieldnames?: string[];
+    moClass: any;
+    hasId: boolean;
+    idType: 'number' | 'string';
+    dataSource: DataSource;
+    gdriveFilePath?: string;
+    gdriveFileId?: string | null;
+    canCreate: boolean;
+    constructor(name: string, moClass?: any);
+    init(): void;
+    static fromProps: (props: any) => MoMeta;
+    static MoMetaFieldDefs: FieldDefinition<any>[];
+    getDisplayName: () => string;
+    getDbName: () => string;
+    getFieldNames: () => string[];
+    getMoClass: () => any;
+    initFieldDefs(): void;
+    addFieldDef: (fieldDef: any) => any;
+    addFieldDefsFromNames: (fieldnames: string[]) => void;
+    deriveFieldDefsFromMo(): FieldDefinition<any>[];
+    deriveFieldDefsFromFieldnames: (fieldnames?: string[]) => FieldDefinition<any>[];
+    extractFieldnamesFromMo(): string[];
+    newMo: () => Mo;
+    objToMo: (obj: any) => Mo;
+    moToObj: (mo: any) => any;
+    documentToMo: (doc: any) => Mo;
+    moToDocument: (mo: any) => any;
+    toDocument: () => {
+        json: string;
+    };
+}
+export declare const moMetaMeta: MoMeta;

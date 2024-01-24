@@ -1,0 +1,30 @@
+import type { Mo } from './Mo';
+import type { FieldDefinition } from '../../services/common/validation/FieldDefinition';
+import type { DataSource } from '../../services/db/DataSource';
+export interface MoMetaInterface {
+    name: string;
+    dbName: string;
+    displayName?: string;
+    keyFieldnames: string[][];
+    fieldDefs: Map<string, FieldDefinition<any>>;
+    gridFieldnames?: string[];
+    moClass: any;
+    hasId: boolean;
+    idType: 'number' | 'string';
+    dataSource: DataSource;
+    gdriveFilePath?: string;
+    gdriveFileId?: string | null;
+    canCreate: boolean;
+    getDisplayName: () => string;
+    getDbName: () => string;
+    getFieldNames: () => string[];
+    getMoClass: () => any;
+    initFieldDefs: () => void;
+    addFieldDefsFromNames: (fieldnames: string[]) => void;
+    deriveFieldDefsFromMo: () => FieldDefinition<any>[];
+    deriveFieldDefsFromFieldnames: (fieldnames: string[]) => FieldDefinition<any>[];
+    extractFieldnamesFromMo: () => string[];
+    newMo: () => Mo;
+    objToMo: (obj: object) => Mo;
+    moToObj: (mo: Mo) => object;
+}
