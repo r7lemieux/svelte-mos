@@ -1,4 +1,4 @@
-import type { Mo } from '../../models/generic/Mo';
+import type { Mo } from '../../models/managedObjects/Mo';
 export interface DataSource {
     getMo: (id: any) => Promise<Mo | undefined>;
     saveMo: (mo: Mo) => Promise<Mo>;

@@ -1,9 +1,9 @@
 <script>import { toDisplayString } from "../../../services/common/util/string.utils";
-export let moMeta;
-console.log(`==>MoCreate.svelte:6 moMeta`, moMeta.name);
-const title = toDisplayString(moMeta.name);
-const fieldDefs = Array.from(moMeta.fieldDefs.values());
-const mo = moMeta.newMo();
+export let moDef;
+console.log(`==>MoCreate.svelte:6 moDef`, moDef.name);
+const title = toDisplayString(moDef.name);
+const fieldDefs = Array.from(moDef.fieldDefs.values());
+const mo = moDef.newMo();
 const onChange = (event) => {
   console.log(`==>Mo.svelte:19 on change event`, event);
   const fieldname = event.srcElement.id;
@@ -12,7 +12,7 @@ const onChange = (event) => {
 };
 const create = (event) => {
   console.log(`==>MoCreate.svelte:14 create event`, event);
-  moMeta.dataSource.addMo(mo);
+  moDef.dataSource.addMo(mo);
 };
 </script>
 <svelte:head>

@@ -1,24 +1,24 @@
 import {DbService} from  '$lib/services/db/db.service'
-import type {Mo} from  '$lib/models/generic/Mo'
-import type {MoMeta} from  '$lib/models/generic/MoMeta'
+import type {Mo} from '$lib/models/managedObjects/Mo'
+import type {MoDefinition} from '$lib/models/managedObjects/MoDefinition.js'
 import {Rezult} from  '$lib/services/common/message/rezult'
 import {ErrorName} from  '$lib/services/common/message/errorName'
 import type {DataSource} from  '$lib/services/db/DataSource'
 
 export class CacheDataSource implements DataSource {
-  moMeta: MoMeta
+  moDef: MoDefinition
   records = new Map<string | number, Mo>()
   db: DbService = new DbService()
 
-  constructor(moMeta) {
-    this.moMeta = moMeta
+  constructor(moDef) {
+    this.moDef = moDef
   }
 
   getMo = async (id: any): Promise<Mo | undefined> => {
     if (this.records.has(id)) {
       return this.records.get(id)
     } else {
-      const mo = await this.db.getMo(this.moMeta, id)
+      const mo = await this.db.getMo(this.moDef, id)
       if (mo) {
         this.records.set(id, mo)
       }
@@ -59,7 +59,7 @@ export class CacheDataSource implements DataSource {
   }
 
   getMos = async (): Promise<Mo[]> => {
-    const mos: Mo[] = await this.db.getMos(this.moMeta)
+    const mos: Mo[] = await this.db.getMos(this.moDef)
     if (mos) {
       for (const mo of mos) {
         this.records.set(mo.id!, mo)

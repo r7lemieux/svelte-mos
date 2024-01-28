@@ -1,4 +1,4 @@
-import type { Mo } from '../../models/generic/Mo';
+import type { Mo } from '../../models/managedObjects/Mo';
 import type { DataSource } from './DataSource';
 export declare class ProxyDataSource implements DataSource {
     next: DataSource;

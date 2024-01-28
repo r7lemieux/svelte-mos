@@ -1,7 +1,7 @@
 <script>import { toDisplayString } from "../../../services/common/util/string.utils";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-import { FieldDefs as fd } from "../../../services/common/validation/CommonFieldDefinition";
+import { CommonFieldDefs as fd } from "../../../models/fields/CommonFieldDefinition";
 import Field from "../field/Field.svelte";
 import { Rezult } from "../../../services/common/message/rezult";
 import { ErrorName } from "../../../services/common/message/errorName";
@@ -9,9 +9,9 @@ export let mo;
 let viewMode = extractViewMode();
 $:
   disabled = viewMode === "view";
-let moMeta = mo.moMeta;
-const title = toDisplayString(moMeta.name);
-const fieldDefs = Array.from(moMeta.fieldDefs.values());
+let moDef = mo.moDef;
+const title = toDisplayString(moDef.name);
+const fieldDefs = Array.from(moDef.fieldDefs.values());
 const ui = {};
 function extractViewMode() {
   const pathParts = $page.url.pathname.split("/");
@@ -39,23 +39,23 @@ const onChange = (fieldId, val) => {
 };
 const edit = () => {
   viewMode = "edit";
-  goto(`/mo/${moMeta.name}/${mo.id}/edit`);
+  goto(`/mo/${moDef.name}/${mo.id}/edit`);
 };
 const save = () => {
-  moMeta.dataSource.saveMo(mo).then((mo2) => {
-    goto(`/mo/${moMeta.name}/${mo2.id}`);
+  moDef.dataSource.saveMo(mo).then((mo2) => {
+    goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const create = (event) => {
   console.log(`==>MoCreate.svelte:14 create event`, event);
-  moMeta.dataSource.addMo(mo).then((mo2) => {
-    goto(`/mo/${moMeta.name}/${mo2.id}`);
+  moDef.dataSource.addMo(mo).then((mo2) => {
+    goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const deleteItem = (fname, i) => {
   mo[fname] = mo[fname].filter((item, index) => index != i);
   console.log(`==>Mo.svelte:65 mo[fname]`, mo[fname]);
-  goto(`/mo/${moMeta.name}`);
+  goto(`/mo/${moDef.name}`);
 };
 </script>
 <svelte:head>

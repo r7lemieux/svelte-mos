@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
-  import type {FieldDefinition} from  '$lib/services/common/validation/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
   import AiOutlineCaretDown from 'svelte-icons-pack/ai/AiOutlineCaretDown'
   import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
   import Icon from 'svelte-icons-pack/Icon.svelte'
@@ -34,7 +34,6 @@
   const toogle = () => showDetails = !showDetails
   const deleteItem = (i) => {
     value = value.filter((item, index) => index != i)
-    console.log(`==>Mo.svelte:65 mo[fname]`, value)
     onChange(fieldDef.name, value)
   }
 </script>

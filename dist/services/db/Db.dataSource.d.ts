@@ -1,11 +1,11 @@
 import { DbService } from './db.service';
-import type { Mo } from '../../models/generic/Mo';
-import type { MoMeta } from '../../models/generic/MoMeta';
+import type { Mo } from '../../models/managedObjects/Mo';
+import type { MoDefinition } from '../../models/managedObjects/MoDefinition.js';
 import type { DataSource } from './DataSource';
 export declare class DbDataSource implements DataSource {
-    moMeta: MoMeta;
+    moDef: MoDefinition;
     db: DbService;
-    constructor(moMeta: any, dbService: any);
+    constructor(moDef: any, dbService: any);
     getMo: (id: any) => Promise<Mo | undefined>;
     saveMo: (mo: any) => Promise<Mo>;
     updateMo: (mo: any) => Promise<Mo>;

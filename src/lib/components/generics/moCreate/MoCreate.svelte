@@ -1,21 +1,18 @@
 <script lang="ts">
   import {toDisplayString} from  '$lib/services/common/util/string.utils'
-  import type {MoMeta} from  '$lib/models/generic/MoMeta'
+  import type {MoDefinition} from '$lib/models/managedObjects/MoDefinition.js'
 
-  export let moMeta: MoMeta
-  console.log(`==>MoCreate.svelte:6 moMeta`, moMeta.name)
-  const title = toDisplayString(moMeta.name)
-  const fieldDefs = Array.from(moMeta.fieldDefs.values())
-  const mo = moMeta.newMo()
+  export let moDef: MoDefinition
+  const title = toDisplayString(moDef.name)
+  const fieldDefs = Array.from(moDef.fieldDefs.values())
+  const mo = moDef.newMo()
   const onChange = event => {
-    console.log(`==>Mo.svelte:19 on change event`, event)
     const fieldname = event.srcElement.id
     const value = event.srcElement.value
     mo[fieldname] = value
   }
   const create = event => {
-    console.log(`==>MoCreate.svelte:14 create event`, event)
-    moMeta.dataSource.addMo(mo)
+    moDef.dataSource.addMo(mo)
   }
 </script>
 <svelte:head>

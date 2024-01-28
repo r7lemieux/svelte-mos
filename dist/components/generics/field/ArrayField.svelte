@@ -54,7 +54,6 @@ const deleteItem = (i) => {
 .field {
   display: flex;
   align-items: start;
-  gap: 5px;
 }
 .field .tree-line {
   border-left: 2px solid #88A;

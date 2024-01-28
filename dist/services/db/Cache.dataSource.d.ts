@@ -1,12 +1,12 @@
 import { DbService } from './db.service';
-import type { Mo } from '../../models/generic/Mo';
-import type { MoMeta } from '../../models/generic/MoMeta';
+import type { Mo } from '../../models/managedObjects/Mo';
+import type { MoDefinition } from '../../models/managedObjects/MoDefinition.js';
 import type { DataSource } from './DataSource';
 export declare class CacheDataSource implements DataSource {
-    moMeta: MoMeta;
+    moDef: MoDefinition;
     records: Map<string | number, Mo>;
     db: DbService;
-    constructor(moMeta: any);
+    constructor(moDef: any);
     getMo: (id: any) => Promise<Mo | undefined>;
     saveMo: (mo: any) => Promise<Mo>;
     updateMo: (mo: any) => Promise<Mo>;

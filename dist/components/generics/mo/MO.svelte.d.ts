@@ -1,5 +1,5 @@
 import { SvelteComponent } from "svelte";
-import type { Mo as MoClass } from '../../../models/generic/Mo';
+import type { Mo as MoClass } from '../../../models/managedObjects/Mo';
 declare const __propDef: {
     props: {
         mo: MoClass;

@@ -8,6 +8,7 @@ export declare class Rezult extends Error {
     constructor(errorName?: ErrorName, data?: any, context?: string);
     setName: (errorName: ErrorName) => void;
     toString: () => string;
+    toDetailString: () => string;
     stringifyOneLevel: (obj: any) => string;
     print: (str: string) => void;
 }

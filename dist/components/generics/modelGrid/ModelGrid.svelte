@@ -40,8 +40,8 @@ const buildGridOptions = () => {
   if (!model)
     return {};
   let gridFieldDefs = Array.from(model.getFieldDefs().values());
-  if (model.moMeta.gridFieldnames) {
-    gridFieldDefs = gridFieldDefs.filter((d) => model?.moMeta.gridFieldnames?.indexOf(d.name) !== -1);
+  if (model.moDef.gridFieldnames) {
+    gridFieldDefs = gridFieldDefs.filter((d) => model?.moDef.gridFieldnames?.indexOf(d.name) !== -1);
   }
   const columnDefs = gridFieldDefs.map((def) => {
     const colDef = def.buildColDef();

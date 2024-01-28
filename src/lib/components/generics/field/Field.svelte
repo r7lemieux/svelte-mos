@@ -1,7 +1,7 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
   import {page} from '$app/stores'
-  import type {FieldDefinition} from  '$lib/services/common/validation/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
   import SimpleField from  '$lib/components/generics/field/SimpleField.svelte'
   import ArrayField from  '$lib/components/generics/field/ArrayField.svelte'
   import MapField from  '$lib/components/generics/field/MapField.svelte'

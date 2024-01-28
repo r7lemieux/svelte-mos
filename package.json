@@ -1,7 +1,7 @@
 {
   "name": "svelte-mos",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "emu": "firebase emulators:start --project richard",
     "dev": "vite dev",
@@ -45,6 +45,7 @@
     "@types/ag-grid": "^3.2.0",
     "@types/cookie": "^0.5.1",
     "@types/eslint": "8.56.0",
+    "@types/fast-levenshtein": "^0.0.4",
     "@types/string-similarity": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",

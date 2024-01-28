@@ -1,5 +1,6 @@
 export * from './common';
-export * from './generic';
-export { Mo } from './generic/Mo';
-export { MoMeta } from './generic/MoMeta';
-export { MoMetas } from './generic/MoMetas';
+export * from './managedObjects';
+export * from './fields';
+export { Mo } from './managedObjects/Mo';
+export { MoDefinition } from './managedObjects/MoDefinition';
+export * from './managedObjects/MoDefinitions';

@@ -5,8 +5,8 @@
   import {onMount} from 'svelte'
   import type {FirstDataRenderedEvent, GridSizeChangedEvent} from 'ag-grid-community/dist/lib/events'
   import type {GridOptions} from 'ag-grid-community/dist/lib/entities/gridOptions'
-  import type {FieldDefinition} from  '$lib/services/common/validation/FieldDefinition'
-  import type {MoListModel} from  '$lib/models/generic/MoList.model'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
+  import type {MoListModel} from '$lib/models/managedObjects/MoList.model'
   import {BtnCellRenderer} from  '$lib/components/common/BtnCellRenderer'
   import {buildIconColDef, IconCellRenderer} from  '$lib/components/common/IconCellRenderer'
   import CgArrowRight from 'svelte-icons-pack/cg/CgArrowRight'
@@ -36,14 +36,14 @@
         grid = new Grid(eGridDiv, gridOptions)
         return true
       } catch (err) {
-        console.log(`==>ModelGrid.svelte:33 err`, err)
+        (`==>ModelGrid.svelte:33 err`, err)
       }
     }
   }
 
   export const modelReady = (listModel: MoListModel): boolean => { //, replaceId: string | null = null): void => {
     if (!listModel) return false
-    displayName = listModel.moMeta.getDisplayName()
+    displayName = listModel.moDef.getDisplayName()
     emptyGrid = !listModel?.mos?.length
     // if (model && !replaceId) {
     if (model && model.getName() === listModel.getName()) {
@@ -62,17 +62,14 @@
    * ------------
    */
   const goToView = (mo) => {
-    console.log(`==>MosGrid.svelte:78 `, mo)
-    goto(`/mo/${mo.moMeta.name}/${mo.id}`)
+    goto(`/mo/${mo.moDef.name}/${mo.id}`)
   }
 
   const buildGridOptions = (): GridOptions<any> => {
     if (!model) return {}
-    // console.log(`==>ModelGrid.svelte:24 spreadSheetModel`, model.fieldNames)
-    // console.log(`==>ModelGrid.svelte:24 spreadSheetModel`, JSON.stringify(model.mos, null, 2))
     let gridFieldDefs = Array.from(model.getFieldDefs().values())
-    if (model.moMeta.gridFieldnames) {
-      gridFieldDefs = gridFieldDefs.filter(d => model?.moMeta!.gridFieldnames?.indexOf(d.name) !== -1)
+    if (model.moDef.gridFieldnames) {
+      gridFieldDefs = gridFieldDefs.filter(d => model?.moDef!.gridFieldnames?.indexOf(d.name) !== -1)
     }
     const columnDefs = gridFieldDefs
       .map((def: FieldDefinition<any>) => {

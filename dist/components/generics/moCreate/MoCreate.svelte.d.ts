@@ -1,8 +1,8 @@
 import { SvelteComponent } from "svelte";
-import type { MoMeta } from '../../../models/generic/MoMeta';
+import type { MoDefinition } from '../../../models/managedObjects/MoDefinition.js';
 declare const __propDef: {
     props: {
-        moMeta: MoMeta;
+        moDef: MoDefinition;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -33,7 +33,7 @@ const buildGrid = () => {
 export const modelReady = (listModel) => {
   if (!listModel)
     return false;
-  displayName = listModel.moMeta.getDisplayName();
+  displayName = listModel.moDef.getDisplayName();
   emptyGrid = !listModel?.mos?.length;
   if (model && model.getName() === listModel.getName()) {
     gridOptions?.api?.setRowData(listModel.mos);
@@ -47,14 +47,14 @@ export const modelReady = (listModel) => {
 };
 const goToView = (mo) => {
   console.log(`==>MosGrid.svelte:78 `, mo);
-  goto(`/mo/${mo.moMeta.name}/${mo.id}`);
+  goto(`/mo/${mo.moDef.name}/${mo.id}`);
 };
 const buildGridOptions = () => {
   if (!model)
     return {};
   let gridFieldDefs = Array.from(model.getFieldDefs().values());
-  if (model.moMeta.gridFieldnames) {
-    gridFieldDefs = gridFieldDefs.filter((d) => model?.moMeta.gridFieldnames?.indexOf(d.name) !== -1);
+  if (model.moDef.gridFieldnames) {
+    gridFieldDefs = gridFieldDefs.filter((d) => model?.moDef.gridFieldnames?.indexOf(d.name) !== -1);
   }
   const columnDefs = gridFieldDefs.map((def) => {
     const colDef = def.buildColDef();

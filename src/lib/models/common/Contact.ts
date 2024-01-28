@@ -1,5 +1,6 @@
-import { Mo } from  '$lib/models/generic/Mo'
-import { MoMeta } from  '$lib/models/generic/MoMeta'
+import { Mo } from '$lib/models/managedObjects/Mo'
+import { moDefDef, MoDefinition } from '$lib/models/managedObjects/MoDefinition.js';
+import { registerMoDef } from '$lib/models/managedObjects/MoDefinitions.js';
 
 export class Contact extends Mo {
   firstName?: string
@@ -14,20 +15,19 @@ export class Contact extends Mo {
   city?: string
   state?: string
   postalCode?: string
-  
-  constructor(props: Partial<Contact>) {
-    super(contactMeta)
-    Object.assign(this, props)}
+	constructor(props: Partial<Contact>) {
+		super(contactMoDef)
+		Object.assign(this, props)
+	}
 }
-
-const contactMeta = MoMeta.fromProps( {
-  hasId: false,
-  name: 'contacts',
-  keyFieldnames: ['phone', 'email'],
-  gridFieldnames: ['firstName', 'lastName', 'phone'],
-})
-contactMeta.moClass = Contact
-contactMeta.initFieldDefs()
-console.log(`==>Contact.ts:31 `, Array.from(contactMeta.fieldDefs.keys()))
-
-export {contactMeta}
+	const contactMoDef = MoDefinition.fromProps( {
+		hasId: false,
+		name: 'contacts',
+		id: 'contacts',
+		keyFieldnames: ['phone', 'email'],
+		gridFieldnames: ['firstName', 'lastName', 'phone'],
+	})
+  contactMoDef.moDef = moDefDef
+	contactMoDef.moClass = Contact
+	contactMoDef.initFieldDefs()
+  registerMoDef(contactMoDef)

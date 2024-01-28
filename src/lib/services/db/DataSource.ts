@@ -1,5 +1,5 @@
 // Prototype
-import type {Mo} from  '$lib/models/generic/Mo'
+import type {Mo} from '$lib/models/managedObjects/Mo'
 export interface DataSource {
   getMo: (id: any) => Promise<Mo | undefined>
   saveMo: (mo: Mo) => Promise<Mo>

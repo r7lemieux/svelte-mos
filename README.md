@@ -13,3 +13,5 @@ And the default generic components will render
 - edit / create view
 
 Any field, mos, or datasource can be customized.
+
+[github](https://github.com/r7lemieux/svelte-mos)

@@ -1,5 +1,4 @@
-import { Mo } from '../generic/Mo';
-import { MoMeta } from '../generic/MoMeta';
+import { Mo } from '../managedObjects/Mo';
 export declare class Contact extends Mo {
     firstName?: string;
     lastName?: string;
@@ -15,5 +14,3 @@ export declare class Contact extends Mo {
     postalCode?: string;
     constructor(props: Partial<Contact>);
 }
-declare const contactMeta: MoMeta;
-export { contactMeta };

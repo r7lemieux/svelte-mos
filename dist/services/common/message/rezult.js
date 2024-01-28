@@ -1,4 +1,5 @@
 import { ErrorName } from './errorName';
+import { jsonToDisplayString } from '../util/string.utils';
 export class Rezult extends Error {
     status = 'error';
     data;
@@ -33,8 +34,11 @@ export class Rezult extends Error {
                 }
             }
         }
-        return `> ${this.status} ${this.context} ${this.name} ${this.message} ${data}`;
+        return `${this.status} ${this.context || ''} ${this.name} ${this.message} ${data ? JSON.stringify(data) : ''}`;
     };
+    toDetailString = () => jsonToDisplayString({
+        status: this.status, data: this.data, context: this.context
+    });
     stringifyOneLevel = obj => JSON.stringify(obj, function (k, v) { return k && v && typeof v !== "number" ? (Array.isArray(v) ? "[object Array]" : "" + v) : v; });
     print = (str) => {
         this.context = str;

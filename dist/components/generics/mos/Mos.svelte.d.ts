@@ -1,12 +1,12 @@
 import { SvelteComponent } from "svelte";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { MoMeta } from '../../../models/generic/MoMeta';
-import type { Mo } from '../../../models/generic/Mo';
+import { MoDefinition } from '../../../models/managedObjects/MoDefinition.js';
+import type { Mo } from '../../../models/managedObjects/Mo';
 declare const __propDef: {
     props: {
         mos?: Mo[] | undefined;
-        moMeta: MoMeta;
+        moDef: MoDefinition;
     };
     events: {
         [evt: string]: CustomEvent<any>;

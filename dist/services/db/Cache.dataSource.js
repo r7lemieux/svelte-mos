@@ -2,18 +2,18 @@ import { DbService } from './db.service';
 import { Rezult } from '../common/message/rezult';
 import { ErrorName } from '../common/message/errorName';
 export class CacheDataSource {
-    moMeta;
+    moDef;
     records = new Map();
     db = new DbService();
-    constructor(moMeta) {
-        this.moMeta = moMeta;
+    constructor(moDef) {
+        this.moDef = moDef;
     }
     getMo = async (id) => {
         if (this.records.has(id)) {
             return this.records.get(id);
         }
         else {
-            const mo = await this.db.getMo(this.moMeta, id);
+            const mo = await this.db.getMo(this.moDef, id);
             if (mo) {
                 this.records.set(id, mo);
             }
@@ -54,7 +54,7 @@ export class CacheDataSource {
         });
     };
     getMos = async () => {
-        const mos = await this.db.getMos(this.moMeta);
+        const mos = await this.db.getMos(this.moDef);
         if (mos) {
             for (const mo of mos) {
                 this.records.set(mo.id, mo);

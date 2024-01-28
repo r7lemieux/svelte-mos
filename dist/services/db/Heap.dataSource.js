@@ -2,11 +2,11 @@ import { DbService } from './db.service';
 import { Rezult } from '../common/message/rezult';
 import { ErrorName } from '../common/message/errorName';
 export class HeapDataSource {
-    moMeta;
+    moDef;
     records = {};
     keyname = 'id';
-    constructor(moMeta) {
-        this.moMeta = moMeta;
+    constructor(moDef) {
+        this.moDef = moDef;
     }
     getMo = async (key) => {
         return this.records[key];

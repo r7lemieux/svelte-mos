@@ -81,3 +81,19 @@ export const alphaFromStr = str => {
     }
     return alpha;
 };
+export const jsonToDisplayString = (json) => {
+    if (!json)
+        return '';
+    if (typeof json === 'string')
+        return json;
+    return Object.entries(json)
+        .map(([k, v]) => {
+        if (typeof v === 'object') {
+            return jsonToDisplayString(v);
+        }
+        else {
+            return `${k}: ${v}`;
+        }
+    })
+        .join(', ');
+};

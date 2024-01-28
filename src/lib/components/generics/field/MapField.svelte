@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
-  import type {FieldDefinition} from  '$lib/services/common/validation/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
   import MapValueField from  '$lib/components/generics/field/MapValueField.svelte'
   import {afterUpdate} from 'svelte'
   import {sizeLabels} from  '$lib/services/common/util/dom.utils'
@@ -29,7 +29,6 @@
   }
   const deleteItem = (i) => {
     value = value.filter((item, index) => index != i)
-    console.log(`==>Mo.svelte:65 mo[fname]`, value)
   }
 
   afterUpdate(sizeLabels)

@@ -1,5 +1,6 @@
-import { Mo } from '../generic/Mo';
-import { MoMeta } from '../generic/MoMeta';
+import { Mo } from '../managedObjects/Mo';
+import { moDefDef, MoDefinition } from '../managedObjects/MoDefinition.js';
+import { registerMoDef } from '../managedObjects/MoDefinitions.js';
 export class Contact extends Mo {
     firstName;
     lastName;
@@ -14,17 +15,19 @@ export class Contact extends Mo {
     state;
     postalCode;
     constructor(props) {
-        super(contactMeta);
+        super(contactMoDef);
         Object.assign(this, props);
     }
 }
-const contactMeta = MoMeta.fromProps({
+const contactMoDef = MoDefinition.fromProps({
     hasId: false,
     name: 'contacts',
+    id: 'contacts',
     keyFieldnames: ['phone', 'email'],
     gridFieldnames: ['firstName', 'lastName', 'phone'],
 });
-contactMeta.moClass = Contact;
-contactMeta.initFieldDefs();
-console.log(`==>Contact.ts:31 `, Array.from(contactMeta.fieldDefs.keys()));
-export { contactMeta };
+contactMoDef.moDef = moDefDef;
+contactMoDef.moClass = Contact;
+contactMoDef.initFieldDefs();
+console.log(`==>Contact.ts:32 `, Array.from(contactMoDef.fieldDefs.keys()));
+registerMoDef(contactMoDef);

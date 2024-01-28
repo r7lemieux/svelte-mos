@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type {Mo} from  '$lib/models/generic/Mo'
+  import type {Mo} from '$lib/models/managedObjects/Mo'
   import {toDisplayString} from  '$lib/services/common/util/string.utils'
   import type {MoViewMode} from  '$lib/constants/ui'
   import {goto} from '$app/navigation'
   import {page} from '$app/stores'
-  import {FieldDefs as fd} from  '$lib/services/common/validation/CommonFieldDefinition'
+  import {CommonFieldDefs as fd} from '$lib/models/fields/CommonFieldDefinition'
   import Field from  '$lib/components/generics/field/Field.svelte'
   import {Rezult} from  '$lib/services/common/message/rezult'
   import {ErrorName} from  '$lib/services/common/message/errorName'
@@ -13,9 +13,9 @@
   export let mo: Mo
   let viewMode: MoViewMode = extractViewMode()
   $: disabled = viewMode === 'view'
-  let moMeta = mo.moMeta
-  const title = toDisplayString(moMeta.name)
-  const fieldDefs = Array.from(moMeta.fieldDefs.values())
+  let moDef = mo.moDef
+  const title = toDisplayString(moDef.name)
+  const fieldDefs = Array.from(moDef.fieldDefs.values())
   const ui = {}
 
   function extractViewMode(): MoViewMode {
@@ -43,48 +43,26 @@
     targetObj[fname] = val
   }
 
-  // const onChange = event => {
-  //   console.log(`==>Mo.svelte:19 on change event`, event)
-  //   const fieldname = event.srcElement.name
-  //   const fieldId = event.srcElement.id
-  //   const value = event.srcElement.value
-  //   const fieldDef = moMeta.fieldDefs.get(fieldname)
-  //   if (fieldDef?.type === 'array') {
-  //     let index = fieldId.split('_').pop()
-  //     if (typeof mo[fieldname] !== 'object') mo[fieldname] = []
-  //     if (index === '-2') {
-  //       mo[fieldname].push(value)
-  //       mo[fieldname] = [...mo[fieldname]]
-  //     } else {
-  //       mo[fieldname][index] = value
-  //     }
-  //   } else {
-  //     mo[fieldname] = value
-  //   }
-  //   event.srcElement.value = ''
-  // }
   const edit = () => {
     viewMode = 'edit'
-    goto(`/mo/${moMeta.name}/${mo.id}/edit`)
-    // history.replaceState(history.state, '', `/mo/${moMeta.name}/${mo.id}/edit`);
+    goto(`/mo/${moDef.name}/${mo.id}/edit`)
+    // history.replaceState(history.state, '', `/mo/${moDef.name}/${mo.id}/edit`);
   }
   const save = () => {
-    moMeta.dataSource.saveMo(mo).then(mo => {
-      goto(`/mo/${moMeta.name}/${mo.id}`)
+    moDef.dataSource.saveMo(mo).then(mo => {
+      goto(`/mo/${moDef.name}/${mo.id}`)
       // viewMode = 'view'
     })
   }
   const create = event => {
-    console.log(`==>MoCreate.svelte:14 create event`, event)
-    moMeta.dataSource.addMo(mo).then(mo => {
-      goto(`/mo/${moMeta.name}/${mo.id}`)
+    moDef.dataSource.addMo(mo).then(mo => {
+      goto(`/mo/${moDef.name}/${mo.id}`)
       // viewMode = 'view'
     })
   }
   const deleteItem = (fname, i) => {
     mo[fname] = mo[fname].filter((item,index) => index != i)
-    console.log(`==>Mo.svelte:65 mo[fname]`, mo[fname])
-    goto(`/mo/${moMeta.name}`)
+    goto(`/mo/${moDef.name}`)
   }
 </script>
 <svelte:head>
