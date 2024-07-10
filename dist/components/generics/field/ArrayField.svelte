@@ -28,7 +28,6 @@ let showDetails = false;
 const toogle = () => showDetails = !showDetails;
 const deleteItem = (i) => {
   value = value.filter((item, index) => index != i);
-  console.log(`==>Mo.svelte:65 mo[fname]`, value);
   onChange(fieldDef.name, value);
 };
 </script>
@@ -36,11 +35,11 @@ const deleteItem = (i) => {
   <label for={fname}>{fd.getDisplayName()}</label>
   <span class=" tree-line {showDetails?'open':'closed'}"></span>
   <span class="value">
-    <span class="count" on:click={toogle} on:keypress={toogle}>
-      <span>{size}</span>
+    <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
       <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">
 <!--      <Icon src={showDetails?AiOutlineCaretDown:AiOutlineCaretRight}/>-->
       </span>
+      <span>{size}</span>
     </span>
   </span>
 </div>
@@ -61,7 +60,7 @@ const deleteItem = (i) => {
   height: 2.5rem;
   width: 5px;
 }
-.field .tree-line.tree-line.open {
+.field .tree-line.open {
   border-bottom: 2px solid #88A;
   width: 9px;
   position: relative;

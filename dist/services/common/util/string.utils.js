@@ -97,3 +97,11 @@ export const jsonToDisplayString = (json) => {
     })
         .join(', ');
 };
+export const objectReplacer = (k, v) => {
+    if (typeof v === 'object') {
+        return v.displayName || v.name || v.toString();
+    }
+    else {
+        return v;
+    }
+};

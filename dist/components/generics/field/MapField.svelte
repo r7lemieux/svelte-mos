@@ -25,19 +25,18 @@ const toogle = () => {
 };
 const deleteItem = (i) => {
   value = value.filter((item, index) => index != i);
-  console.log(`==>Mo.svelte:65 mo[fname]`, value);
 };
 afterUpdate(sizeLabels);
 </script>
 <div class="field">
   <label for={fname}>{fd.getDisplayName()}</label>
-  <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>
+  <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
 <!--    <span class="top tree-line1"/>-->
 <!--    <span class="arrow {showDetails?'open':'closed'}"/>-->
 <!--    <span class="bot {showDetails?'open tree-line':'closed'}"/>-->
   </span>
   <span class="value">
-      <span class="count" on:click={toogle} on:keypress={toogle}>
+      <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
         <span>{size}</span>
           <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">
         </span>
@@ -55,7 +54,7 @@ afterUpdate(sizeLabels);
 <!--          <Icon src={ui[fname+showDetails]?AiOutlineCaretDown:AiOutlineCaretRight}/>-->
 <!--        </span>-->
 <!--        </span>-->
-<style>@charset "UTF-8";
+<style >@charset "UTF-8";
 .field {
   display: flex;
   align-items: start;
@@ -66,7 +65,7 @@ afterUpdate(sizeLabels);
   height: 2.5rem;
   width: 5px;
 }
-.field .tree-line.tree-line.open {
+.field .tree-line.open {
   border-bottom: 2px solid #88A;
   width: 9px;
   position: relative;

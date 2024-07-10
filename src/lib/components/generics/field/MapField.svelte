@@ -36,13 +36,13 @@
 </script>
 <div class="field">
   <label for={fname}>{fd.getDisplayName()}</label>
-  <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>
+  <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
 <!--    <span class="top tree-line1"/>-->
 <!--    <span class="arrow {showDetails?'open':'closed'}"/>-->
 <!--    <span class="bot {showDetails?'open tree-line':'closed'}"/>-->
   </span>
   <span class="value">
-      <span class="count" on:click={toogle} on:keypress={toogle}>
+      <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
         <span>{size}</span>
           <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">
         </span>
@@ -60,7 +60,7 @@
 <!--          <Icon src={ui[fname+showDetails]?AiOutlineCaretDown:AiOutlineCaretRight}/>-->
 <!--        </span>-->
 <!--        </span>-->
-<style lang="sass">
+<style lang="sass" >
   @use 'field'
 //.tree-line.open
   //border-bottom: 2px solid field.$tree-line-color

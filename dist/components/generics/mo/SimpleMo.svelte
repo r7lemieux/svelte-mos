@@ -47,14 +47,12 @@ const save = () => {
   });
 };
 const create = (event) => {
-  console.log(`==>MoCreate.svelte:14 create event`, event);
   moDef.dataSource.addMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const deleteItem = (fname, i) => {
   mo[fname] = mo[fname].filter((item, index) => index != i);
-  console.log(`==>Mo.svelte:65 mo[fname]`, mo[fname]);
   goto(`/mo/${moDef.name}`);
 };
 </script>

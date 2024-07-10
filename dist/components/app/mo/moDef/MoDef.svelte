@@ -12,7 +12,7 @@ $:
   disabled = viewMode === "view";
 let moDef = mo;
 const title = toDisplayString(moDef.name);
-const fieldDefs = Array.from(moDef.fieldDefs.values());
+const fieldDefs = Array.from(mo.moDef.fieldDefs.values());
 const ui = {};
 const onChange = (fieldId, val) => {
   const fieldPathNames = fieldId.split(".");
@@ -39,14 +39,12 @@ const save = () => {
   });
 };
 const create = (event) => {
-  console.log(`==>MoCreate.svelte:14 create event`, event);
   moDef.dataSource.addMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const deleteItem = (fname, i) => {
   mo[fname] = mo[fname].filter((item, index) => index != i);
-  console.log(`==>Mo.svelte:65 mo[fname]`, mo[fname]);
 };
 </script>
 <svelte:head>

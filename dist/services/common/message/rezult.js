@@ -10,13 +10,26 @@ export class Rezult extends Error {
         this.setName(errorName);
         this.data = data;
         this.context = context;
-        if (errorName != ErrorName.ok)
-            console.trace(`==>rezult.ts:19 `, this.toString());
+        // if (errorName != ErrorName.ok)
+        //   console.trace(`==>rezult.ts:19 `, this.toString())
     }
     setName = (errorName) => {
         this.name = ErrorName[errorName];
     };
-    toString = () => {
+    toObj = () => {
+        const obj = {
+            name: this.name,
+            status: this.status,
+        };
+        if (this.context)
+            obj.context = this.context;
+        if (this.data)
+            obj.data = this.data;
+        return obj;
+    };
+    serialize = () => JSON.stringify(this.toObj());
+    toString = () => this.toDisplayString();
+    toDisplayString = () => {
         let data = this.data;
         try {
             data = JSON.stringify(this.data);
@@ -45,6 +58,19 @@ export class Rezult extends Error {
         if (!process.env.testing) {
             console.log(this.toString());
         }
+    };
+    static build = (err, data, context) => {
+        if (err && err instanceof Rezult)
+            return err;
+        const rezult = new Rezult(ErrorName.server_error);
+        if (data)
+            rezult.data = data;
+        if (context)
+            rezult.context = context;
+        if (err && err.message) {
+            rezult.data = { ...rezult.data, err: err.message } || { message: err.message };
+        }
+        return rezult;
     };
 }
 export const OK = new Rezult(ErrorName.ok);

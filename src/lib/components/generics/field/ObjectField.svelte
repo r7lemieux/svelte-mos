@@ -43,7 +43,7 @@
 <!--</div>-->
 <!--{#if showDetails}-->
   {#each Object.keys(value).sort() as key}
-    <div class="field">
+    <div class="field" style="margin-left:{(level+1)*12}px;">
       <label for="{key}">{key}</label>
       <span class="tree-line"></span>
       <span class="value">{value[key]?.toString()}</span>

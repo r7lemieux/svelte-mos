@@ -38,17 +38,17 @@
 
   <span class="value">
     {#if valueType === 'mo'}
-      <span class="count" on:click={toogle} on:keypress={toogle}>
+      <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
         <span class="detail-icon detail-arrow {showDetails?'open':'closed'}"> </span>
       </span>
     {:else if valueType === 'object'}
-      <span class="count" on:click={toogle} on:keypress={toogle}>
+      <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
         <span class="detail-icon detail-arrow {showDetails?'open':'closed'}"> </span>
       </span>
     {:else}
         <input class="array-item" type={fd.inputType} name={fname}
                id={key} value={value} on:change={changed} {disabled}/>
-        <span class="delete-x" on:click={del} on:keypress={del}
+        <span class="delete-x" on:click={del} on:keypress={del} role="button" tabindex="0"
               style="display:{viewMode==='view'?'none':'inline'}">X</span>
     {/if}
   </span>

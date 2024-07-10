@@ -26,13 +26,14 @@
 </script>
 <div class="field" style="margin-left:{level*12}px;">
   <label for={fname}></label>
-  <span class=" tree-line"></span>
+  <span class="tree-line" />
+  <!--{showDetails?'open':'closed'}"></span>-->
   <span class="value">
      {#if index >= 0}
 <!--        <span class="array-value">-->
         <input class="array-item" type={fd.inputType} name={fname}
                id={index} value={value} on:change={changed} {disabled}/>
-        <span class="delete-x" on:click={del} on:keypress={del}
+        <span class="delete-x" on:click={del} on:keypress={del} role="button" tabindex="0"
               style="display:{viewMode==='view'?'none':'inline'}">X</span>
 <!--        </span>-->
      {:else if viewMode !== 'view' }

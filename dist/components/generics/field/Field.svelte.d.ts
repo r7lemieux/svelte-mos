@@ -1,13 +1,13 @@
 import { SvelteComponent } from "svelte";
 import type { MoViewMode } from '../../../constants/ui';
 import type { FieldDefinition } from '../../../models/fields/FieldDefinition';
+import './field.sass';
 declare const __propDef: {
     props: {
         fieldDef: FieldDefinition<never>;
         value: any;
         viewMode?: MoViewMode | undefined;
         level?: number | undefined;
-        branch?: boolean | undefined;
         onChange: (fieldId: string, value: any) => void;
     };
     events: {

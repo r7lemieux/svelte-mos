@@ -8,7 +8,6 @@ export const getUiMoDef = moDef => {
     for (const fieldDef of (Array.from(moDef.fieldDefs.values()))) {
         const uiFieldDef = new FieldDefinitionMo(fieldDef);
         uiMoDef.fieldDefs.set(fieldDef.name, uiFieldDef);
-        console.log(`==>MoDefs.ts:21 uiFieldDef`, uiFieldDef['name']);
     }
     return moDef;
 };

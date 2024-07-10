@@ -25,7 +25,7 @@ const nodeClicked = (id) => {
   {#if i == nodes.length - 1 }
     <span class="last-node">{node.name}</span>
     {:else}
-      <span class="node" on:click={nodeClicked(node.id)} on:keypress={nodeClicked(node.id)} >{node.name} > </span>
+      <span class="node" on:click={nodeClicked(node.id)} on:keypress={nodeClicked(node.id)} role="button" aria-pressed="false" tabindex="0">{node.name} > </span>
   {/if}
 {/each}
 </div>

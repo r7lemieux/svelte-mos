@@ -1,6 +1,6 @@
 import { ErrorName } from '../../services/common/message/errorName';
 import { OK, Rezult } from '../../services/common/message/rezult';
-import { toDisplayString } from '../../services/common/util/string.utils';
+import { objectReplacer, toDisplayString } from '../../services/common/util/string.utils';
 import { copyOwnProperties } from '../../services/common/util/ts.utils';
 // Singleton
 export class FieldDefinition {
@@ -124,7 +124,7 @@ export class FieldDefinition {
             case 'date':
             case 'object':
             case 'array':
-                return JSON.stringify(v);
+                return JSON.stringify(v, objectReplacer);
             case 'string':
             case 'int':
             case 'float':

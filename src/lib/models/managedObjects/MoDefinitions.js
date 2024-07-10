@@ -14,7 +14,6 @@ for (const moMetaName of Object.keys(MoDefinitions)) {
     for (const fieldDef of (Array.from(moMeta.fieldDefs.values()))) {
         const uiFieldDef = new FieldDefinitionMo(fieldDef);
         uiMoMeta.fieldDefs.set(fieldDef.name, uiFieldDef);
-        console.log(`==>MoMetas.ts:21 uiFieldDef`, uiFieldDef['name']);
     }
     UiMoMetas[moMetaName] = uiMoMeta;
 }

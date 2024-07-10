@@ -102,7 +102,7 @@ export class MoListModel {
             const field1 = fieldDef.parse(field0)
             row[fieldDef.name] = field1
           } catch (ex) {
-            if (ex instanceof Rezult) {
+            if (ex && ex instanceof Rezult) {
               (ex as Rezult).context = `parsing line:${l}, field:${i}`
               this.errors.push(ex)
             } else {
@@ -156,7 +156,7 @@ export class MoListModel {
             const field1 = fieldDef.parse(field0)
             row[fieldDef.name] = field1
           } catch (ex) {
-            if (ex instanceof Rezult) {
+            if (ex && ex instanceof Rezult) {
               (ex as Rezult).context = `parsing line:${l}, field:${i}`
               this.errors.push(ex)
             } else {

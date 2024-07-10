@@ -26,7 +26,7 @@ const buildGrid = () => {
       grid = new Grid(eGridDiv, gridOptions);
       return true;
     } catch (err) {
-      console.log(`==>ModelGrid.svelte:33 err`, err);
+      `==>ModelGrid.svelte:33 err`, err;
     }
   }
 };
@@ -46,7 +46,6 @@ export const modelReady = (listModel) => {
   return true;
 };
 const goToView = (mo) => {
-  console.log(`==>MosGrid.svelte:78 `, mo);
   goto(`/mo/${mo.moDef.name}/${mo.id}`);
 };
 const buildGridOptions = () => {

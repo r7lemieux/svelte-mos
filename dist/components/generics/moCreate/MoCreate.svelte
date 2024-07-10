@@ -1,17 +1,14 @@
 <script>import { toDisplayString } from "../../../services/common/util/string.utils";
 export let moDef;
-console.log(`==>MoCreate.svelte:6 moDef`, moDef.name);
 const title = toDisplayString(moDef.name);
 const fieldDefs = Array.from(moDef.fieldDefs.values());
 const mo = moDef.newMo();
 const onChange = (event) => {
-  console.log(`==>Mo.svelte:19 on change event`, event);
   const fieldname = event.srcElement.id;
   const value = event.srcElement.value;
   mo[fieldname] = value;
 };
 const create = (event) => {
-  console.log(`==>MoCreate.svelte:14 create event`, event);
   moDef.dataSource.addMo(mo);
 };
 </script>

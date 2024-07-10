@@ -41,7 +41,7 @@
   <label for={fname}>{fd.getDisplayName()}</label>
   <span class=" tree-line {showDetails?'open':'closed'}"></span>
   <span class="value">
-    <span class="count" on:click={toogle} on:keypress={toogle}>
+    <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
       <span>{size}</span>
       <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">
 <!--      <Icon src={showDetails?AiOutlineCaretDown:AiOutlineCaretRight}/>-->

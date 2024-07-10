@@ -1,7 +1,7 @@
 import type {FieldDefinitionInterface} from '$lib/models/fields/FieldDefinition.interface'
 import {ErrorName} from  '$lib/services/common/message/errorName'
 import {OK, Rezult} from  '$lib/services/common/message/rezult'
-import {toDisplayString} from  '$lib/services/common/util/string.utils'
+import { objectReplacer, toDisplayString } from '$lib/services/common/util/string.utils';
 import type {ColDef} from 'ag-grid-community'
 import {copyOwnProperties} from  '$lib/services/common/util/ts.utils'
 import type {InputTypes} from  '$lib/services/common/util/dom.utils'
@@ -132,7 +132,7 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> { /
       case 'date':
       case 'object':
       case 'array':
-        return JSON.stringify(v)
+        return JSON.stringify(v, objectReplacer)
       case 'string':
       case 'int':
       case 'float':

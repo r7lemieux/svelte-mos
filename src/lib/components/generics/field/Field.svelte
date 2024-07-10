@@ -7,12 +7,12 @@
   import MapField from  '$lib/components/generics/field/MapField.svelte'
   import { afterUpdate } from "svelte";
   import { sizeLabels } from  '$lib/services/common/util/dom.utils'
-  import ObjectField from  '$lib/components/generics/field/ObjectField.svelte'
+  import ObjectField from '$lib/components/generics/field/ObjectField.svelte'
+  import './field.sass'
   export let fieldDef: FieldDefinition<never>
   export let value
   export let viewMode: MoViewMode = extractViewMode()
   export let level = 1
-  export let branch = false
   export let onChange: (fieldId: string, value: any) => void
   $: disabled = viewMode === 'view'
   const fd = fieldDef
@@ -38,7 +38,7 @@
   {/if}
 
 <style lang="sass">
-  @use 'field'
+  //@use 'field'
   //.tree-indicator
   //  border-left: 4px solid #888
   //  display: block

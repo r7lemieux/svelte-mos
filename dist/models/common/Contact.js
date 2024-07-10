@@ -29,5 +29,4 @@ const contactMoDef = MoDefinition.fromProps({
 contactMoDef.moDef = moDefDef;
 contactMoDef.moClass = Contact;
 contactMoDef.initFieldDefs();
-console.log(`==>Contact.ts:32 `, Array.from(contactMoDef.fieldDefs.keys()));
 registerMoDef(contactMoDef);

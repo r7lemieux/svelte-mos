@@ -80,7 +80,6 @@ export class MoListModel {
         return model;
     };
     buildFromCsv(sheetStr) {
-        console.log(`==>SpreadSheetBuilder.service.ts:24 sheetStr`, sheetStr);
         const lines = sheetStr.split('\r\n');
         const titleStr = lines[0];
         this.buildFieldDefsFromTitleLine(titleStr);
@@ -100,7 +99,7 @@ export class MoListModel {
                         row[fieldDef.name] = field1;
                     }
                     catch (ex) {
-                        if (ex instanceof Rezult) {
+                        if (ex && ex instanceof Rezult) {
                             ex.context = `parsing line:${l}, field:${i}`;
                             this.errors.push(ex);
                         }
@@ -136,7 +135,6 @@ export class MoListModel {
         return fieldDefs;
     }
     fillFromCsv(sheetStr, options) {
-        console.log(`==>SpreadSheetBuilder.service.ts:24 sheetStr`, sheetStr);
         const lines = sheetStr.split('\r\n');
         const titleStr = lines[0];
         const fieldNames = titleStr.split(',');
@@ -157,7 +155,7 @@ export class MoListModel {
                         row[fieldDef.name] = field1;
                     }
                     catch (ex) {
-                        if (ex instanceof Rezult) {
+                        if (ex && ex instanceof Rezult) {
                             ex.context = `parsing line:${l}, field:${i}`;
                             this.errors.push(ex);
                         }

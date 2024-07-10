@@ -37,7 +37,7 @@ afterUpdate(sizeLabels);
 <!--</div>-->
 <!--{#if showDetails}-->
   {#each Object.keys(value).sort() as key}
-    <div class="field">
+    <div class="field" style="margin-left:{(level+1)*12}px;">
       <label for="{key}">{key}</label>
       <span class="tree-line"></span>
       <span class="value">{value[key]?.toString()}</span>
@@ -55,7 +55,7 @@ afterUpdate(sizeLabels);
   height: 2.5rem;
   width: 5px;
 }
-.field .tree-line.tree-line.open {
+.field .tree-line.open {
   border-bottom: 2px solid #88A;
   width: 9px;
   position: relative;

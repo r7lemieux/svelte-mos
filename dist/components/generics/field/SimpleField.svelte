@@ -1,4 +1,5 @@
-<script>export let fieldDef;
+<script>import "./field.sass";
+export let fieldDef;
 export let value;
 export let level;
 export let viewMode;
@@ -32,7 +33,7 @@ let changed = (event) => {
   height: 2.5rem;
   width: 5px;
 }
-.field .tree-line.tree-line.open {
+.field .tree-line.open {
   border-bottom: 2px solid #88A;
   width: 9px;
   position: relative;

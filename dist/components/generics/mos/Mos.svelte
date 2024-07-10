@@ -16,7 +16,6 @@ const createMo = () => {
 };
 onMount(() => {
   displayName = moDef?.getDisplayName();
-  console.log(`==>Mos.svelte:20 `, displayName);
   modelReady(moListModel);
 });
 </script>
