@@ -36,10 +36,10 @@ const deleteItem = (i) => {
   <span class=" tree-line {showDetails?'open':'closed'}"></span>
   <span class="value">
     <span class="count" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
+      <span>{size}</span>
       <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">
 <!--      <Icon src={showDetails?AiOutlineCaretDown:AiOutlineCaretRight}/>-->
       </span>
-      <span>{size}</span>
     </span>
   </span>
 </div>
