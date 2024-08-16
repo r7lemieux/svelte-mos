@@ -1,7 +1,7 @@
 import { SvelteComponent } from "svelte";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import type { MoListModel } from '../../../models/managedObjects/MoList.model';
+import type { MoListModel } from '../../../models/managedObjects/MoList.model.js';
 declare const __propDef: {
     props: {
         height?: string | undefined;

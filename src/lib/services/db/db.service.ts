@@ -1,15 +1,16 @@
 // Prototype
-import type {Mo} from '$lib/models/managedObjects/Mo'
+import type {Mo} from '$lib/models/managedObjects/Mo.js'
 import {Rezult} from  '$lib/services/common/message/rezult'
 import {ErrorName} from  '$lib/services/common/message/errorName'
-import type {MoListModel} from '$lib/models/managedObjects/MoList.model'
-import type {MoDefinition} from '$lib/models/managedObjects/MoDefinition.js'
+import type {MoListModel} from '$lib/models/managedObjects/MoList.model.js'
+import type {MoDefinition} from '$lib/models/managedObjects/MoDefinition'
 import type {DataSource} from  '$lib/services/db/DataSource'
-import type {DbServiceInterface} from '$lib/services/db/db.service.interface.js'
+import type {DbServiceInterface} from '$lib/services/db/db.service.interface'
+import type { MoDefinitionInterface } from '$lib/models/index.js';
 
 export class DbService implements DbServiceInterface{
 
-  getMo = async(moDef: MoDefinition, id: any): Promise<Mo | undefined> =>
+  getMo = async(moDef: MoDefinitionInterface, id: any): Promise<Mo | undefined> =>
     Promise.reject(new Rezult(ErrorName.missing_implementation))
   addMo = async(mo: Mo): Promise<Mo> =>
     Promise.reject(new Rezult(ErrorName.missing_implementation))

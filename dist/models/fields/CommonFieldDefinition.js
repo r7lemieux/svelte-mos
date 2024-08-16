@@ -1,4 +1,4 @@
-import { FieldDefinition, from } from './FieldDefinition';
+import { FieldDefinition, from } from './FieldDefinition.js';
 //ref some regex from https://owasp.org/www-community/OWASP_Validation_Regex_Repository
 export const BaseFieldDefs = {
     Id: new FieldDefinition({

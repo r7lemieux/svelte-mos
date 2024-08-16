@@ -1,4 +1,4 @@
-import { Mo } from '../managedObjects/Mo';
+import { Mo } from '../managedObjects/Mo.js';
 export declare class Contact extends Mo {
     firstName?: string;
     lastName?: string;
@@ -14,3 +14,4 @@ export declare class Contact extends Mo {
     postalCode?: string;
     constructor(props: Partial<Contact>);
 }
+export declare const getContactMoMeta: () => any;

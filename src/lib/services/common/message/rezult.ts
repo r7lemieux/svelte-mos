@@ -1,5 +1,5 @@
-import {ErrorName} from './errorName'
-import { jsonToDisplayString } from '$lib/services/common/util/string.utils'
+import {ErrorName} from './errorName.js'
+import { jsonToDisplayString } from '$lib/services/common/util/string.utils.js'
 
 export type RezultStatus = 'message' | 'error'
 
@@ -65,14 +65,15 @@ export class Rezult extends Error {
 
   print = (str: string) => {
     this.context = str
-    if (!process.env.testing) {
-      console.log(this.toString())
-    }
+    // if (!process.env.testing) {
+    //   console.log(this.toString())
+    // }
   }
 
   static build = (err, data?:any, context?:any): Rezult => {
     if (err && err instanceof Rezult) return err
-    const rezult = new Rezult(ErrorName.server_error)
+    const rezult = new Rezult(ErrorName.type5_error)
+    console.trace(`==>rezult.ts:78 rezult`, rezult)
     if (data) rezult.data = data
     if (context) rezult.context = context
     if (err && err.message) {

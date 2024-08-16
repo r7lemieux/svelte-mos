@@ -1,13 +1,14 @@
 <script lang="ts">
   import {MoListModel} from '$lib/models/managedObjects/MoList.model.js'
-  import {moDefDef} from '$lib/models/managedObjects/MoDefinition.js'
+  import { moDefDef } from '$lib/models/managedObjects/MoDefinition'
   import Mos from  '$lib/components/generics/mos/Mos.svelte'
-  import type {Mo} from '$lib/models/managedObjects/Mo'
+  import type {Mo} from '$lib/models/managedObjects/Mo.js'
+  import { moDefMoMeta } from '$lib/models/index.js'
   export let mos
   const moDef = moDefDef
   // const mos = data.mos
   let modelReady: (model: MoListModel) => boolean
-  const moListModel = new MoListModel(moDefDef)
+  const moListModel = new MoListModel(moDefMoMeta)
   // onMount(() => {
   //   modelReady(moListModel)
   // })

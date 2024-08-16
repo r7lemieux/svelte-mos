@@ -1,74 +1,85 @@
-import * as stringSimilarity from 'string-similarity';
-import * as levenshtein from 'fast-levenshtein';
-import { FieldDefs } from  '$lib/services/common/validation/CommonFieldDefinition';
-import { toWords } from  '$lib/services/common/util/string.utils';
-export const diceRank = (word1, word2) => {
+"use strict";
+exports.__esModule = true;
+exports.getClosestFieldName = exports.getClosestFieldname = exports.getClosestName = exports.fnameSimilarity = exports.wordsRank = exports.levenshteinRank = exports.diceRank = void 0;
+var stringSimilarity = require("string-similarity");
+var levenshtein = require("fastest-levenshtein");
+var CommonFieldDefinition_1 = require("$lib/models/fields/CommonFieldDefinition");
+var string_utils_1 = require("$lib/services/common/util/string.utils");
+var diceRank = function (word1, word2) {
     if (!word1 || !word2)
         return 0;
     return stringSimilarity.compareTwoStrings(word1.toLowerCase(), word2.toLowerCase());
 };
-export const levenshteinRank = (word1, word2) => {
+exports.diceRank = diceRank;
+var levenshteinRank = function (word1, word2) {
     if (!word1 || !word2)
         return 0;
-    return 1 / (Math.log(Math.exp(1) + levenshtein.get(word1.toLowerCase(), word2.toLowerCase(), { useCollator: false })));
+    return 1 / (Math.log(Math.exp(1) + levenshtein['distance'](word1.toLowerCase(), word2.toLowerCase())));
 };
-export const wordsRank = (word1, word2) => (diceRank(word1, word2) + levenshteinRank(word1, word2)) / 2;
-export const fnameSimilarity = (word1, word2) => {
+exports.levenshteinRank = levenshteinRank;
+var wordsRank = function (word1, word2) { return ((0, exports.diceRank)(word1, word2) + (0, exports.levenshteinRank)(word1, word2)) / 2; };
+exports.wordsRank = wordsRank;
+var fnameSimilarity = function (word1, word2) {
     if (!word1 || !word2)
         return 0;
-    return wordsRank(word1, word2);
+    return (0, exports.wordsRank)(word1, word2);
 };
-export const getClosestName = (text, names) => {
-    let closestName = '';
-    let bestRank = 0;
-    const rank = 0;
-    for (const name of names) {
-        const rank = fnameSimilarity(text, name);
-        if (rank > bestRank) {
-            closestName = name;
-            bestRank = rank;
+exports.fnameSimilarity = fnameSimilarity;
+var getClosestName = function (text, names) {
+    var closestName = '';
+    var bestRank = 0;
+    var rank = 0;
+    for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
+        var name_1 = names_1[_i];
+        var rank_1 = (0, exports.fnameSimilarity)(text, name_1);
+        if (rank_1 > bestRank) {
+            closestName = name_1;
+            bestRank = rank_1;
         }
     }
     return { name: closestName, rank: bestRank };
 };
-export const getClosestFieldname = (text) => {
-    let closestName = '';
-    const fnames = Object.keys(FieldDefs);
-    const textResult = getClosestName(text, fnames);
+exports.getClosestName = getClosestName;
+var getClosestFieldname = function (text) {
+    var closestName = '';
+    var fnames = Object.keys(CommonFieldDefinition_1.CommonFieldDefs);
+    var textResult = (0, exports.getClosestName)(text, fnames);
     if (textResult.rank > 0.70)
         return textResult.name;
-    const words = toWords(text);
-    const fnameWords = fnames.map(toWords);
-    const firstWord = words[0];
-    const firstFnameWord = fnameWords.map(ws => ws[0]);
-    const lastWord = words[words.length - 1];
-    const lastFnameWord = fnameWords.map(ws => ws[ws.length - 1]);
-    const ffResult = getClosestName(firstWord, firstFnameWord);
-    const llResult = getClosestName(lastWord, lastFnameWord);
-    const ffllBest = (ffResult.rank < llResult.rank) ? llResult : ffResult;
+    var words = (0, string_utils_1.toWords)(text);
+    var fnameWords = fnames.map(string_utils_1.toWords);
+    var firstWord = words[0];
+    var firstFnameWord = fnameWords.map(function (ws) { return ws[0]; });
+    var lastWord = words[words.length - 1];
+    var lastFnameWord = fnameWords.map(function (ws) { return ws[ws.length - 1]; });
+    var ffResult = (0, exports.getClosestName)(firstWord, firstFnameWord);
+    var llResult = (0, exports.getClosestName)(lastWord, lastFnameWord);
+    var ffllBest = (ffResult.rank < llResult.rank) ? llResult : ffResult;
     if (ffllBest.rank > 0.70)
         return ffllBest.name;
-    const flResult = getClosestName(firstWord, firstFnameWord);
-    const lfResult = getClosestName(firstWord, firstFnameWord);
-    const fllfBest = (flResult.rank > lfResult.rank) ? flResult : lfResult;
+    var flResult = (0, exports.getClosestName)(firstWord, firstFnameWord);
+    var lfResult = (0, exports.getClosestName)(firstWord, firstFnameWord);
+    var fllfBest = (flResult.rank > lfResult.rank) ? flResult : lfResult;
     if (fllfBest.rank > 0.70)
         return fllfBest.name;
-    const results = [textResult, ffllBest, fllfBest];
-    const bestRank = Math.max(...results.map(r => r.rank));
+    var results = [textResult, ffllBest, fllfBest];
+    var bestRank = Math.max.apply(Math, results.map(function (r) { return r.rank; }));
     if (bestRank > 0.55) {
-        const bestResult = results.find(r => r.rank == bestRank);
-        closestName = bestResult?.name || text;
+        var bestResult = results.find(function (r) { return r.rank == bestRank; });
+        closestName = (bestResult === null || bestResult === void 0 ? void 0 : bestResult.name) || text;
     }
     else
         closestName = text;
     return closestName;
 };
-export const getClosestFieldName = (word) => {
-    let closestName = '';
-    let bestSimilarity = 0;
-    for (const fname of Object.keys(FieldDefs)) {
-        const similarity = fnameSimilarity(fname, word);
-        if (fnameSimilarity(fname, word) > bestSimilarity) {
+exports.getClosestFieldname = getClosestFieldname;
+var getClosestFieldName = function (word) {
+    var closestName = '';
+    var bestSimilarity = 0;
+    for (var _i = 0, _a = Object.keys(CommonFieldDefinition_1.CommonFieldDefs); _i < _a.length; _i++) {
+        var fname = _a[_i];
+        var similarity = (0, exports.fnameSimilarity)(fname, word);
+        if ((0, exports.fnameSimilarity)(fname, word) > bestSimilarity) {
             closestName = fname;
             bestSimilarity = similarity;
         }
@@ -78,4 +89,4 @@ export const getClosestFieldName = (word) => {
     }
     return closestName;
 };
-//# sourceMappingURL=FieldMatcher.js.map
+exports.getClosestFieldName = getClosestFieldName;

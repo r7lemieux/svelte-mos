@@ -1,4 +1,4 @@
-import { Rezult } from '../../services/common/message/rezult';
+import { Rezult } from '../../services/common/message/rezult.js';
 export type validator = keyof ValidationService;
 declare interface IValidationOptions {
     nullable?: boolean;

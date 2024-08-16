@@ -1,187 +1,183 @@
+"use strict";
+exports.__esModule = true;
+exports.MoListModel = void 0;
 // Prototype
-import { FieldDefs, getFieldDef } from  '$lib/services/common/validation/CommonFieldDefinition';
-import { FieldDefinition } from  '$lib/services/common/validation/FieldDefinition';
-import { Rezult } from  '$lib/services/common/message/rezult';
-import { getClosestFieldName } from  '$lib/services/common/validation/FieldMatcher';
-import { MoMeta } from  '$lib/models/generic/MoDefinition';
-import { ErrorName } from  '$lib/services/common/message/errorName';
-export class MoListModel {
-    moMeta;
-    mos = [];
-    fieldDefs;
-    constructor(moMeta) {
-        this.moMeta = moMeta;
-    }
-    errors = [];
-    init() {
-        // this.mos.forEach(mo => mo.view = 'MMM2')
-        // this.addViewButton()
-    }
-    getName = () => this.moMeta.name;
-    getFieldDefs = () => {
-        if (!this.fieldDefs) {
-            this.fieldDefs = this.moMeta.fieldDefs;
-        }
-        return this.fieldDefs;
-    };
-    /* ----------------------
-    * Construct From Objects
-    * -----------------------
-    */
-    buildFromObjs = objs => {
-        this.moMeta.fieldDefs = this.buildFieldDefs(objs);
-        this.mos = objs.map(this.moMeta.objToMo);
-    };
-    buildFieldnameToKeys = (objs) => {
-        if (!objs || !objs.length)
-            return {};
-        const keyToFieldname = {};
-        const fieldnameToKeys = {};
-        for (const obj of objs) {
-            for (const key of Object.keys(obj)) {
-                const mappedFieldName = keyToFieldname[key];
-                if (!mappedFieldName) {
-                    const fieldName1 = getClosestFieldName(key);
-                    //later find mapping base on single words. The last one is most important. i.e. "home phone" is phone type
-                    if (!fieldnameToKeys[fieldName1])
-                        fieldnameToKeys[fieldName1] = [];
-                    fieldnameToKeys[fieldName1].push(key);
-                    keyToFieldname[key] = fieldName1;
+var CommonFieldDefinition_1 = require("$lib/models/fields/CommonFieldDefinition");
+var FieldDefinition_1 = require("$lib/models/fields/FieldDefinition");
+var rezult_1 = require("$lib/services/common/message/rezult");
+var FieldMatcher_1 = require("$lib/models/fields/FieldMatcher");
+var MoDefinition_1 = require("$lib/models/managedObjects/MoDefinition");
+var errorName_1 = require("$lib/services/common/message/errorName");
+var index_1 = require("$lib/models/index");
+var MoListModel = /** @class */ (function () {
+    function MoListModel(moMeta) {
+        var _this = this;
+        this.mos = [];
+        this.errors = [];
+        this.getName = function () { return _this.moDef.name; };
+        this.getFieldDefs = function () {
+            if (!_this.fieldDefs) {
+                _this.fieldDefs = _this.moDef.fieldDefs;
+            }
+            return _this.fieldDefs;
+        };
+        /* ----------------------
+        * Construct From Objects
+        * -----------------------
+        */
+        this.buildFromObjs = function (objs) {
+            _this.moDef.fieldDefs = _this.buildFieldDefs(objs);
+            _this.mos = objs.map(_this.moDef.objToMo);
+        };
+        this.buildFieldnameToKeys = function (objs) {
+            if (!objs || !objs.length)
+                return {};
+            var keyToFieldname = {};
+            var fieldnameToKeys = {};
+            for (var _i = 0, objs_1 = objs; _i < objs_1.length; _i++) {
+                var obj = objs_1[_i];
+                for (var _a = 0, _b = Object.keys(obj); _a < _b.length; _a++) {
+                    var key = _b[_a];
+                    var mappedFieldName = keyToFieldname[key];
+                    if (!mappedFieldName) {
+                        var fieldName1 = (0, FieldMatcher_1.getClosestFieldName)(key);
+                        //later find mapping base on single words. The last one is most important. i.e. "home phone" is phone type
+                        if (!fieldnameToKeys[fieldName1])
+                            fieldnameToKeys[fieldName1] = [];
+                        fieldnameToKeys[fieldName1].push(key);
+                        keyToFieldname[key] = fieldName1;
+                    }
                 }
             }
-        }
-        return fieldnameToKeys;
-    };
-    buildFieldDefs = (objs) => {
-        const fieldDefs = new Map();
-        if (!objs || !objs.length)
-            return fieldDefs;
-        const fieldnameToKeys = this.buildFieldnameToKeys(objs);
-        for (const [fieldname, keys] of Object.entries(fieldnameToKeys)) {
-            for (const key of keys) {
-                //later keyToFieldname[key] = normalize(key) // get a nice key name, try to use a common fieldDef
-                // keyToFieldname[key] = key
-                const fieldDef = FieldDefinition.from(FieldDefs[fieldname], { key, name: key });
-                fieldDefs.set(fieldname, fieldDef);
-                //Build a field def for those keys.
+            return fieldnameToKeys;
+        };
+        this.buildFieldDefs = function (objs) {
+            var fieldDefs = new Map();
+            if (!objs || !objs.length)
+                return fieldDefs;
+            var fieldnameToKeys = _this.buildFieldnameToKeys(objs);
+            for (var _i = 0, _a = Object.entries(fieldnameToKeys); _i < _a.length; _i++) {
+                var _b = _a[_i], fieldname = _b[0], keys = _b[1];
+                for (var _c = 0, keys_1 = keys; _c < keys_1.length; _c++) {
+                    var key = keys_1[_c];
+                    //later keyToFieldname[key] = normalize(key) // get a nice key name, try to use a common fieldDef
+                    // keyToFieldname[key] = key
+                    var fieldDef = FieldDefinition_1.FieldDefinition.from(CommonFieldDefinition_1.CommonFieldDefs[fieldname], { key: key, name: key });
+                    fieldDefs.set(fieldname, fieldDef);
+                    //Build a field def for those keys.
+                }
             }
-        }
-        return fieldDefs;
+            return fieldDefs;
+        };
+        this.extractFieldNamesFromHeaderLine = function (titleStr) { return titleStr.split(',').map(FieldMatcher_1.getClosestFieldName); };
+        this.moMeta = moMeta;
+        this.moDef = moMeta.moDef;
+    }
+    MoListModel.prototype.init = function () {
+        // this.mos.forEach(mo => mo.view = 'MMM2')
+        // this.addViewButton()
     };
-    extractFieldNamesFromHeaderLine = titleStr => titleStr.split(',').map(getClosestFieldName);
-    /* -----
-     *  CSV
-     * -----
-     */
-    static fromCsv = (name, str) => {
-        const moMeta = new MoMeta(name);
-        const model = new MoListModel(moMeta);
-        model.buildFromCsv(str);
-        return model;
-    };
-    buildFromCsv(sheetStr) {
-        console.log(`==>SpreadSheetBuilder.service.ts:24 sheetStr`, sheetStr);
-        const lines = sheetStr.split('\r\n');
-        const titleStr = lines[0];
+    MoListModel.prototype.buildFromCsv = function (sheetStr) {
+        var lines = sheetStr.split('\r\n');
+        var titleStr = lines[0];
         this.buildFieldDefsFromTitleLine(titleStr);
-        const fieldNames = titleStr.split(',');
-        this.moMeta.hasId = fieldNames.indexOf('id') !== -1;
-        const fieldDefArray = Array.from(this.getFieldDefs().values());
-        for (let l = 1; l < lines.length; l++) {
-            const line = lines[l];
-            const row = {};
-            const fields0 = line.split(',');
-            for (let i = 0; i < fields0.length; i++) {
-                const field0 = fields0[i];
-                const fieldDef = fieldDefArray[i];
+        var fieldNames = titleStr.split(',');
+        this.moDef.hasId = fieldNames.indexOf('id') !== -1;
+        var fieldDefArray = Array.from(this.getFieldDefs().values());
+        for (var l = 1; l < lines.length; l++) {
+            var line = lines[l];
+            var row = {};
+            var fields0 = line.split(',');
+            for (var i = 0; i < fields0.length; i++) {
+                var field0 = fields0[i];
+                var fieldDef = fieldDefArray[i];
                 if (fieldDef) {
                     try {
-                        const field1 = fieldDef.parse(field0);
+                        var field1 = fieldDef.parse(field0);
                         row[fieldDef.name] = field1;
                     }
                     catch (ex) {
-                        if (ex instanceof Rezult) {
-                            ex.context = `parsing line:${l}, field:${i}`;
+                        if (ex && ex instanceof rezult_1.Rezult) {
+                            ex.context = "parsing line:".concat(l, ", field:").concat(i);
                             this.errors.push(ex);
                         }
                         else {
-                            console.trace(`==>SpreadSheetBuilder.service.ts:39 ex`, ex);
+                            console.trace("==>SpreadSheetBuilder.service.ts:39 ex", ex);
                         }
                     }
                 }
             }
             this.mos.push(this.moMeta.objToMo(row));
         }
-    }
-    buildFieldDefsFromTitleLine(titleStr) {
-        const fieldNames = titleStr.split(',');
-        const fieldDefNames = this.extractFieldNamesFromHeaderLine(titleStr);
-        for (let f = 0; f < fieldNames.length; f++) {
-            const fieldDef = FieldDefinition.from(FieldDefs[fieldDefNames[f]] || FieldDefs['default']);
+    };
+    MoListModel.prototype.buildFieldDefsFromTitleLine = function (titleStr) {
+        var fieldNames = titleStr.split(',');
+        var fieldDefNames = this.extractFieldNamesFromHeaderLine(titleStr);
+        for (var f = 0; f < fieldNames.length; f++) {
+            var fieldDef = FieldDefinition_1.FieldDefinition.from(CommonFieldDefinition_1.CommonFieldDefs[fieldDefNames[f]] || CommonFieldDefinition_1.CommonFieldDefs['default']);
             fieldDef.name = fieldNames[f];
             this.getFieldDefs().set(fieldNames[f], fieldDef);
         }
-    }
-    matchFieldDefsFromTitleLine(fieldNames, addFields) {
-        const fieldDefs = fieldNames.map(fieldName => {
-            let fieldDef = this.getFieldDefs().get(fieldName);
+    };
+    MoListModel.prototype.matchFieldDefsFromTitleLine = function (fieldNames, addFields) {
+        var _this = this;
+        var fieldDefs = fieldNames.map(function (fieldName) {
+            var fieldDef = _this.getFieldDefs().get(fieldName);
             if (!fieldDef && addFields) {
-                const defFieldName = getClosestFieldName(fieldName);
-                fieldDef = FieldDefinition.from(FieldDefs[defFieldName || FieldDefs['default']]);
+                var defFieldName = (0, FieldMatcher_1.getClosestFieldName)(fieldName);
+                fieldDef = FieldDefinition_1.FieldDefinition.from(CommonFieldDefinition_1.CommonFieldDefs[defFieldName || CommonFieldDefinition_1.CommonFieldDefs['default']]);
                 fieldDef.name = fieldName;
-                this.getFieldDefs().set(fieldName, fieldDef);
+                _this.getFieldDefs().set(fieldName, fieldDef);
             }
             return fieldDef;
         });
         return fieldDefs;
-    }
-    fillFromCsv(sheetStr, options) {
-        console.log(`==>SpreadSheetBuilder.service.ts:24 sheetStr`, sheetStr);
-        const lines = sheetStr.split('\r\n');
-        const titleStr = lines[0];
-        const fieldNames = titleStr.split(',');
-        const fieldDefs = this.matchFieldDefsFromTitleLine(fieldNames, !!options?.addNewFields);
-        if (this.moMeta.hasId && fieldNames.indexOf('id') === -1) {
-            throw new Rezult(ErrorName.gdrive_missing_id);
+    };
+    MoListModel.prototype.fillFromCsv = function (sheetStr, options) {
+        var lines = sheetStr.split('\r\n');
+        var titleStr = lines[0];
+        var fieldNames = titleStr.split(',');
+        var fieldDefs = this.matchFieldDefsFromTitleLine(fieldNames, !!(options === null || options === void 0 ? void 0 : options.addNewFields));
+        if (this.moDef.hasId && fieldNames.indexOf('id') === -1) {
+            throw new rezult_1.Rezult(errorName_1.ErrorName.gdrive_missing_id);
         }
-        for (let l = 1; l < lines.length; l++) {
-            const line = lines[l];
-            const row = {};
-            const fields0 = line.split(',');
-            for (let i = 0; i < fields0.length; i++) {
-                const field0 = fields0[i];
-                const fieldDef = fieldDefs[i];
+        for (var l = 1; l < lines.length; l++) {
+            var line = lines[l];
+            var row = {};
+            var fields0 = line.split(',');
+            for (var i = 0; i < fields0.length; i++) {
+                var field0 = fields0[i];
+                var fieldDef = fieldDefs[i];
                 if (fieldDef) {
                     try {
-                        const field1 = fieldDef.parse(field0);
+                        var field1 = fieldDef.parse(field0);
                         row[fieldDef.name] = field1;
                     }
                     catch (ex) {
-                        if (ex instanceof Rezult) {
-                            ex.context = `parsing line:${l}, field:${i}`;
+                        if (ex && ex instanceof rezult_1.Rezult) {
+                            ex.context = "parsing line:".concat(l, ", field:").concat(i);
                             this.errors.push(ex);
                         }
                         else {
-                            console.trace(`==>SpreadSheetBuilder.service.ts:39 ex`, ex);
+                            console.trace("==>SpreadSheetBuilder.service.ts:39 ex", ex);
                         }
                     }
                 }
             }
             this.mos.push(this.moMeta.objToMo(row));
         }
-    }
-    /* -------
-     * Actions
-     * -------
-     */
-    goToView = pmo => {
-        let mo;
-        if (pmo.id) {
-            mo = this.moMeta.dataSource.getMo(pmo.id);
-        }
-        else {
-            mo = pmo;
-        }
     };
-}
-//# sourceMappingURL=MoList.model.js.map
+    /* -----
+     *  CSV
+     * -----
+     */
+    MoListModel.fromCsv = function (name, str) {
+        var moDef = new MoDefinition_1.MoDefinition(name);
+        var moMeta = new index_1.MoMeta(moDef);
+        var model = new MoListModel(moMeta);
+        model.buildFromCsv(str);
+        return model;
+    };
+    return MoListModel;
+}());
+exports.MoListModel = MoListModel;

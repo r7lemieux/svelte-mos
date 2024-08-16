@@ -1,5 +1,5 @@
-import {ErrorName} from '$lib/services/common/message/errorName'
-import {Rezult} from '$lib/services/common/message/rezult'
+import {ErrorName} from '$lib/services/common/message/errorName.js'
+import {Rezult} from '$lib/services/common/message/rezult.js'
 
 export type validator = keyof ValidationService
 

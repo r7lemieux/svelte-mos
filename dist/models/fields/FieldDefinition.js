@@ -4,14 +4,11 @@ import { objectReplacer, toDisplayString } from '../../services/common/util/stri
 import { copyOwnProperties } from '../../services/common/util/ts.utils';
 // Singleton
 export class FieldDefinition {
-    // // moDef = fieldDefinitionMoDef
-    // id: string | number = 0
     name = '';
     type = 'string';
     description;
     displayName;
     example;
-    // columnName: string | undefined
     regex;
     regexFlag;
     minLen = 0;
@@ -40,19 +37,6 @@ export class FieldDefinition {
         copyOwnProperties(props, newFieldDef);
         return newFieldDef;
     };
-    // delete
-    // static from1 = (fieldDef0: FieldDefinition<any>, props: Partial<FieldDefinitionInterface<any>> = {}): FieldDefinition<any> => {
-    //   if (!fieldDef0) throw new Rezult(ErrorName.missing_param, {function: 'FieldDefinition.from', param: 'fieldDef0'})
-    //   const fieldDef0Props = {}
-    //   Object.getOwnPropertyNames(fieldDef0).forEach(n => fieldDef0Props[n] = fieldDef0[n])
-    //   const fieldDef = new FieldDefinition(fieldDef0Props)
-    //   // fieldDef.bindFunctions(fieldDef0Props)
-    //   // fieldDef.bindFunctions(props)
-    //   Object.assign(fieldDef, props)
-    //   bindFunctions(fieldDef, fieldDef0Props)
-    //   bindFunctions(fieldDef, props)
-    //   return fieldDef
-    // }
     clone() {
         const newFieldDef = new FieldDefinition();
         copyOwnProperties(this, newFieldDef);

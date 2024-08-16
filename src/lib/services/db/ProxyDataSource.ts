@@ -1,5 +1,5 @@
 import {DbService} from  '$lib/services/db/db.service'
-import type {Mo} from '$lib/models/managedObjects/Mo'
+import type {Mo} from '$lib/models/managedObjects/Mo.js'
 import type {DataSource} from  '$lib/services/db/DataSource'
 
 export class ProxyDataSource implements DataSource {

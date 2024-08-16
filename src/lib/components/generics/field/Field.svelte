@@ -1,14 +1,14 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
   import {page} from '$app/stores'
-  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
   import SimpleField from  '$lib/components/generics/field/SimpleField.svelte'
   import ArrayField from  '$lib/components/generics/field/ArrayField.svelte'
   import MapField from  '$lib/components/generics/field/MapField.svelte'
   import { afterUpdate } from "svelte";
   import { sizeLabels } from  '$lib/services/common/util/dom.utils'
   import ObjectField from '$lib/components/generics/field/ObjectField.svelte'
-  import './field.sass'
+  // import './field.sass'
   export let fieldDef: FieldDefinition<never>
   export let value
   export let viewMode: MoViewMode = extractViewMode()

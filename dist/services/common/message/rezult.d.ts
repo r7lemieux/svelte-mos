@@ -1,4 +1,4 @@
-import { ErrorName } from './errorName';
+import { ErrorName } from './errorName.js';
 export type RezultStatus = 'message' | 'error';
 export declare class Rezult extends Error {
     status: RezultStatus;

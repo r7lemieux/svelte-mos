@@ -32,7 +32,7 @@ $tree-line-color: #88A
     width: 120px
     color: #244
     align-self: center
-    text-wrap: avoid
+    text-wrap: balance
 
   .value
     flex: 200px 4 2
@@ -61,7 +61,7 @@ $tree-line-color: #88A
     height: $field-height
     align-self: center
     width: $detail-margin
-    font-family: "Courier 10 Pitch"
+    font-family: "Courier 10 Pitch", serif
     font-size: smaller
     color: #883
 
@@ -75,8 +75,9 @@ $tree-line-color: #88A
       margin: 0 0 4px 5px
     .detail-arrow.open::after
         margin-bottom: 0
-        -webkit-transform: rotate(90deg)
         transform: rotate(90deg)
+        @supports (-webkit-transform: rotate(90deg))
+          -webkit-transform: rotate(90deg)
 
     .empty-value
       height: $field-height

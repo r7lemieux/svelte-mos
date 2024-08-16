@@ -1,8 +1,10 @@
-import {MoDefinition} from '$lib/models/managedObjects/MoDefinition.js'
-import {Mo} from '$lib/models/managedObjects/Mo'
-import {type FieldDefinition, from} from '$lib/models/fields/FieldDefinition'
-import {BaseFieldDefs} from '$lib/models/fields/CommonFieldDefinition'
-import type {FieldDefinitionInterface} from '$lib/models/fields/FieldDefinition.interface'
+import {MoDefinition} from '../managedObjects/MoDefinition'
+import {Mo} from '../managedObjects/Mo.js'
+import {type FieldDefinition, from} from './FieldDefinition.js'
+import { BaseFieldDefs, CommonFieldDefs } from './CommonFieldDefinition.js'
+import type { MoMetaInterface } from '$lib.js'
+// import { MoMetaInterface } from '../managedObjects/MoMetaInterface'
+// import { MoMetaInterface } from '$lib/models/managedObjects/MoMetaInterface'
 
 export class FieldDefinitionMo<Type> extends Mo {
 
@@ -22,7 +24,8 @@ export class FieldDefinitionMo<Type> extends Mo {
   fieldDef: FieldDefinition<any>
 
   constructor(fieldDefinition: FieldDefinition<any>) {
-    super(fieldDefinitionMoDef)
+    super({} as MoMetaInterface)
+    // super(fieldDefinitionMoMeta)
     this.fieldDef = fieldDefinition
     this.hydrate()
   }
@@ -75,6 +78,8 @@ fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('key'))
 fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('inputType'))
 fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('gridColDef'))
 
+// const fieldDefinitionMoMeta = new MoMeta(fieldDefinitionMoDef)
+
 Object.assign(fieldDefinitionMoDef, {
   name: 'meta',
   dbName: 'MoDefinition',
@@ -87,9 +92,5 @@ Object.assign(fieldDefinitionMoDef, {
   dataSource: null,
   gdriveFilePath: 'system/resources',
   gdriveFileId: null,
-  newMo: () => {
-    const moDef = new MoDefinition('')
-    moDef.moDef = fieldDefinitionMoDef
-    return moDef
-  }
+  newMo: () => new FieldDefinitionMo(CommonFieldDefs.name)
 })

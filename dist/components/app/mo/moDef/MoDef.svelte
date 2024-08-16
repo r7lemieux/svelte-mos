@@ -1,16 +1,16 @@
-<script>import { toDisplayString } from "../../../../services/common/util/string.utils";
+<script>import { toDisplayString } from "../../../../services/common/util/string.utils.js";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-import { CommonFieldDefs as fd } from "../../../../models/fields/CommonFieldDefinition";
+import { CommonFieldDefs as fd } from "../../../../models/fields/CommonFieldDefinition.js";
 import Field from "../../../generics/field/Field.svelte";
 import { Rezult } from "../../../../services/common/message/rezult";
 import { ErrorName } from "../../../../services/common/message/errorName";
-import { extractViewMode } from "../../../../services/common/util/dom.utils";
+import { extractViewMode } from "../../../../services/common/util/dom.utils.js";
 export let mo;
 let viewMode = extractViewMode($page);
 $:
   disabled = viewMode === "view";
-let moDef = mo;
+let moDef = mo.moDef;
 const title = toDisplayString(moDef.name);
 const fieldDefs = Array.from(mo.moDef.fieldDefs.values());
 const ui = {};
@@ -34,12 +34,12 @@ const edit = () => {
   goto(`/mo/${moDef.name}/${mo.id}/edit`);
 };
 const save = () => {
-  moDef.dataSource.saveMo(mo).then((mo2) => {
+  mo.moMeta.dataSource?.saveMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const create = (event) => {
-  moDef.dataSource.addMo(mo).then((mo2) => {
+  mo.moMeta.dataSource?.addMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };

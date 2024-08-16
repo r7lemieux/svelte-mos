@@ -1,42 +1,41 @@
-import { Mo } from './Mo';
+import { type Mo } from './Mo';
 import { FieldDefinition } from '../fields/FieldDefinition';
-import type { MoDefinitionInterface } from './MoDefinitionInterface.js';
-import type { DataSource } from '../../services/db/DataSource';
-export declare class MoDefinition extends Mo implements MoDefinitionInterface {
+import type { MoDefinitionInterface } from './MoDefinitionInterface';
+import type { MoMetaInterface } from './MoMetaInterface';
+import type { MoInterface } from '../index.js';
+export declare class MoDefinition implements MoDefinitionInterface {
+    id: string;
     name: string;
     dbName: string;
     displayName?: string;
     keyFieldnames: string[][];
     fieldDefs: Map<string, FieldDefinition<any>>;
     gridFieldnames?: string[];
-    moClass: any;
+    moClass: typeof Mo;
     hasId: boolean;
     idType: 'number' | 'string';
-    dataSource: DataSource;
     gdriveFilePath?: string;
     gdriveFileId?: string | null;
     canCreate: boolean;
     constructor(name: string, moClass?: any);
     init(): void;
     static fromProps: (props: any) => MoDefinition;
-    static MoDefFieldDefs: FieldDefinition<any>[];
     getDisplayName: () => string;
     getDbName: () => string;
     getFieldNames: () => string[];
-    getMoClass: () => any;
+    getMoClass: () => typeof Mo;
     initFieldDefs(): void;
     addFieldDef: (fieldDef: any) => any;
     addFieldDefsFromNames: (fieldnames: string[]) => void;
     deriveFieldDefsFromMo(): FieldDefinition<any>[];
     deriveFieldDefsFromFieldnames: (fieldnames?: string[]) => FieldDefinition<any>[];
     extractFieldnamesFromMo(): string[];
-    newMo: () => Mo;
-    objToMo: (obj: any) => Mo;
+    newMo: () => MoInterface;
+    objToMo: (obj: object, moMeta: MoMetaInterface) => MoInterface;
+    documentToMo: (doc: any) => MoInterface;
     moToObj: (mo: any) => any;
-    documentToMo: (doc: any) => Mo;
     moToDocument: (mo: any) => any;
-    toDocument: () => {
-        json: string;
-    };
 }
-export declare const moDefDef: MoDefinition;
+declare const defaultMoDef: MoDefinition;
+declare const moDefDef: MoDefinition;
+export { defaultMoDef, moDefDef };

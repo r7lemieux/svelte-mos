@@ -1,4 +1,7 @@
-export var ErrorName;
+"use strict";
+exports.__esModule = true;
+exports.ErrorDef = exports.ErrorName = void 0;
+var ErrorName;
 (function (ErrorName) {
     ErrorName[ErrorName["ok"] = 0] = "ok";
     ErrorName[ErrorName["compute_invalid_ratingSystem"] = 1] = "compute_invalid_ratingSystem";
@@ -39,8 +42,8 @@ export var ErrorName;
     ErrorName[ErrorName["server_error"] = 36] = "server_error";
     ErrorName[ErrorName["spreadsheet_no_name"] = 37] = "spreadsheet_no_name";
     ErrorName[ErrorName["gdrive_error"] = 38] = "gdrive_error";
-})(ErrorName || (ErrorName = {}));
-export const ErrorDef = {
+})(ErrorName = exports.ErrorName || (exports.ErrorName = {}));
+exports.ErrorDef = {
     ok: { httpCode: 200 },
     compute_invalid_ratingSystem: { httpCode: 500 },
     db_error: {},
@@ -65,6 +68,5 @@ export const ErrorDef = {
     req_invalid_action: { httpCode: 400 },
     req_missing_id: { httpCode: 400 },
     req_no_id: { httpCode: 400 },
-    server_error: { httpCode: 500 },
+    server_error: { httpCode: 500 }
 };
-//# sourceMappingURL=errorName.js.map

@@ -1,2 +1,2 @@
-export * from './errorName';
-export * from './rezult';
+export * from './errorName.js';
+export * from './rezult.js';

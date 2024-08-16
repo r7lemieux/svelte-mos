@@ -1,17 +1,16 @@
-import type { Mo } from './Mo';
-import type { FieldDefinition } from '../fields/FieldDefinition';
-import type { DataSource } from '../../services/db/DataSource';
+import type { MoInterface } from './MoInterface';
+import type { FieldDefinitionInterface } from '../fields/FieldDefinition.interface';
+import type { MoMetaInterface } from './MoMetaInterface';
 export interface MoDefinitionInterface {
     name: string;
     dbName: string;
     displayName?: string;
     keyFieldnames: string[][];
-    fieldDefs: Map<string, FieldDefinition<any>>;
+    fieldDefs: Map<string, FieldDefinitionInterface<any>>;
     gridFieldnames?: string[];
     moClass: any;
     hasId: boolean;
     idType: 'number' | 'string';
-    dataSource: DataSource;
     gdriveFilePath?: string;
     gdriveFileId?: string | null;
     canCreate: boolean;
@@ -21,10 +20,12 @@ export interface MoDefinitionInterface {
     getMoClass: () => any;
     initFieldDefs: () => void;
     addFieldDefsFromNames: (fieldnames: string[]) => void;
-    deriveFieldDefsFromMo: () => FieldDefinition<any>[];
-    deriveFieldDefsFromFieldnames: (fieldnames: string[]) => FieldDefinition<any>[];
+    deriveFieldDefsFromMo: () => FieldDefinitionInterface<any>[];
+    deriveFieldDefsFromFieldnames: (fieldnames: string[]) => FieldDefinitionInterface<any>[];
     extractFieldnamesFromMo: () => string[];
-    newMo: () => Mo;
-    objToMo: (obj: object) => Mo;
-    moToObj: (mo: Mo) => object;
+    newMo: (moMeta?: MoMetaInterface) => MoInterface;
+    objToMo: (obj: object, moMeta: MoMetaInterface) => MoInterface;
+    moToObj: (mo: MoInterface) => object;
+    moToDocument: (mo: MoInterface) => any;
+    documentToMo: (doc: any) => MoInterface;
 }

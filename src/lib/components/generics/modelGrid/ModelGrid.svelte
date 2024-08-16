@@ -5,8 +5,8 @@
   import {onMount} from 'svelte'
   import type {FirstDataRenderedEvent, GridSizeChangedEvent} from 'ag-grid-community/dist/lib/events'
   import type {GridOptions} from 'ag-grid-community/dist/lib/entities/gridOptions'
-  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
-  import type {MoListModel} from '$lib/models/managedObjects/MoList.model'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
+  import type {MoListModel} from '$lib/models/managedObjects/MoList.model.js'
 
   export let height = '100px'
   export let gridId = 'grid'

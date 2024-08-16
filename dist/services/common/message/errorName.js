@@ -26,19 +26,21 @@ export var ErrorName;
     ErrorName[ErrorName["field_invalid_numberTooSmall"] = 23] = "field_invalid_numberTooSmall";
     ErrorName[ErrorName["field_unknown"] = 24] = "field_unknown";
     ErrorName[ErrorName["field_unsupported"] = 25] = "field_unsupported";
-    ErrorName[ErrorName["gdrive_missing_fileId"] = 26] = "gdrive_missing_fileId";
-    ErrorName[ErrorName["gdrive_missing_id"] = 27] = "gdrive_missing_id";
-    ErrorName[ErrorName["gdrive_file_notFound"] = 28] = "gdrive_file_notFound";
-    ErrorName[ErrorName["missing_field"] = 29] = "missing_field";
-    ErrorName[ErrorName["missing_implementation"] = 30] = "missing_implementation";
-    ErrorName[ErrorName["missing_param"] = 31] = "missing_param";
-    ErrorName[ErrorName["not_implemented_in_subclass"] = 32] = "not_implemented_in_subclass";
-    ErrorName[ErrorName["req_invalid_action"] = 33] = "req_invalid_action";
-    ErrorName[ErrorName["req_missing_id"] = 34] = "req_missing_id";
-    ErrorName[ErrorName["req_no_id"] = 35] = "req_no_id";
-    ErrorName[ErrorName["server_error"] = 36] = "server_error";
-    ErrorName[ErrorName["spreadsheet_no_name"] = 37] = "spreadsheet_no_name";
-    ErrorName[ErrorName["gdrive_error"] = 38] = "gdrive_error";
+    ErrorName[ErrorName["gdrive_error"] = 26] = "gdrive_error";
+    ErrorName[ErrorName["gdrive_missing_fileId"] = 27] = "gdrive_missing_fileId";
+    ErrorName[ErrorName["gdrive_missing_id"] = 28] = "gdrive_missing_id";
+    ErrorName[ErrorName["gdrive_file_notFound"] = 29] = "gdrive_file_notFound";
+    ErrorName[ErrorName["missing_field"] = 30] = "missing_field";
+    ErrorName[ErrorName["missing_implementation"] = 31] = "missing_implementation";
+    ErrorName[ErrorName["missing_param"] = 32] = "missing_param";
+    ErrorName[ErrorName["not_implemented_in_default"] = 33] = "not_implemented_in_default";
+    ErrorName[ErrorName["not_implemented_in_subclass"] = 34] = "not_implemented_in_subclass";
+    ErrorName[ErrorName["req_invalid_action"] = 35] = "req_invalid_action";
+    ErrorName[ErrorName["req_missing_id"] = 36] = "req_missing_id";
+    ErrorName[ErrorName["req_no_id"] = 37] = "req_no_id";
+    ErrorName[ErrorName["server_error"] = 38] = "server_error";
+    ErrorName[ErrorName["spreadsheet_no_name"] = 39] = "spreadsheet_no_name";
+    ErrorName[ErrorName["type5_error"] = 40] = "type5_error";
 })(ErrorName || (ErrorName = {}));
 export const ErrorDef = {
     ok: { httpCode: 200 },
@@ -66,4 +68,5 @@ export const ErrorDef = {
     req_missing_id: { httpCode: 400 },
     req_no_id: { httpCode: 400 },
     server_error: { httpCode: 500 },
+    type5_error: { httpCode: 505 },
 };

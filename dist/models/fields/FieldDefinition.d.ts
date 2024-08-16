@@ -33,6 +33,6 @@ export declare class FieldDefinition<Type> implements FieldDefinitionInterface<T
     getDescription(): string;
     validateValue(val0: any): Rezult;
     validateString(str: any): Rezult;
-    buildColDef(): ColDef<any, any>;
+    buildColDef(): ColDef;
 }
 export declare const from: (fieldDef0: FieldDefinition<any>, props?: Partial<FieldDefinitionInterface<any>>) => FieldDefinition<any>;

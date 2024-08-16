@@ -1,7 +1,7 @@
-import { MoDefinition } from '$lib/models/managedObjects/MoDefinition.js';
-import { Mo } from '$lib/models/managedObjects/Mo';
-import { from } from '$lib/services/common/validation/FieldDefinition';
-import { BaseFieldDefs } from '$lib/services/common/validation/CommonFieldDefinition';
+import { MoDefinition } from '$lib/models/managedObjects/MoDefinition'
+import { Mo } from '$lib/models/managedObjects/Mo.js'
+import { from } from '$lib/services/common/validation/FieldDefinition.js'
+import { BaseFieldDefs } from '$lib/services/common/validation/CommonFieldDefinition.js'
 export class FieldDefinitionMo extends Mo {
     // type = 'string'
     // name = ''

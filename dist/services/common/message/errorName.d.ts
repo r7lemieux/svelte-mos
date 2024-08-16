@@ -25,19 +25,21 @@ export declare enum ErrorName {
     'field_invalid_numberTooSmall' = 23,
     'field_unknown' = 24,
     'field_unsupported' = 25,
-    'gdrive_missing_fileId' = 26,
-    'gdrive_missing_id' = 27,
-    'gdrive_file_notFound' = 28,
-    'missing_field' = 29,
-    'missing_implementation' = 30,
-    'missing_param' = 31,
-    'not_implemented_in_subclass' = 32,
-    'req_invalid_action' = 33,
-    'req_missing_id' = 34,
-    'req_no_id' = 35,
-    'server_error' = 36,
-    'spreadsheet_no_name' = 37,
-    'gdrive_error' = 38
+    'gdrive_error' = 26,
+    'gdrive_missing_fileId' = 27,
+    'gdrive_missing_id' = 28,
+    'gdrive_file_notFound' = 29,
+    'missing_field' = 30,
+    'missing_implementation' = 31,
+    'missing_param' = 32,
+    'not_implemented_in_default' = 33,
+    'not_implemented_in_subclass' = 34,
+    'req_invalid_action' = 35,
+    'req_missing_id' = 36,
+    'req_no_id' = 37,
+    'server_error' = 38,
+    'spreadsheet_no_name' = 39,
+    'type5_error' = 40
 }
 export declare const ErrorDef: {
     ok: {
@@ -93,6 +95,9 @@ export declare const ErrorDef: {
         httpCode: number;
     };
     server_error: {
+        httpCode: number;
+    };
+    type5_error: {
         httpCode: number;
     };
 };

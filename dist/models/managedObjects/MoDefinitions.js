@@ -1,5 +1,5 @@
-import { MoDefinition, moDefDef } from './MoDefinition.js';
-import { FieldDefinitionMo } from '../fields/FieldDefinitionMo';
+import { MoDefinition, moDefDef } from './MoDefinition';
+import { FieldDefinitionMo } from '../fields/FieldDefinitionMo.js';
 export const UiMoDefs = {};
 export const getUiMoDef = moDef => {
     const uiMoDef = new MoDefinition(moDef.name);
@@ -11,12 +11,12 @@ export const getUiMoDef = moDef => {
     }
     return moDef;
 };
-export const registerMoDef = (moDef) => {
-    moDefDef.dataSource.saveMo(moDef);
-};
-export const getMoDef = (moname) => {
-    return moDefDef.dataSource.getMo(moname)
-        .then(mo => {
-        return mo;
-    });
-};
+// export const registerMoDef = (moDef: MoDefinition) => {
+//   moDefMeta.dataSource?.saveMo(moDef)
+// }
+// export const getMoDef = (moname:string): Promise<MoDefinition> => {
+//   return moDefMeta.dataSource?.getMo(moname)
+//     .then( mo => {
+//       return mo as MoDefinition
+//     })
+// }

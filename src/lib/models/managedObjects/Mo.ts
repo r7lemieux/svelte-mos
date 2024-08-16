@@ -1,13 +1,19 @@
-import type {MoDefinitionInterface} from '$lib/models/managedObjects/MoDefinitionInterface.js'
+// import type {MoDefinitionInterface} from '$lib/models/managedObjects/MoDefinitionInterface'
+import type { MoMetaInterface } from './MoMetaInterface'
+import { defaultMoMeta } from './moMetaInstances.js'
+import type { MoInterface } from '$lib/models/index.js'
 
-export class Mo {
+export class Mo implements MoInterface {
 
-  moDef: MoDefinitionInterface
-  id: number | string | undefined
+  moMeta: MoMetaInterface
+  id?: number | string
 
-  constructor(moDef: MoDefinitionInterface) {
-    this.moDef = moDef
+  constructor(moMeta?: MoMetaInterface) {
+    this.moMeta = moMeta || defaultMoMeta
   }
+
+  getDisplayName = () => this.id
+
   setProps = (props: any): Mo => {
     for (const key of Object.getOwnPropertyNames(props)) {
       // if (key != 'fieldDefs') {
@@ -19,8 +25,8 @@ export class Mo {
   toObj = () => {
     const data: any = {}
     if (this.id) data.id = this.id
-    for (const fname of Array.from(this.moDef.fieldDefs.keys())) {
-      const fieldDef = this.moDef.fieldDefs.get(fname)
+    for (const fname of Array.from(this.moMeta.moDef.fieldDefs.keys())) {
+      //const fieldDef = this.moMeta.moDef.fieldDefs.get(fname)
       const value = this[fname]
       if (value !== undefined && value !== null) {
         data[fname] = this[fname]
@@ -31,8 +37,8 @@ export class Mo {
   toDocument = () => {
     const data: any = {}
     if (this.id) data.id = this.id
-    for (const fname of Array.from(this.moDef.fieldDefs.keys())) {
-      const fieldDef = this.moDef.fieldDefs.get(fname)
+    for (const fname of Array.from(this.moMeta.moDef.fieldDefs.keys())) {
+      const fieldDef = this.moMeta.moDef.fieldDefs.get(fname)
       const value = this[fname]
       if (value !== undefined && value !== null) {
         data[fname] = fieldDef?.valueToDocument(this[fname])
@@ -40,10 +46,9 @@ export class Mo {
     }
     return data
   }
-
   hydrate(partial: Partial<Mo>) {
+    // noinspection TypeScriptValidateTypes
     Object.assign(this, partial)
   }
-
-
 }
+defaultMoMeta.moDef.moClass = Mo

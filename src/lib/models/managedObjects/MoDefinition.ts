@@ -1,43 +1,42 @@
-import {Mo} from '$lib/models/managedObjects/Mo'
-import {FieldDefinition, from} from '$lib/models/fields/FieldDefinition'
-import {BaseFieldDefs, CommonFieldDefs, getFieldDef} from '$lib/models/fields/CommonFieldDefinition'
-import {getClosestFieldName} from '$lib/models/fields/FieldMatcher'
-import {toDisplayString} from  '$lib/services/common/util/string.utils'
-import {defaultDbService} from  '$lib/config/config'
-import {ErrorName} from  '$lib/services/common/message/errorName'
-import {Rezult} from  '$lib/services/common/message/rezult'
-import {CacheDataSource} from  '$lib/services/db/Cache.dataSource'
-import type {MoDefinitionInterface} from '$lib/models/managedObjects/MoDefinitionInterface.js'
-import type {DataSource} from  '$lib/services/db/DataSource'
-import {HeapDataSource} from  '$lib/services/db/Heap.dataSource'
+import { type Mo } from './Mo'
+// import { MoInterface } from './MoInterface'
+import { FieldDefinition, from } from '../fields/FieldDefinition'
+import { BaseFieldDefs, getFieldDef } from '../fields/CommonFieldDefinition'
+import { getClosestFieldName } from '../fields/FieldMatcher'
+import { toDisplayString } from '../../services/common/util/string.utils'
+import { ErrorName } from '../../services/common/message/errorName'
+import { Rezult } from '../../services/common/message/rezult'
+import type { MoDefinitionInterface } from './MoDefinitionInterface'
+import type { MoMetaInterface } from  './MoMetaInterface'
+import type { MoInterface } from '$lib/models/index.js'
+// import { defaultMoMeta } from '$lib/models/managedObjects/moMetaInstances.js'
+// import type { MoMetaInterface } from './MoMetaInterface'
+// import { defaultMoMeta } from './MoMeta'
 
-export class MoDefinition extends Mo implements MoDefinitionInterface {
+export class MoDefinition implements MoDefinitionInterface {
+  id: string
   name: string
   dbName: string
   displayName?: string
   keyFieldnames: string[][] = []
   fieldDefs = new Map<string, FieldDefinition<any>>()
   gridFieldnames?: string[]
-  moClass
+  moClass: typeof Mo
   hasId = false
   idType: 'number' | 'string' = 'string'
-  dataSource: DataSource
   gdriveFilePath?: string
   gdriveFileId?: string | null
   canCreate = true
 
   constructor(name: string, moClass?) {
-    super({} as MoDefinitionInterface)
+    // super({} as MoMetaInterface)
     if (name && !name.match(/[A-Za-z0-9]/)) throw new Rezult(ErrorName.field_invalid, {
       method: 'MoDefinition.extractFieldnamesFromMo',
       name: name
     })
     this.name = this.dbName = this.id = name
     this.moClass = moClass
-    if (this.name !== 'moDef') this.moDef = moDefDef
-    const cacheDataSource = new CacheDataSource(this)
-    cacheDataSource.db = defaultDbService
-    this.dataSource = cacheDataSource
+    // if (this.name !== 'moDef') this.moMeta = moDefMeta
     this.init()
   }
 
@@ -56,11 +55,12 @@ export class MoDefinition extends Mo implements MoDefinitionInterface {
     }
     return moDef
   }
-  static MoDefFieldDefs = [
-    FieldDefinition.from(CommonFieldDefs.name),
-    FieldDefinition.from(BaseFieldDefs.Array, {name: 'keyFieldNames'}),
-    FieldDefinition.from(BaseFieldDefs.Object, {name: 'fieldDefs'}),
-  ]
+  // del
+  // static MoDefFieldDefs = [
+  //   FieldDefinition.from(CommonFieldDefs.name),
+  //   FieldDefinition.from(BaseFieldDefs.Array, {name: 'keyFieldNames'}),
+  //   FieldDefinition.from(BaseFieldDefs.Object, {name: 'fieldDefs'}),
+  // ]
 
   /*  ---------
    *  Accessors
@@ -69,8 +69,8 @@ export class MoDefinition extends Mo implements MoDefinitionInterface {
   getDisplayName = () => this.displayName || toDisplayString(this.name)
   getDbName = () => this.dbName || this.name
   getFieldNames = () => Array.from(this.fieldDefs.keys())
-  getMoClass = () => this.moClass || Mo
-
+  // getMoClass = () => this.moClass || typeof Mo
+  getMoClass = () => this.moClass
   /* -----------------
    * Field Definitions
    * -----------------
@@ -103,37 +103,54 @@ export class MoDefinition extends Mo implements MoDefinitionInterface {
   }
 
   extractFieldnamesFromMo() {
-    const mo = this.newMo()
-    const fieldnames = Object.getOwnPropertyNames(mo).filter(n => typeof mo[n] !== 'function' && n !== 'moDef')
-    return fieldnames
+    // const moClass: typeof Mo = this.moClass || Mo
+    const moClass =  this.moClass || Object
+	  const mo: MoInterface = this.newMo()
+	  const fieldnames = Object.getOwnPropertyNames(mo).filter(n => typeof mo[n] !== 'function' && n !== 'moDef')
+	  return fieldnames
   }
 
-  /*  --
-   *  Mo
-   *  --
+  /*  -------------
+   *  Mo Management
+   *  -------------
    */
-  newMo = (): Mo => {
-    const moClass = this.moClass || Mo
-    const mo: Mo = new moClass(this)
+  // I would prefer Mo and typeof Mo to MoInterface i
+  // but it causes:  ReferenceError: Cannot access 'Mo' before initialization
+  // newMo = (): Mo => {
+  //   const moClass: typeof Mo = this.moClass || Mo
+  //   const mo: Mo = new moClass()
+  //   return mo
+  // }
+  // objToMo = (obj: object, moMeta: MoMetaInterface): Mo => this.newMo().setProps(obj)
+  // documentToMo = (doc: any): Mo => {
+  //   const mo = this.newMo()
+  //   for (const [fname, fDef] of Array.from(this.fieldDefs.entries())) {
+  //     mo[fname] = fDef.documentToValue(doc[fname])
+  //   }
+  //   return mo
+  // }
+  newMo = (): MoInterface => {
+    const moClass = this.moClass || Object
+    const mo = new moClass() as MoInterface
     return mo
   }
-  objToMo = (obj: any): Mo => this.newMo().setProps(obj)
-  moToObj = (mo: any): any => mo.toObj()
-  documentToMo = (doc: any): Mo => {
+  objToMo = (obj: object, moMeta: MoMetaInterface): MoInterface => this.newMo().setProps(obj)
+  documentToMo = (doc: any): MoInterface => {
     const mo = this.newMo()
     for (const [fname, fDef] of Array.from(this.fieldDefs.entries())) {
       mo[fname] = fDef.documentToValue(doc[fname])
     }
     return mo
   }
+  moToObj = (mo: any): any => mo.toObj()
   moToDocument = mo => mo.toDocument()
-  toDocument = () => {
-    const obj = this.toObj()
-    return {json: JSON.stringify(obj)}
-  }
 }
+
+const defaultMoDef = new MoDefinition('default')
+defaultMoDef.moClass = Object //typeof Mo
+
 // const moDefDef = new MoDefinition('MoDefinition')
-export const moDefDef = new MoDefinition('moDef')
+const moDefDef = new MoDefinition('moDef')
 moDefDef.addFieldDef(from(BaseFieldDefs.Id).chainSetName('id'))
 moDefDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
 moDefDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('dbName'))
@@ -152,35 +169,30 @@ moClassFieldDef.gridColDef.field = undefined
 moClassFieldDef.gridColDef.valueGetter = params => params.data.moClass.name
 moClassFieldDef.valueToString = v => v.name
 moDefDef.addFieldDef(moClassFieldDef)
+// export const moDefMeta: MoMetaInterface = new MoMeta(moDefDef)
 Object.assign(moDefDef, {
   name: 'moDef',
   dbName: 'moDef',
   displayName: 'Mo Definition',
   keyFieldnames: ['moName'],
   gridFieldnames: ['name', 'gdriveFilePath'],
-  moClass: MoDefinition,
+  moClass: typeof MoDefinition,
   hasId: true,
   idType: 'string',
   // dataSource: new CacheDataSource(moDefDef),
   gdriveFilePath: 'system/resources',
   gdriveFileId: null,
   canCreate: false,
-  newMo: () => {
-    const moDef = new MoDefinition('')
-    moDef.moDef = moDefDef
-    return moDef
-  }
 })
-const moDefDefDef = new MoDefinition('moDef')
-moDefDef.moDef = moDefDefDef
-moDefDef.documentToMo  = doc => {
-  const moDef = new MoDefinition('moDef', MoDefinition)
-  const obj = JSON.parse(doc.json)
-  Object.assign(moDef, obj)
-  return moDef
-  //return JSON.parse(doc)
-}
-const cacheDataSource = new HeapDataSource(this)
-cacheDataSource.keyname = 'name'
-moDefDef.dataSource = cacheDataSource
+const moDefDefDef = new MoDefinition('moDefDef')
+// const moDefDefMeta =  new MoMeta(moDefDefDef)
+// moDefDef.moMeta = moDefDefMeta
+// moDefMeta.documentToMo  = doc => {
+//   const moDef = new MoDefinition('moDef', MoDefinition)
+//   const obj = JSON.parse(doc.json)
+//   Object.assign(moDef, obj)
+//   return moDef
+//   //return JSON.parse(doc)
+// }
+export {defaultMoDef, moDefDef}
 

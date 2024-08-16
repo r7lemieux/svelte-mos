@@ -1,9 +1,11 @@
+import { defaultMoMeta } from './moMetaInstances.js';
 export class Mo {
-    moDef;
+    moMeta;
     id;
-    constructor(moDef) {
-        this.moDef = moDef;
+    constructor(moMeta) {
+        this.moMeta = moMeta || defaultMoMeta;
     }
+    getDisplayName = () => this.id;
     setProps = (props) => {
         for (const key of Object.getOwnPropertyNames(props)) {
             // if (key != 'fieldDefs') {
@@ -16,8 +18,8 @@ export class Mo {
         const data = {};
         if (this.id)
             data.id = this.id;
-        for (const fname of Array.from(this.moDef.fieldDefs.keys())) {
-            const fieldDef = this.moDef.fieldDefs.get(fname);
+        for (const fname of Array.from(this.moMeta.moDef.fieldDefs.keys())) {
+            //const fieldDef = this.moMeta.moDef.fieldDefs.get(fname)
             const value = this[fname];
             if (value !== undefined && value !== null) {
                 data[fname] = this[fname];
@@ -29,8 +31,8 @@ export class Mo {
         const data = {};
         if (this.id)
             data.id = this.id;
-        for (const fname of Array.from(this.moDef.fieldDefs.keys())) {
-            const fieldDef = this.moDef.fieldDefs.get(fname);
+        for (const fname of Array.from(this.moMeta.moDef.fieldDefs.keys())) {
+            const fieldDef = this.moMeta.moDef.fieldDefs.get(fname);
             const value = this[fname];
             if (value !== undefined && value !== null) {
                 data[fname] = fieldDef?.valueToDocument(this[fname]);
@@ -39,6 +41,8 @@ export class Mo {
         return data;
     };
     hydrate(partial) {
+        // noinspection TypeScriptValidateTypes
         Object.assign(this, partial);
     }
 }
+defaultMoMeta.moDef.moClass = Mo;

@@ -1,22 +1,19 @@
-import type {FieldDefinitionInterface} from '$lib/models/fields/FieldDefinition.interface'
-import {ErrorName} from  '$lib/services/common/message/errorName'
-import {OK, Rezult} from  '$lib/services/common/message/rezult'
-import { objectReplacer, toDisplayString } from '$lib/services/common/util/string.utils';
+import type {FieldDefinitionInterface} from './FieldDefinition.interface'
+import {ErrorName} from  '../../services/common/message/errorName'
+import {OK, Rezult} from  '../../services/common/message/rezult'
+import { objectReplacer, toDisplayString } from '../../services/common/util/string.utils';
 import type {ColDef} from 'ag-grid-community'
-import {copyOwnProperties} from  '$lib/services/common/util/ts.utils'
-import type {InputTypes} from  '$lib/services/common/util/dom.utils'
+import {copyOwnProperties} from  '../../services/common/util/ts.utils'
+import type {InputTypes} from  '../../services/common/util/dom.utils'
 
 // Singleton
-export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> { //, MoInterface {
+export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> {
 
-  // // moDef = fieldDefinitionMoDef
-  // id: string | number = 0
   name = ''
   type = 'string'
   description?: string
   displayName: string | undefined
   example?: string
-  // columnName: string | undefined
   regex?: RegExp
   regexFlag?: string
   minLen = 0
@@ -27,7 +24,6 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> { /
   canBeNull = true
   canBeUndefined = true
   mapValueType?: string // for maps
-
 
   constructor(props: Partial<FieldDefinition<any>> = {}) {
     this.init(props)
@@ -49,19 +45,6 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> { /
     copyOwnProperties(props, newFieldDef)
     return newFieldDef
   }
-  // delete
-  // static from1 = (fieldDef0: FieldDefinition<any>, props: Partial<FieldDefinitionInterface<any>> = {}): FieldDefinition<any> => {
-  //   if (!fieldDef0) throw new Rezult(ErrorName.missing_param, {function: 'FieldDefinition.from', param: 'fieldDef0'})
-  //   const fieldDef0Props = {}
-  //   Object.getOwnPropertyNames(fieldDef0).forEach(n => fieldDef0Props[n] = fieldDef0[n])
-  //   const fieldDef = new FieldDefinition(fieldDef0Props)
-  //   // fieldDef.bindFunctions(fieldDef0Props)
-  //   // fieldDef.bindFunctions(props)
-  //   Object.assign(fieldDef, props)
-  //   bindFunctions(fieldDef, fieldDef0Props)
-  //   bindFunctions(fieldDef, props)
-  //   return fieldDef
-  // }
 
   clone() {
     const newFieldDef = new FieldDefinition()
@@ -203,7 +186,7 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> { /
     return OK
   }
 
-  buildColDef() {
+  buildColDef(): ColDef {
     const colDef = this.gridColDef || {}
     colDef.field = colDef.field || this.name
     colDef.cellClass = colDef.cellClass || this.name

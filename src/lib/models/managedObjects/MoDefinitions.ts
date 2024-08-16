@@ -1,6 +1,6 @@
-import {MoDefinition, moDefDef} from '$lib/models/managedObjects/MoDefinition.js'
-import {FieldDefinitionMo} from '$lib/models/fields/FieldDefinitionMo'
-import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
+import { MoDefinition, moDefDef } from './MoDefinition';
+import {FieldDefinitionMo} from '../fields/FieldDefinitionMo.js'
+import type {FieldDefinition} from '../fields/FieldDefinition.js'
 
 export const UiMoDefs = {}
 export const getUiMoDef = moDef => {
@@ -13,12 +13,12 @@ export const getUiMoDef = moDef => {
   }
   return moDef
 }
-export const registerMoDef = (moDef: MoDefinition) => {
-  moDefDef.dataSource.saveMo(moDef)
-}
-export const getMoDef = (moname:string): Promise<MoDefinition> => {
-  return moDefDef.dataSource.getMo(moname)
-    .then( mo => {
-      return mo as MoDefinition
-    })
-}
+// export const registerMoDef = (moDef: MoDefinition) => {
+//   moDefMeta.dataSource?.saveMo(moDef)
+// }
+// export const getMoDef = (moname:string): Promise<MoDefinition> => {
+//   return moDefMeta.dataSource?.getMo(moname)
+//     .then( mo => {
+//       return mo as MoDefinition
+//     })
+// }

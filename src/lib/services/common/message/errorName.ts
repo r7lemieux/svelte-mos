@@ -25,19 +25,21 @@ export enum ErrorName {
   'field_invalid_numberTooSmall',
   'field_unknown',
   'field_unsupported',
+  'gdrive_error',
   'gdrive_missing_fileId',
   'gdrive_missing_id',
   'gdrive_file_notFound',
   'missing_field',
   'missing_implementation',
   'missing_param',
+  'not_implemented_in_default',
   'not_implemented_in_subclass',
   'req_invalid_action',
   'req_missing_id',
   'req_no_id',
   'server_error',
   'spreadsheet_no_name',
-  'gdrive_error',
+  'type5_error',
 }
 
 export const ErrorDef = {
@@ -66,4 +68,5 @@ export const ErrorDef = {
   req_missing_id: {httpCode: 400},
   req_no_id: {httpCode: 400},
   server_error: {httpCode: 500},
-} 
+  type5_error: {httpCode: 505},
+}

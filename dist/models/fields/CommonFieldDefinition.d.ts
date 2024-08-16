@@ -1,4 +1,4 @@
-import { FieldDefinition } from './FieldDefinition';
+import { FieldDefinition } from './FieldDefinition.js';
 export declare const BaseFieldDefs: {
     [name: string]: FieldDefinition<any>;
 };

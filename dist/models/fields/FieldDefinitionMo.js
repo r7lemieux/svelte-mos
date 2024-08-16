@@ -1,7 +1,9 @@
-import { MoDefinition } from '../managedObjects/MoDefinition.js';
-import { Mo } from '../managedObjects/Mo';
-import { from } from './FieldDefinition';
-import { BaseFieldDefs } from './CommonFieldDefinition';
+import { MoDefinition } from '../managedObjects/MoDefinition';
+import { Mo } from '../managedObjects/Mo.js';
+import { from } from './FieldDefinition.js';
+import { BaseFieldDefs, CommonFieldDefs } from './CommonFieldDefinition.js';
+// import { MoMetaInterface } from '../managedObjects/MoMetaInterface'
+// import { MoMetaInterface } from '../managedObjects/MoMetaInterface'
 export class FieldDefinitionMo extends Mo {
     // type = 'string'
     // name = ''
@@ -17,7 +19,8 @@ export class FieldDefinitionMo extends Mo {
     // inputType: InputTypes = 'text'
     fieldDef;
     constructor(fieldDefinition) {
-        super(fieldDefinitionMoDef);
+        super({});
+        // super(fieldDefinitionMoMeta)
         this.fieldDef = fieldDefinition;
         this.hydrate();
     }
@@ -49,6 +52,7 @@ fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Integer).chainSetName('maxLe
 fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('key'));
 fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('inputType'));
 fieldDefinitionMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('gridColDef'));
+// const fieldDefinitionMoMeta = new MoMeta(fieldDefinitionMoDef)
 Object.assign(fieldDefinitionMoDef, {
     name: 'meta',
     dbName: 'MoDefinition',
@@ -61,9 +65,5 @@ Object.assign(fieldDefinitionMoDef, {
     dataSource: null,
     gdriveFilePath: 'system/resources',
     gdriveFileId: null,
-    newMo: () => {
-        const moDef = new MoDefinition('');
-        moDef.moDef = fieldDefinitionMoDef;
-        return moDef;
-    }
+    newMo: () => new FieldDefinitionMo(CommonFieldDefs.name)
 });

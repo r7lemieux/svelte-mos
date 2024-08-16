@@ -1,44 +1,35 @@
-import { ErrorName } from '$lib/services/common/message/errorName';
-import { OK, Rezult } from '$lib/services/common/message/rezult';
-import { toDisplayString } from '$lib/services/common/util/string.utils';
-import { copyOwnProperties } from '$lib/services/common/util/ts.utils';
+"use strict";
+exports.__esModule = true;
+exports.from = exports.FieldDefinition = void 0;
+var errorName_1 = require("$lib/services/common/message/errorName");
+var rezult_1 = require("$lib/services/common/message/rezult");
+var string_utils_1 = require("$lib/services/common/util/string.utils");
+var ts_utils_1 = require("$lib/services/common/util/ts.utils");
 // Singleton
-export class FieldDefinition {
-    // // moMeta = fieldDefinitionMoMeta
-    // id: string | number = 0
-    name = '';
-    type = 'string';
-    description;
-    displayName;
-    example;
-    // columnName: string | undefined
-    regex;
-    regexFlag;
-    minLen = 0;
-    maxLen = 256;
-    key; // database or column name
-    inputType = 'text';
-    gridColDef = {};
-    canBeNull = true;
-    canBeUndefined = true;
-    mapValueType; // for maps
-    constructor(props = {}) {
+var FieldDefinition = /** @class */ (function () {
+    function FieldDefinition(props) {
+        if (props === void 0) { props = {}; }
+        // // moDef = fieldDefinitionMoDef
+        // id: string | number = 0
+        this.name = '';
+        this.type = 'string';
+        this.minLen = 0;
+        this.maxLen = 256;
+        this.inputType = 'text';
+        this.gridColDef = {};
+        this.canBeNull = true;
+        this.canBeUndefined = true;
         this.init(props);
     }
-    init(props) {
-        for (const key of Object.keys(props)) {
+    FieldDefinition.prototype.init = function (props) {
+        for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
+            var key = _a[_i];
             this[key] = props[key];
         }
-    }
-    validate() {
+    };
+    FieldDefinition.prototype.validate = function () {
         if (!this.name)
-            throw new Rezult(ErrorName.missing_field, { type: 'FieldDefinition', fieldname: 'name' });
-    }
-    static from = (fieldDef0, props = {}) => {
-        const newFieldDef = new FieldDefinition();
-        copyOwnProperties(fieldDef0, newFieldDef);
-        copyOwnProperties(props, newFieldDef);
-        return newFieldDef;
+            throw new rezult_1.Rezult(errorName_1.ErrorName.missing_field, { type: 'FieldDefinition', fieldname: 'name' });
     };
     // delete
     // static from1 = (fieldDef0: FieldDefinition<any>, props: Partial<FieldDefinitionInterface<any>> = {}): FieldDefinition<any> => {
@@ -53,11 +44,11 @@ export class FieldDefinition {
     //   bindFunctions(fieldDef, props)
     //   return fieldDef
     // }
-    clone() {
-        const newFieldDef = new FieldDefinition();
-        copyOwnProperties(this, newFieldDef);
+    FieldDefinition.prototype.clone = function () {
+        var newFieldDef = new FieldDefinition();
+        (0, ts_utils_1.copyOwnProperties)(this, newFieldDef);
         return newFieldDef;
-    }
+    };
     /// delete
     // clone1 = () => {
     //   const propnames = Object.getOwnPropertyNames(this).filter(pn => typeof (this[pn]) != 'function')
@@ -76,11 +67,11 @@ export class FieldDefinition {
     //   copy.parse = this.parse
     //   return copy
     // }
-    chainSetName(name) {
+    FieldDefinition.prototype.chainSetName = function (name) {
         this.name = name;
         return this;
-    }
-    parse(v) {
+    };
+    FieldDefinition.prototype.parse = function (v) {
         if (v === undefined && this.canBeUndefined)
             return v;
         if (v === null && this.canBeNull)
@@ -100,18 +91,18 @@ export class FieldDefinition {
                 return JSON.parse(v);
             case 'array': {
                 if (v && v[0] !== '[')
-                    v = `[${v}]`;
+                    v = "[".concat(v, "]");
                 return JSON.parse(v);
             }
             case 'map': {
-                const obj = JSON.parse(v);
+                var obj = JSON.parse(v);
                 return new Map(Object.entries(obj));
             }
             default:
                 return v;
         }
-    }
-    valueToString(v) {
+    };
+    FieldDefinition.prototype.valueToString = function (v) {
         if (v === undefined && this.canBeUndefined)
             return v;
         if (v === null && this.canBeNull)
@@ -124,15 +115,15 @@ export class FieldDefinition {
             case 'date':
             case 'object':
             case 'array':
-                return JSON.stringify(v);
+                return JSON.stringify(v, string_utils_1.objectReplacer);
             case 'string':
             case 'int':
             case 'float':
             default:
                 return v.toString();
         }
-    }
-    documentToValue(v) {
+    };
+    FieldDefinition.prototype.documentToValue = function (v) {
         if (v === undefined || v === 'undefined' && this.canBeUndefined)
             return v;
         if (v === null || v === 'null' && this.canBeNull)
@@ -150,8 +141,8 @@ export class FieldDefinition {
             default:
                 return v;
         }
-    }
-    valueToDocument(v) {
+    };
+    FieldDefinition.prototype.valueToDocument = function (v) {
         if (v === undefined || v === 'undefined' && this.canBeUndefined)
             return v;
         if (v === null || v === 'null' && this.canBeNull)
@@ -169,38 +160,47 @@ export class FieldDefinition {
             default:
                 return v;
         }
-    }
-    getDisplayName() {
-        return this.displayName || toDisplayString(this.name);
-    }
-    getColumnName() {
-        return this.gridColDef?.headerName || this.displayName || toDisplayString(this.name);
-    }
-    getDescription() {
-        const ex = this.example ? `. For example: ${this.example}` : '';
-        return this.description || `A valid ${this.name} ${ex} `;
-    }
-    validateValue(val0) { return OK; }
-    validateString(str) {
+    };
+    FieldDefinition.prototype.getDisplayName = function () {
+        return this.displayName || (0, string_utils_1.toDisplayString)(this.name);
+    };
+    FieldDefinition.prototype.getColumnName = function () {
+        var _a;
+        return ((_a = this.gridColDef) === null || _a === void 0 ? void 0 : _a.headerName) || this.displayName || (0, string_utils_1.toDisplayString)(this.name);
+    };
+    FieldDefinition.prototype.getDescription = function () {
+        var ex = this.example ? ". For example: ".concat(this.example) : '';
+        return this.description || "A valid ".concat(this.name, " ").concat(ex, " ");
+    };
+    FieldDefinition.prototype.validateValue = function (val0) { return rezult_1.OK; };
+    FieldDefinition.prototype.validateString = function (str) {
         if (this.minLen && str.length < this.minLen) {
-            return new Rezult(ErrorName.field_invalid_tooShort, { str: str, minLen: this.minLen });
+            return new rezult_1.Rezult(errorName_1.ErrorName.field_invalid_tooShort, { str: str, minLen: this.minLen });
         }
         else if (this.maxLen && str.length > this.maxLen) {
-            return new Rezult(ErrorName.field_invalid_tooLong, { str: str, maxLen: this.maxLen });
+            return new rezult_1.Rezult(errorName_1.ErrorName.field_invalid_tooLong, { str: str, maxLen: this.maxLen });
         }
         else if (this.regex && !this.regex.test(str)) {
-            return new Rezult(ErrorName.field_invalid, { str: str, regex: this.regex });
+            return new rezult_1.Rezult(errorName_1.ErrorName.field_invalid, { str: str, regex: this.regex });
         }
-        return OK;
-    }
-    buildColDef() {
-        const colDef = this.gridColDef || {};
+        return rezult_1.OK;
+    };
+    FieldDefinition.prototype.buildColDef = function () {
+        var colDef = this.gridColDef || {};
         colDef.field = colDef.field || this.name;
         colDef.cellClass = colDef.cellClass || this.name;
-        colDef.headerName = colDef?.headerName || this.displayName || toDisplayString(this.name);
+        colDef.headerName = (colDef === null || colDef === void 0 ? void 0 : colDef.headerName) || this.displayName || (0, string_utils_1.toDisplayString)(this.name);
         return colDef;
-    }
-}
-// export const fieldDefinitionMoMeta = new MoMeta('FieldDefinition')
-export const from = FieldDefinition.from;
-//# sourceMappingURL=FieldDefinition.js.map
+    };
+    FieldDefinition.from = function (fieldDef0, props) {
+        if (props === void 0) { props = {}; }
+        var newFieldDef = new FieldDefinition();
+        (0, ts_utils_1.copyOwnProperties)(fieldDef0, newFieldDef);
+        (0, ts_utils_1.copyOwnProperties)(props, newFieldDef);
+        return newFieldDef;
+    };
+    return FieldDefinition;
+}());
+exports.FieldDefinition = FieldDefinition;
+// export const fieldDefinitionMoField = new MoDefinition('FieldDefinition')
+exports.from = FieldDefinition.from;

@@ -1,6 +1,6 @@
 import { DbService } from './db.service';
-import type { Mo } from '../../models/managedObjects/Mo';
-import type { MoDefinition } from '../../models/managedObjects/MoDefinition.js';
+import type { Mo } from '../../models/managedObjects/Mo.js';
+import type { MoDefinition } from '../../models/managedObjects/MoDefinition';
 import type { DataSource } from './DataSource';
 export declare class DbDataSource implements DataSource {
     moDef: MoDefinition;

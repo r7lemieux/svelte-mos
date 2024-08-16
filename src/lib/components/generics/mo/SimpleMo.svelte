@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type {Mo} from '$lib/models/managedObjects/Mo'
+  import type {Mo} from '$lib/models/managedObjects/Mo.js'
   import {toDisplayString} from  '$lib/services/common/util/string.utils'
   import type {MoViewMode} from  '$lib/constants/ui'
   import {goto} from '$app/navigation'
   import {page} from '$app/stores'
-  import {CommonFieldDefs as fd} from '$lib/models/fields/CommonFieldDefinition'
+  import {CommonFieldDefs as fd} from '$lib/models/fields/CommonFieldDefinition.js'
   import Field from  '$lib/components/generics/field/Field.svelte'
   import {Rezult} from  '$lib/services/common/message/rezult'
   import {ErrorName} from  '$lib/services/common/message/errorName'
@@ -13,7 +13,8 @@
   export let mo: Mo
   let viewMode: MoViewMode = extractViewMode()
   $: disabled = viewMode === 'view'
-  let moDef = mo.moDef
+  let moMeta = mo.moMeta
+  let moDef = mo.moMeta.moDef
   const title = toDisplayString(moDef.name)
   const fieldDefs = Array.from(moDef.fieldDefs.values())
   const ui = {}
@@ -49,13 +50,13 @@
     // history.replaceState(history.state, '', `/mo/${moDef.name}/${mo.id}/edit`);
   }
   const save = () => {
-    moDef.dataSource.saveMo(mo).then(mo => {
+    moMeta.dataSource?.saveMo(mo).then(mo => {
       goto(`/mo/${moDef.name}/${mo.id}`)
       // viewMode = 'view'
     })
   }
   const create = event => {
-    moDef.dataSource.addMo(mo).then(mo => {
+    moMeta.dataSource?.addMo(mo).then(mo => {
       goto(`/mo/${moDef.name}/${mo.id}`)
       // viewMode = 'view'
     })

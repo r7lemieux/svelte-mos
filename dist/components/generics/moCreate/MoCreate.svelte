@@ -1,15 +1,16 @@
 <script>import { toDisplayString } from "../../../services/common/util/string.utils";
-export let moDef;
-const title = toDisplayString(moDef.name);
-const fieldDefs = Array.from(moDef.fieldDefs.values());
-const mo = moDef.newMo();
+import { MoMeta } from "../../../models/index.js";
+export let moMeta;
+const title = toDisplayString(moMeta.name);
+const fieldDefs = Array.from(moMeta.moDef.fieldDefs.values());
+const mo = moMeta.newMo();
 const onChange = (event) => {
   const fieldname = event.srcElement.id;
   const value = event.srcElement.value;
   mo[fieldname] = value;
 };
 const create = (event) => {
-  moDef.dataSource.addMo(mo);
+  moMeta.dataSource?.addMo(mo);
 };
 </script>
 <svelte:head>

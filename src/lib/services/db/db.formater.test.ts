@@ -1,4 +1,4 @@
-import {choicesToDb, dbToChoicesWithValidChoices, dbToPrimitiveMapWithDefaults, primitivesToDb} from './db.formater'
+import {choicesToDb, dbToChoicesWithValidChoices, dbToPrimitiveMapWithDefaults, primitivesToDb} from './db.formater.js'
 import { expect, test } from '@playwright/test';
 
 test('tax model to db', () => {

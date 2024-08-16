@@ -1,4 +1,4 @@
-import type { Rezult } from "lib/services/common/message/rezult";
+import type { Rezult } from "../../services/common/message/rezult";
 import type { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
 export interface FieldDefinitionInterface<Type> {
     name: string;

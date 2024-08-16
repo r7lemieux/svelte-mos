@@ -1,18 +1,23 @@
 // Prototype
-import {CommonFieldDefs, getFieldDef} from '$lib/models/fields/CommonFieldDefinition'
-import {FieldDefinition} from '$lib/models/fields/FieldDefinition'
-import {Rezult} from  '$lib/services/common/message/rezult'
-import {getClosestFieldName} from '$lib/models/fields/FieldMatcher'
-import type {Mo} from '$lib/models/managedObjects/Mo'
-import {MoDefinition} from '$lib/models/managedObjects/MoDefinition.js'
-import {ErrorName} from  '$lib/services/common/message/errorName'
+import {CommonFieldDefs, getFieldDef} from '../fields/CommonFieldDefinition.js'
+import {FieldDefinition} from '../fields/FieldDefinition.js'
+import {Rezult} from  '../../services/common/message/rezult'
+import {getClosestFieldName} from '../fields/FieldMatcher.js'
+import type {Mo} from './Mo.js'
+import {MoDefinition} from './MoDefinition'
+import {ErrorName} from  '../../services/common/message/errorName'
+import type { MoMetaInterface } from './MoMetaInterface'
+import { MoMeta } from './MoMeta.js'
+import type { MoDefinitionInterface } from './MoDefinitionInterface'
 
 export class MoListModel {
-  moDef: MoDefinition
+  moMeta: MoMetaInterface
+  moDef: MoDefinitionInterface
   mos: Mo[] = []
-  fieldDefs?: Map<string, FieldDefinition<any>>
-  constructor(moDef: MoDefinition) {
-    this.moDef = moDef
+  fieldDefs: Map<string, FieldDefinition<any>>
+  constructor(moMeta: MoMetaInterface) {
+    this.moMeta = moMeta
+    this.moDef = moMeta.moDef
   }
   errors: Rezult[] = []
 
@@ -21,9 +26,9 @@ export class MoListModel {
     // this.addViewButton()
   }
   getName = () => this.moDef.name
-  getFieldDefs = () => {
+  getFieldDefs = ():  Map<string, FieldDefinition<any>> => {
     if (!this.fieldDefs) {
-       this.fieldDefs = this.moDef.fieldDefs
+       this.fieldDefs = this.moDef.fieldDefs as Map<string, FieldDefinition<any>> || new Map<string, FieldDefinition<any>>()
     }
     return this.fieldDefs
   }
@@ -78,7 +83,8 @@ export class MoListModel {
    */
   static fromCsv = (name: string, str: string): MoListModel => {
     const moDef = new MoDefinition(name)
-    const model = new MoListModel(moDef)
+    const moMeta = new MoMeta(moDef)
+    const model = new MoListModel(moMeta)
     model.buildFromCsv(str)
     return model
   }
@@ -111,7 +117,7 @@ export class MoListModel {
           }
         }
       }
-      this.mos.push(this.moDef.objToMo(row))
+      this.mos.push(this.moMeta.objToMo(row))
     }
   }
   buildFieldDefsFromTitleLine(titleStr) {
@@ -165,21 +171,8 @@ export class MoListModel {
           }
         }
       }
-      this.mos.push(this.moDef.objToMo(row))
+      this.mos.push(this.moMeta.objToMo(row))
     }
   }
-
-  /* -------
-   * Actions
-   * -------
-   */
-   goToView = pmo => {
-     let mo
-     if (pmo.id) {
-       mo = this.moDef.dataSource.getMo(pmo.id)
-     } else {
-       mo = pmo
-     }
-   }
 }
 export type FillFromCsvOptions = { addNewFields: boolean }

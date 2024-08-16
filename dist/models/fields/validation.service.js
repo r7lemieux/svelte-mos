@@ -1,5 +1,5 @@
-import { ErrorName } from '../../services/common/message/errorName';
-import { Rezult } from '../../services/common/message/rezult';
+import { ErrorName } from '../../services/common/message/errorName.js';
+import { Rezult } from '../../services/common/message/rezult.js';
 export class ValidationService {
     key = (str, len = 40) => {
         const valid = str && typeof str == 'string' && str.match(new RegExp('^[a-zA-Z][a-zA-Z_\\d]{1,' + (len - 1) + '}$'));

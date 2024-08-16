@@ -1,10 +1,12 @@
 // Prototype
-import type {Mo} from '$lib/models/managedObjects/Mo'
+import type {Mo} from '$lib/models/managedObjects/Mo.js'
+import type { MoInterface } from '$lib/models/managedObjects/MoInterface'
 export interface DataSource {
+  name?: string
   getMo: (id: any) => Promise<Mo | undefined>
   saveMo: (mo: Mo) => Promise<Mo>
   updateMo: (mo: Mo) => Promise<Mo>
-  addMo: (mo: Mo) => Promise<Mo>
+  addMo: (mo: MoInterface) => Promise<Mo>
   getMos: () => Promise<Mo[]>
   saveMos: (givenMos: Mo[]) => Promise<Mo[]>
   deleteMo: (id: string|number) => Promise<void>

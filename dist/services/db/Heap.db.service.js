@@ -9,13 +9,13 @@ export class HeapDbService {
     saveMo = async (mo) => {
         if (!mo)
             throw new Rezult(ErrorName.missing_param);
-        this.records[mo.moDef.dbName][mo.id] = mo;
+        this.records[mo.moMeta.moDef.dbName][mo.id] = mo;
         return mo;
     };
     updateMo = async (mo) => {
         if (!mo)
             throw new Rezult(ErrorName.missing_param);
-        this.records[mo.moDef.dbName][mo.id] = mo;
+        this.records[mo.moMeta.moDef.dbName][mo.id] = mo;
         return mo;
     };
     addMo = async (mo) => {
@@ -25,15 +25,18 @@ export class HeapDbService {
         return mo;
     };
     getMos = async (moDef) => {
+        const moMap = this.records[moDef.dbName];
+        if (!moMap)
+            return [];
         return Object.values(this.records[moDef.dbName]);
     };
     saveMos = async (givenMos) => {
         for (const mo of givenMos) {
-            this.records[mo.moDef.dbName][mo.id] = mo;
+            this.records[mo.moMeta.moDef.dbName][mo.id] = mo;
         }
         return givenMos;
     };
     deleteMo = async (mo) => {
-        delete this.records[mo.moDef.dbName][mo.id];
+        delete this.records[mo.moMeta.moDef.dbName][mo.id];
     };
 }

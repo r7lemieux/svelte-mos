@@ -1,12 +1,14 @@
-import { FieldDefinition } from '../fields/FieldDefinition';
+import { FieldDefinition } from '../fields/FieldDefinition.js';
 import { Rezult } from '../../services/common/message/rezult';
-import type { Mo } from './Mo';
-import { MoDefinition } from './MoDefinition.js';
+import type { Mo } from './Mo.js';
+import type { MoMetaInterface } from './MoMetaInterface';
+import type { MoDefinitionInterface } from './MoDefinitionInterface';
 export declare class MoListModel {
-    moDef: MoDefinition;
+    moMeta: MoMetaInterface;
+    moDef: MoDefinitionInterface;
     mos: Mo[];
-    fieldDefs?: Map<string, FieldDefinition<any>>;
-    constructor(moDef: MoDefinition);
+    fieldDefs: Map<string, FieldDefinition<any>>;
+    constructor(moMeta: MoMetaInterface);
     errors: Rezult[];
     init(): void;
     getName: () => string;
@@ -22,7 +24,6 @@ export declare class MoListModel {
     buildFieldDefsFromTitleLine(titleStr: any): void;
     matchFieldDefsFromTitleLine(fieldNames: string[], addFields: boolean): (FieldDefinition<any> | undefined)[];
     fillFromCsv(sheetStr: any, options?: FillFromCsvOptions): void;
-    goToView: (pmo: any) => void;
 }
 export type FillFromCsvOptions = {
     addNewFields: boolean;

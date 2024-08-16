@@ -1,5 +1,5 @@
-// import { DbServiceInterface} from '$lib/services/db/db.service.interface.js'
-import { HeapDbService } from '$lib/services/db/Heap.db.service.js';
+// import { DbServiceInterface} from '$lib/services/db/db.service.interface'
+import { HeapDbService } from '$lib/services/db/Heap.db.service.js'
 
 export const local = {
   signInSuccessUrl: 'http://127.0.0.1:5173',

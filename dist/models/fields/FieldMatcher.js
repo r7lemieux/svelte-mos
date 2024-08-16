@@ -1,6 +1,6 @@
 import * as stringSimilarity from 'string-similarity';
 import * as levenshtein from 'fastest-levenshtein';
-import { CommonFieldDefs } from './CommonFieldDefinition';
+import { CommonFieldDefs } from './CommonFieldDefinition.js';
 import { toWords } from '../../services/common/util/string.utils';
 export const diceRank = (word1, word2) => {
     if (!word1 || !word2)

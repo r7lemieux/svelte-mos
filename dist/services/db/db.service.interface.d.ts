@@ -1,7 +1,8 @@
-import type { Mo } from '../../models/managedObjects/Mo';
-import type { MoDefinition } from '../../models/managedObjects/MoDefinition.js';
+import type { Mo } from '../../models/managedObjects/Mo.js';
+import type { MoDefinition } from '../../models/managedObjects/MoDefinition';
+import type { MoDefinitionInterface } from '../../models/index.js';
 export interface DbServiceInterface {
-    getMo: (moDef: MoDefinition, id: any) => Promise<Mo | undefined>;
+    getMo: (moDef: MoDefinitionInterface, id: any) => Promise<Mo | undefined>;
     addMo: (mo: Mo) => Promise<Mo>;
     saveMo: (mo: Mo) => Promise<Mo>;
     updateMo: (mo: Mo) => Promise<Mo>;

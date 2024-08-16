@@ -1,14 +1,16 @@
-import { Mo } from './Mo';
+import {} from './Mo';
+// import { MoInterface } from './MoInterface'
 import { FieldDefinition, from } from '../fields/FieldDefinition';
-import { BaseFieldDefs, CommonFieldDefs, getFieldDef } from '../fields/CommonFieldDefinition';
+import { BaseFieldDefs, getFieldDef } from '../fields/CommonFieldDefinition';
 import { getClosestFieldName } from '../fields/FieldMatcher';
 import { toDisplayString } from '../../services/common/util/string.utils';
-import { defaultDbService } from '../../config/config';
 import { ErrorName } from '../../services/common/message/errorName';
 import { Rezult } from '../../services/common/message/rezult';
-import { CacheDataSource } from '../../services/db/Cache.dataSource';
-import { HeapDataSource } from '../../services/db/Heap.dataSource';
-export class MoDefinition extends Mo {
+// import { defaultMoMeta } from './moMetaInstances.js'
+// import type { MoMetaInterface } from './MoMetaInterface'
+// import { defaultMoMeta } from './MoMeta'
+export class MoDefinition {
+    id;
     name;
     dbName;
     displayName;
@@ -18,12 +20,11 @@ export class MoDefinition extends Mo {
     moClass;
     hasId = false;
     idType = 'string';
-    dataSource;
     gdriveFilePath;
     gdriveFileId;
     canCreate = true;
     constructor(name, moClass) {
-        super({});
+        // super({} as MoMetaInterface)
         if (name && !name.match(/[A-Za-z0-9]/))
             throw new Rezult(ErrorName.field_invalid, {
                 method: 'MoDefinition.extractFieldnamesFromMo',
@@ -31,11 +32,7 @@ export class MoDefinition extends Mo {
             });
         this.name = this.dbName = this.id = name;
         this.moClass = moClass;
-        if (this.name !== 'moDef')
-            this.moDef = moDefDef;
-        const cacheDataSource = new CacheDataSource(this);
-        cacheDataSource.db = defaultDbService;
-        this.dataSource = cacheDataSource;
+        // if (this.name !== 'moDef') this.moMeta = moDefMeta
         this.init();
     }
     /* ------------
@@ -52,11 +49,12 @@ export class MoDefinition extends Mo {
         }
         return moDef;
     };
-    static MoDefFieldDefs = [
-        FieldDefinition.from(CommonFieldDefs.name),
-        FieldDefinition.from(BaseFieldDefs.Array, { name: 'keyFieldNames' }),
-        FieldDefinition.from(BaseFieldDefs.Object, { name: 'fieldDefs' }),
-    ];
+    // del
+    // static MoDefFieldDefs = [
+    //   FieldDefinition.from(CommonFieldDefs.name),
+    //   FieldDefinition.from(BaseFieldDefs.Array, {name: 'keyFieldNames'}),
+    //   FieldDefinition.from(BaseFieldDefs.Object, {name: 'fieldDefs'}),
+    // ]
     /*  ---------
      *  Accessors
      *  ---------
@@ -64,7 +62,8 @@ export class MoDefinition extends Mo {
     getDisplayName = () => this.displayName || toDisplayString(this.name);
     getDbName = () => this.dbName || this.name;
     getFieldNames = () => Array.from(this.fieldDefs.keys());
-    getMoClass = () => this.moClass || Mo;
+    // getMoClass = () => this.moClass || typeof Mo
+    getMoClass = () => this.moClass;
     /* -----------------
      * Field Definitions
      * -----------------
@@ -93,21 +92,37 @@ export class MoDefinition extends Mo {
             .map((fd, i) => from(fd, { name: fieldnames[i] }));
     };
     extractFieldnamesFromMo() {
+        // const moClass: typeof Mo = this.moClass || Mo
+        const moClass = this.moClass || Object;
         const mo = this.newMo();
         const fieldnames = Object.getOwnPropertyNames(mo).filter(n => typeof mo[n] !== 'function' && n !== 'moDef');
         return fieldnames;
     }
-    /*  --
-     *  Mo
-     *  --
+    /*  -------------
+     *  Mo Management
+     *  -------------
      */
+    // I would prefer Mo and typeof Mo to MoInterface i
+    // but it causes:  ReferenceError: Cannot access 'Mo' before initialization
+    // newMo = (): Mo => {
+    //   const moClass: typeof Mo = this.moClass || Mo
+    //   const mo: Mo = new moClass()
+    //   return mo
+    // }
+    // objToMo = (obj: object, moMeta: MoMetaInterface): Mo => this.newMo().setProps(obj)
+    // documentToMo = (doc: any): Mo => {
+    //   const mo = this.newMo()
+    //   for (const [fname, fDef] of Array.from(this.fieldDefs.entries())) {
+    //     mo[fname] = fDef.documentToValue(doc[fname])
+    //   }
+    //   return mo
+    // }
     newMo = () => {
-        const moClass = this.moClass || Mo;
-        const mo = new moClass(this);
+        const moClass = this.moClass || Object;
+        const mo = new moClass();
         return mo;
     };
-    objToMo = (obj) => this.newMo().setProps(obj);
-    moToObj = (mo) => mo.toObj();
+    objToMo = (obj, moMeta) => this.newMo().setProps(obj);
     documentToMo = (doc) => {
         const mo = this.newMo();
         for (const [fname, fDef] of Array.from(this.fieldDefs.entries())) {
@@ -115,14 +130,13 @@ export class MoDefinition extends Mo {
         }
         return mo;
     };
+    moToObj = (mo) => mo.toObj();
     moToDocument = mo => mo.toDocument();
-    toDocument = () => {
-        const obj = this.toObj();
-        return { json: JSON.stringify(obj) };
-    };
 }
+const defaultMoDef = new MoDefinition('default');
+defaultMoDef.moClass = Object; //typeof Mo
 // const moDefDef = new MoDefinition('MoDefinition')
-export const moDefDef = new MoDefinition('moDef');
+const moDefDef = new MoDefinition('moDef');
 moDefDef.addFieldDef(from(BaseFieldDefs.Id).chainSetName('id'));
 moDefDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'));
 moDefDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('dbName'));
@@ -141,34 +155,29 @@ moClassFieldDef.gridColDef.field = undefined;
 moClassFieldDef.gridColDef.valueGetter = params => params.data.moClass.name;
 moClassFieldDef.valueToString = v => v.name;
 moDefDef.addFieldDef(moClassFieldDef);
+// export const moDefMeta: MoMetaInterface = new MoMeta(moDefDef)
 Object.assign(moDefDef, {
     name: 'moDef',
     dbName: 'moDef',
     displayName: 'Mo Definition',
     keyFieldnames: ['moName'],
     gridFieldnames: ['name', 'gdriveFilePath'],
-    moClass: MoDefinition,
+    moClass: typeof MoDefinition,
     hasId: true,
     idType: 'string',
     // dataSource: new CacheDataSource(moDefDef),
     gdriveFilePath: 'system/resources',
     gdriveFileId: null,
     canCreate: false,
-    newMo: () => {
-        const moDef = new MoDefinition('');
-        moDef.moDef = moDefDef;
-        return moDef;
-    }
 });
-const moDefDefDef = new MoDefinition('moDef');
-moDefDef.moDef = moDefDefDef;
-moDefDef.documentToMo = doc => {
-    const moDef = new MoDefinition('moDef', MoDefinition);
-    const obj = JSON.parse(doc.json);
-    Object.assign(moDef, obj);
-    return moDef;
-    //return JSON.parse(doc)
-};
-const cacheDataSource = new HeapDataSource(this);
-cacheDataSource.keyname = 'name';
-moDefDef.dataSource = cacheDataSource;
+const moDefDefDef = new MoDefinition('moDefDef');
+// const moDefDefMeta =  new MoMeta(moDefDefDef)
+// moDefDef.moMeta = moDefDefMeta
+// moDefMeta.documentToMo  = doc => {
+//   const moDef = new MoDefinition('moDef', MoDefinition)
+//   const obj = JSON.parse(doc.json)
+//   Object.assign(moDef, obj)
+//   return moDef
+//   //return JSON.parse(doc)
+// }
+export { defaultMoDef, moDefDef };

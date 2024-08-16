@@ -5,7 +5,6 @@ import MapField from "./MapField.svelte";
 import { afterUpdate } from "svelte";
 import { sizeLabels } from "../../../services/common/util/dom.utils";
 import ObjectField from "./ObjectField.svelte";
-import "./field.sass";
 export let fieldDef;
 export let value;
 export let viewMode = extractViewMode();

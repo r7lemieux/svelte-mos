@@ -1,45 +1,51 @@
-export class Mo {
-    moMeta;
-    id;
-    constructor(moMeta) {
+"use strict";
+exports.__esModule = true;
+exports.Mo = void 0;
+var Mo = /** @class */ (function () {
+    function Mo(moMeta) {
+        var _this = this;
+        this.setProps = function (props) {
+            for (var _i = 0, _a = Object.getOwnPropertyNames(props); _i < _a.length; _i++) {
+                var key = _a[_i];
+                // if (key != 'fieldDefs') {
+                _this[key] = props[key];
+                // }
+            }
+            return _this;
+        };
+        this.toObj = function () {
+            var data = {};
+            if (_this.id)
+                data.id = _this.id;
+            for (var _i = 0, _a = Array.from(_this.moMeta.moDef.fieldDefs.keys()); _i < _a.length; _i++) {
+                var fname = _a[_i];
+                var fieldDef = _this.moMeta.moDef.fieldDefs.get(fname);
+                var value = _this[fname];
+                if (value !== undefined && value !== null) {
+                    data[fname] = _this[fname];
+                }
+            }
+            return data;
+        };
+        this.toDocument = function () {
+            var data = {};
+            if (_this.id)
+                data.id = _this.id;
+            for (var _i = 0, _a = Array.from(_this.moMeta.moDef.fieldDefs.keys()); _i < _a.length; _i++) {
+                var fname = _a[_i];
+                var fieldDef = _this.moMeta.moDef.fieldDefs.get(fname);
+                var value = _this[fname];
+                if (value !== undefined && value !== null) {
+                    data[fname] = fieldDef === null || fieldDef === void 0 ? void 0 : fieldDef.valueToDocument(_this[fname]);
+                }
+            }
+            return data;
+        };
         this.moMeta = moMeta;
     }
-    setProps = (props) => {
-        for (const key of Object.getOwnPropertyNames(props)) {
-            // if (key != 'fieldDefs') {
-            this[key] = props[key];
-            // }
-        }
-        return this;
-    };
-    toObj = () => {
-        const data = {};
-        if (this.id)
-            data.id = this.id;
-        for (const fname of Array.from(this.moMeta.fieldDefs.keys())) {
-            const fieldDef = this.moMeta.fieldDefs.get(fname);
-            const value = this[fname];
-            if (value !== undefined && value !== null) {
-                data[fname] = this[fname];
-            }
-        }
-        return data;
-    };
-    toDocument = () => {
-        const data = {};
-        if (this.id)
-            data.id = this.id;
-        for (const fname of Array.from(this.moMeta.fieldDefs.keys())) {
-            const fieldDef = this.moMeta.fieldDefs.get(fname);
-            const value = this[fname];
-            if (value !== undefined && value !== null) {
-                data[fname] = fieldDef?.valueToDocument(this[fname]);
-            }
-        }
-        return data;
-    };
-    hydrate(partial) {
+    Mo.prototype.hydrate = function (partial) {
         Object.assign(this, partial);
-    }
-}
-//# sourceMappingURL=Mo.js.map
+    };
+    return Mo;
+}());
+exports.Mo = Mo;

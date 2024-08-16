@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
-  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
   import MapValueField from  '$lib/components/generics/field/MapValueField.svelte'
   import {afterUpdate} from 'svelte'
   import {sizeLabels} from  '$lib/services/common/util/dom.utils'

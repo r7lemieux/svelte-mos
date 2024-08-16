@@ -1,16 +1,19 @@
 // Prototype
-import { CommonFieldDefs, getFieldDef } from '../fields/CommonFieldDefinition';
-import { FieldDefinition } from '../fields/FieldDefinition';
+import { CommonFieldDefs, getFieldDef } from '../fields/CommonFieldDefinition.js';
+import { FieldDefinition } from '../fields/FieldDefinition.js';
 import { Rezult } from '../../services/common/message/rezult';
-import { getClosestFieldName } from '../fields/FieldMatcher';
-import { MoDefinition } from './MoDefinition.js';
+import { getClosestFieldName } from '../fields/FieldMatcher.js';
+import { MoDefinition } from './MoDefinition';
 import { ErrorName } from '../../services/common/message/errorName';
+import { MoMeta } from './MoMeta.js';
 export class MoListModel {
+    moMeta;
     moDef;
     mos = [];
     fieldDefs;
-    constructor(moDef) {
-        this.moDef = moDef;
+    constructor(moMeta) {
+        this.moMeta = moMeta;
+        this.moDef = moMeta.moDef;
     }
     errors = [];
     init() {
@@ -20,7 +23,7 @@ export class MoListModel {
     getName = () => this.moDef.name;
     getFieldDefs = () => {
         if (!this.fieldDefs) {
-            this.fieldDefs = this.moDef.fieldDefs;
+            this.fieldDefs = this.moDef.fieldDefs || new Map();
         }
         return this.fieldDefs;
     };
@@ -75,7 +78,8 @@ export class MoListModel {
      */
     static fromCsv = (name, str) => {
         const moDef = new MoDefinition(name);
-        const model = new MoListModel(moDef);
+        const moMeta = new MoMeta(moDef);
+        const model = new MoListModel(moMeta);
         model.buildFromCsv(str);
         return model;
     };
@@ -109,7 +113,7 @@ export class MoListModel {
                     }
                 }
             }
-            this.mos.push(this.moDef.objToMo(row));
+            this.mos.push(this.moMeta.objToMo(row));
         }
     }
     buildFieldDefsFromTitleLine(titleStr) {
@@ -165,20 +169,7 @@ export class MoListModel {
                     }
                 }
             }
-            this.mos.push(this.moDef.objToMo(row));
+            this.mos.push(this.moMeta.objToMo(row));
         }
     }
-    /* -------
-     * Actions
-     * -------
-     */
-    goToView = pmo => {
-        let mo;
-        if (pmo.id) {
-            mo = this.moDef.dataSource.getMo(pmo.id);
-        }
-        else {
-            mo = pmo;
-        }
-    };
 }

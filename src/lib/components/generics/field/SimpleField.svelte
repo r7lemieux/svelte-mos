@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
-  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition'
+  import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
   import './field.sass'
   export let fieldDef: FieldDefinition<never>
   export let value

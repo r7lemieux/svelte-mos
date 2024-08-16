@@ -1,26 +1,30 @@
-import { MoMeta, moMetaMeta } from '$lib/models/generic/MoDefinition';
-import { contactMeta } from '$lib/models/common/Contact';
-import { FieldDefinitionMo } from '$lib/services/common/validation/FieldDefinitionMo';
-export const MoDefinitions = {
-    moDef: moMetaMeta,
-    contact: contactMeta
-};
-export const UiMoMetas = {};
-for (const moMetaName of Object.keys(MoDefinitions)) {
-    const moMeta = MoDefinitions[moMetaName];
-    const uiMoMeta = new MoMeta(moMeta.name);
-    Object.assign(uiMoMeta, moMeta);
-    uiMoMeta.fieldDefs = new Map();
-    for (const fieldDef of (Array.from(moMeta.fieldDefs.values()))) {
-        const uiFieldDef = new FieldDefinitionMo(fieldDef);
-        uiMoMeta.fieldDefs.set(fieldDef.name, uiFieldDef);
+"use strict";
+exports.__esModule = true;
+exports.getMoDef = exports.registerMoDef = exports.getUiMoDef = exports.UiMoDefs = void 0;
+var MoDefinition_1 = require("$lib/models/managedObjects/MoDefinition");
+var FieldDefinitionMo_1 = require("$lib/models/fields/FieldDefinitionMo");
+exports.UiMoDefs = {};
+var getUiMoDef = function (moDef) {
+    var uiMoDef = new MoDefinition_1.MoDefinition(moDef.name);
+    Object.assign(uiMoDef, moDef);
+    uiMoDef.fieldDefs = new Map();
+    for (var _i = 0, _a = (Array.from(moDef.fieldDefs.values())); _i < _a.length; _i++) {
+        var fieldDef = _a[_i];
+        var uiFieldDef = new FieldDefinitionMo_1.FieldDefinitionMo(fieldDef);
+        uiMoDef.fieldDefs.set(fieldDef.name, uiFieldDef);
     }
-    UiMoMetas[moMetaName] = uiMoMeta;
-}
-export const saveMetas = () => moMetaMeta.dataSource.saveMos(Object.values(MoDefinitions));
-saveMetas();
-// export const saveMetas = async (): Promise<Mo[]> => {
-//   const mos = Object.values(MoMetas)
-//   return moMetaMeta.dataSource.saveMos(mos)
-// }
-//# sourceMappingURL=MoMetas.js.map
+    return moDef;
+};
+exports.getUiMoDef = getUiMoDef;
+var registerMoDef = function (moDef) {
+    var _a;
+    (_a = MoDefinition_1.moDefMeta.dataSource) === null || _a === void 0 ? void 0 : _a.saveMo(moDef);
+};
+exports.registerMoDef = registerMoDef;
+var getMoDef = function (moname) {
+    var _a;
+    return (_a = MoDefinition_1.moDefMeta.dataSource) === null || _a === void 0 ? void 0 : _a.getMo(moname).then(function (mo) {
+        return mo;
+    });
+};
+exports.getMoDef = getMoDef;

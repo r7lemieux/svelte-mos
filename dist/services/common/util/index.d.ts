@@ -1,3 +1,3 @@
-export * from './dom.utils';
-export * from './ts.utils';
-export * from './string.utils';
+export * from './dom.utils.js';
+export * from './ts.utils.js';
+export * from './string.utils.js';

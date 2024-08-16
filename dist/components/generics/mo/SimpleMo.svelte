@@ -1,7 +1,7 @@
 <script>import { toDisplayString } from "../../../services/common/util/string.utils";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-import { CommonFieldDefs as fd } from "../../../models/fields/CommonFieldDefinition";
+import { CommonFieldDefs as fd } from "../../../models/fields/CommonFieldDefinition.js";
 import Field from "../field/Field.svelte";
 import { Rezult } from "../../../services/common/message/rezult";
 import { ErrorName } from "../../../services/common/message/errorName";
@@ -9,7 +9,8 @@ export let mo;
 let viewMode = extractViewMode();
 $:
   disabled = viewMode === "view";
-let moDef = mo.moDef;
+let moMeta = mo.moMeta;
+let moDef = mo.moMeta.moDef;
 const title = toDisplayString(moDef.name);
 const fieldDefs = Array.from(moDef.fieldDefs.values());
 const ui = {};
@@ -42,12 +43,12 @@ const edit = () => {
   goto(`/mo/${moDef.name}/${mo.id}/edit`);
 };
 const save = () => {
-  moDef.dataSource.saveMo(mo).then((mo2) => {
+  moMeta.dataSource?.saveMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };
 const create = (event) => {
-  moDef.dataSource.addMo(mo).then((mo2) => {
+  moMeta.dataSource?.addMo(mo).then((mo2) => {
     goto(`/mo/${moDef.name}/${mo2.id}`);
   });
 };

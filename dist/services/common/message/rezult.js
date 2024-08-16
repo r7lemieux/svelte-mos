@@ -1,5 +1,5 @@
-import { ErrorName } from './errorName';
-import { jsonToDisplayString } from '../util/string.utils';
+import { ErrorName } from './errorName.js';
+import { jsonToDisplayString } from '../util/string.utils.js';
 export class Rezult extends Error {
     status = 'error';
     data;
@@ -55,14 +55,15 @@ export class Rezult extends Error {
     stringifyOneLevel = obj => JSON.stringify(obj, function (k, v) { return k && v && typeof v !== "number" ? (Array.isArray(v) ? "[object Array]" : "" + v) : v; });
     print = (str) => {
         this.context = str;
-        if (!process.env.testing) {
-            console.log(this.toString());
-        }
+        // if (!process.env.testing) {
+        //   console.log(this.toString())
+        // }
     };
     static build = (err, data, context) => {
         if (err && err instanceof Rezult)
             return err;
-        const rezult = new Rezult(ErrorName.server_error);
+        const rezult = new Rezult(ErrorName.type5_error);
+        console.trace(`==>rezult.ts:78 rezult`, rezult);
         if (data)
             rezult.data = data;
         if (context)

@@ -1,10 +1,13 @@
-export const toCamelCase = (str0) => {
+"use strict";
+exports.__esModule = true;
+exports.objectReplacer = exports.jsonToDisplayString = exports.alphaFromStr = exports.toDisplayString0 = exports.toDisplayString = exports.toWords = exports.toCamelCase = void 0;
+var toCamelCase = function (str0) {
     if (!str0)
         return '';
-    let camel = str0[0].toLowerCase();
-    for (let i = 1; i < str0.length; i++) {
-        const pchar = str0[i - 1];
-        const char = str0[i];
+    var camel = str0[0].toLowerCase();
+    for (var i = 1; i < str0.length; i++) {
+        var pchar = str0[i - 1];
+        var char = str0[i];
         if (char.match(/[A-Za-z0-9]/)) {
             if (char.match(/[A-Z]/) || pchar.match(/![A-Z]/)) {
                 camel += char;
@@ -16,14 +19,15 @@ export const toCamelCase = (str0) => {
     }
     return camel;
 };
-export const toWords = (str0) => {
-    const words = [];
+exports.toCamelCase = toCamelCase;
+var toWords = function (str0) {
+    var words = [];
     if (!str0)
         return words;
-    let word = str0[0];
-    for (let i = 1; i < str0.length; i++) {
-        const pchar = str0[i - 1];
-        const char = str0[i];
+    var word = str0[0];
+    for (var i = 1; i < str0.length; i++) {
+        var pchar = str0[i - 1];
+        var char = str0[i];
         if (char.match(/[A-Z]/)) {
             if (pchar.match(/[^A-Z]/)) {
                 words.push(word);
@@ -41,19 +45,21 @@ export const toWords = (str0) => {
         words.push(word);
     return words;
 };
-export const toDisplayString = (str0) => {
+exports.toWords = toWords;
+var toDisplayString = function (str0) {
     if (!str0)
         return '';
-    const str1 = toWords(str0).join(' ');
+    var str1 = (0, exports.toWords)(str0).join(' ');
     return str1[0].toUpperCase() + str1.slice(1);
 };
-export const toDisplayString0 = (str0) => {
+exports.toDisplayString = toDisplayString;
+var toDisplayString0 = function (str0) {
     if (!str0)
         return '';
-    let str = str0[0].toUpperCase();
-    for (let i = 1; i < str0.length; i++) {
-        const pchar = str0[i - 1];
-        const char = str0[i];
+    var str = str0[0].toUpperCase();
+    for (var i = 1; i < str0.length; i++) {
+        var pchar = str0[i - 1];
+        var char = str0[i];
         if (char.match(/[A-Z]/)) {
             if (pchar.match(/[^A-Z]/)) {
                 str += ' ' + char;
@@ -68,11 +74,12 @@ export const toDisplayString0 = (str0) => {
     }
     return str;
 };
-const alphaRegex = new RegExp(/[A-Za-z]/);
-export const alphaFromStr = str => {
-    let alpha = '';
+exports.toDisplayString0 = toDisplayString0;
+var alphaRegex = new RegExp(/[A-Za-z]/);
+var alphaFromStr = function (str) {
+    var alpha = '';
     if (str) {
-        let i = str.length;
+        var i = str.length;
         while (i--) {
             if (alphaRegex.test(str[i])) {
                 alpha = alpha + str[i];
@@ -81,4 +88,31 @@ export const alphaFromStr = str => {
     }
     return alpha;
 };
-//# sourceMappingURL=string.utils.js.map
+exports.alphaFromStr = alphaFromStr;
+var jsonToDisplayString = function (json) {
+    if (!json)
+        return '';
+    if (typeof json === 'string')
+        return json;
+    return Object.entries(json)
+        .map(function (_a) {
+        var k = _a[0], v = _a[1];
+        if (typeof v === 'object') {
+            return (0, exports.jsonToDisplayString)(v);
+        }
+        else {
+            return "".concat(k, ": ").concat(v);
+        }
+    })
+        .join(', ');
+};
+exports.jsonToDisplayString = jsonToDisplayString;
+var objectReplacer = function (k, v) {
+    if (typeof v === 'object') {
+        return v.displayName || v.name || v.toString();
+    }
+    else {
+        return v;
+    }
+};
+exports.objectReplacer = objectReplacer;

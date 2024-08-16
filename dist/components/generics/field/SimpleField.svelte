@@ -53,7 +53,7 @@ let changed = (event) => {
   width: 120px;
   color: #244;
   align-self: center;
-  text-wrap: avoid;
+  text-wrap: balance;
 }
 .field .value {
   flex: 200px 4 2;
@@ -82,7 +82,7 @@ let changed = (event) => {
   height: 2rem;
   align-self: center;
   width: 35px;
-  font-family: "Courier 10 Pitch";
+  font-family: "Courier 10 Pitch", serif;
   font-size: smaller;
   color: #883;
 }
@@ -97,8 +97,12 @@ let changed = (event) => {
 }
 .field .count .detail-arrow.open::after {
   margin-bottom: 0;
-  -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
+}
+@supports (-webkit-transform: rotate(90deg)) {
+  .field .count .detail-arrow.open::after {
+    -webkit-transform: rotate(90deg);
+  }
 }
 .field .count .empty-value {
   height: 2rem;
