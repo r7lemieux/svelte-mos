@@ -30,7 +30,7 @@ afterUpdate(sizeLabels);
   {:else if fd.type === 'map'}
     <MapField    {fieldDef} {value} {viewMode} {level} {onChange}/>
   {:else if fd.type === 'object'}
-    <ObjectField name={fd.name} {value} {viewMode} {level} {onChange}/>
+    <ObjectField {fieldDef} {value} {viewMode} {level} {onChange}/>
   {:else}
     <SimpleField {fieldDef} {value} {viewMode} {level} {onChange}/>
   {/if}

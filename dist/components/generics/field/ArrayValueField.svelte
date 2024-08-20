@@ -1,4 +1,5 @@
-<script>export let fieldDef;
+<script>import { onMount } from "svelte";
+export let fieldDef;
 export let value;
 export let viewMode;
 export let single = false;
@@ -20,8 +21,15 @@ let added = (event) => {
   onChange(index, val);
   event.srcElement.value = "";
 };
+let height;
+onMount(() => {
+  const ele = document.querySelector(".field");
+  console.log(`==>SimpleField.svelte:21 ele `, ele);
+  height = ele.offsetHeight;
+  console.log(`==>SimpleField.svelte:21  height `, height);
+});
 </script>
-<div class="field" style="margin-left:{level*12}px;">
+<div class="field ArrayValueField" style="margin-left:{level*12}px;">
   <label for={fname}></label>
   <span class="tree-line" />
   <!--{showDetails?'open':'closed'}"></span>-->
@@ -52,7 +60,7 @@ let added = (event) => {
 }
 .field .tree-line.open {
   border-bottom: 2px solid #88A;
-  width: 9px;
+  width: 10px;
   position: relative;
   left: 1px;
 }
@@ -65,7 +73,7 @@ let added = (event) => {
 .field label {
   flex: 120px 1 0;
   display: flex;
-  margin: 0 5px 7px 0;
+  margin: 0 8px 7px 0;
   justify-content: flex-end;
   width: 120px;
   color: #244;
@@ -74,12 +82,13 @@ let added = (event) => {
 }
 .field .value {
   flex: 200px 4 2;
+  margin-left: 3px;
 }
 .field input {
   height: 2rem;
   border: none;
   border-bottom: 1px solid #E1E2FF;
-  padding: 0 0.5rem;
+  padding: 0 0.3rem;
   width: 100%;
 }
 .field input[disabled] {
@@ -98,6 +107,7 @@ let added = (event) => {
   align-items: center;
   height: 2rem;
   align-self: center;
+  margin: 0 0.5rem 0 0.4rem;
   width: 35px;
   font-family: "Courier 10 Pitch", serif;
   font-size: smaller;
@@ -128,7 +138,6 @@ let added = (event) => {
 }
 .field .detail-icon {
   position: relative;
-  top: 2px;
 }
 .field input.array-item {
   height: 2rem;

@@ -25,6 +25,7 @@ export declare class FieldDefinition<Type> implements FieldDefinitionInterface<T
     clone(): FieldDefinition<unknown>;
     chainSetName(name: any): this;
     parse(v: any): any | null;
+    gridToString(gridFields: any): any;
     valueToString(v: any): any;
     documentToValue(v: any): any;
     valueToDocument(v: any): any;

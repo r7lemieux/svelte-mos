@@ -38,4 +38,3 @@ moDefMoMeta.documentToMo  = doc => {
   Object.assign(moDefMo, obj)
   return moDefMo
 }
-

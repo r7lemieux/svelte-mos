@@ -31,7 +31,7 @@ const deleteItem = (i) => {
   onChange(fieldDef.name, value);
 };
 </script>
-<div class="field" style="margin-left:{level*12}px;">
+<div class="field ArrayField" style="margin-left:{level*12}px;">
   <label for={fname}>{fd.getDisplayName()}</label>
   <span class=" tree-line {showDetails?'open':'closed'}"></span>
   <span class="value">
@@ -62,7 +62,7 @@ const deleteItem = (i) => {
 }
 .field .tree-line.open {
   border-bottom: 2px solid #88A;
-  width: 9px;
+  width: 10px;
   position: relative;
   left: 1px;
 }
@@ -75,7 +75,7 @@ const deleteItem = (i) => {
 .field label {
   flex: 120px 1 0;
   display: flex;
-  margin: 0 5px 7px 0;
+  margin: 0 8px 7px 0;
   justify-content: flex-end;
   width: 120px;
   color: #244;
@@ -84,12 +84,13 @@ const deleteItem = (i) => {
 }
 .field .value {
   flex: 200px 4 2;
+  margin-left: 3px;
 }
 .field input {
   height: 2rem;
   border: none;
   border-bottom: 1px solid #E1E2FF;
-  padding: 0 0.5rem;
+  padding: 0 0.3rem;
   width: 100%;
 }
 .field input[disabled] {
@@ -108,6 +109,7 @@ const deleteItem = (i) => {
   align-items: center;
   height: 2rem;
   align-self: center;
+  margin: 0 0.5rem 0 0.4rem;
   width: 35px;
   font-family: "Courier 10 Pitch", serif;
   font-size: smaller;
@@ -138,7 +140,6 @@ const deleteItem = (i) => {
 }
 .field .detail-icon {
   position: relative;
-  top: 2px;
 }
 .field input.array-item {
   height: 2rem;

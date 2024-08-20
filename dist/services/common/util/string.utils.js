@@ -98,10 +98,24 @@ export const jsonToDisplayString = (json) => {
         .join(', ');
 };
 export const objectReplacer = (k, v) => {
-    if (typeof v === 'object') {
-        return v.displayName || v.name || v.toString();
+    console.log(`==>string.utils.ts:90  k`, k);
+    console.log(`==>string.utils.ts:90  v`, v);
+    if (v && typeof v === 'object') {
+        if (v.getDisplayName)
+            return v.getDisplayName();
+        return v.displayName || v.name || v.constructor?.name || v.toString();
     }
     else {
         return v;
+    }
+};
+export const objectToString = (o) => {
+    if (o && typeof o === 'object') {
+        if (o.getDisplayName)
+            return o.getDisplayName();
+        return o.displayName || o.name || o.constructor?.name || o.toString();
+    }
+    else {
+        return o;
     }
 };

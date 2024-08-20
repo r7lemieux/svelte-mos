@@ -13,12 +13,16 @@ import type { MoInterface } from './MoInterface'
 export class MoMetaMo extends Mo implements MoMetaInterface {
   name: string
   moDef: MoDefinitionInterface
-  dataSource: DataSource
+  dataSource?: DataSource
 
   constructor(moMeta: MoMetaInterface) {
     super({} as MoMetaInterface)
-    this.moMeta = moMeta
+    this.moMeta = moMetaMoMeta
+    this.moDef = moMeta.moDef
+    this.dataSource = moMeta.dataSource
+    this.name = moMeta.name
   }
+  toDisplayString = () => this.name || this.moDef.name
   newMo = (): MoInterface => {
     const moClass: MoInterface = this.moDef.moClass || Mo
     const mo: MoInterface = new (moClass as typeof Mo)(this)
@@ -44,10 +48,10 @@ export class MoMetaMo extends Mo implements MoMetaInterface {
 
 export const moMetaMoDef = new MoDefinition('moMetaMo')
 moMetaMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
-const moDefFieldDef = from(BaseFieldDefs.Map).chainSetName('moDef')
+const moDefFieldDef = from(BaseFieldDefs.Object).chainSetName('moDef')
 moDefFieldDef.mapValueType = 'object'
 moMetaMoDef.addFieldDef(moDefFieldDef)
-const dataSourceFieldDef = from(BaseFieldDefs.Map).chainSetName('dataSource')
+const dataSourceFieldDef = from(BaseFieldDefs.Object).chainSetName('dataSource')
 dataSourceFieldDef.mapValueType = 'object'
 moMetaMoDef.addFieldDef(dataSourceFieldDef)
 Object.assign(moMetaMoDef, {
@@ -56,6 +60,7 @@ Object.assign(moMetaMoDef, {
   moDef: moDefDef,
 })
 export const moMetaMoMeta = new MoMeta(moMetaMoDef)
+moMetaMoMeta.moDef.name = 'moMeta'
 moMetaMoDef.documentToMo = doc => {
   const moMetaMo = new MoMetaMo({} as MoMetaInterface)
   const obj = JSON.parse(doc.json)
@@ -63,5 +68,6 @@ moMetaMoDef.documentToMo = doc => {
   return moMetaMo
 }
 const cacheDataSource = new HeapDataSource()
+cacheDataSource.name = 'moMetas'
 cacheDataSource.keyname = 'name'
 moMetaMoMeta.dataSource = cacheDataSource

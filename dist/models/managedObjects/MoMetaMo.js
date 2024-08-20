@@ -10,8 +10,12 @@ export class MoMetaMo extends Mo {
     dataSource;
     constructor(moMeta) {
         super({});
-        this.moMeta = moMeta;
+        this.moMeta = moMetaMoMeta;
+        this.moDef = moMeta.moDef;
+        this.dataSource = moMeta.dataSource;
+        this.name = moMeta.name;
     }
+    toDisplayString = () => this.name || this.moDef.name;
     newMo = () => {
         const moClass = this.moDef.moClass || Mo;
         const mo = new moClass(this);
@@ -35,10 +39,10 @@ export class MoMetaMo extends Mo {
 }
 export const moMetaMoDef = new MoDefinition('moMetaMo');
 moMetaMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'));
-const moDefFieldDef = from(BaseFieldDefs.Map).chainSetName('moDef');
+const moDefFieldDef = from(BaseFieldDefs.Object).chainSetName('moDef');
 moDefFieldDef.mapValueType = 'object';
 moMetaMoDef.addFieldDef(moDefFieldDef);
-const dataSourceFieldDef = from(BaseFieldDefs.Map).chainSetName('dataSource');
+const dataSourceFieldDef = from(BaseFieldDefs.Object).chainSetName('dataSource');
 dataSourceFieldDef.mapValueType = 'object';
 moMetaMoDef.addFieldDef(dataSourceFieldDef);
 Object.assign(moMetaMoDef, {
@@ -47,6 +51,7 @@ Object.assign(moMetaMoDef, {
     moDef: moDefDef,
 });
 export const moMetaMoMeta = new MoMeta(moMetaMoDef);
+moMetaMoMeta.moDef.name = 'moMeta';
 moMetaMoDef.documentToMo = doc => {
     const moMetaMo = new MoMetaMo({});
     const obj = JSON.parse(doc.json);
@@ -54,5 +59,6 @@ moMetaMoDef.documentToMo = doc => {
     return moMetaMo;
 };
 const cacheDataSource = new HeapDataSource();
+cacheDataSource.name = 'moMetas';
 cacheDataSource.keyname = 'name';
 moMetaMoMeta.dataSource = cacheDataSource;

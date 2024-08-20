@@ -14,8 +14,6 @@
   <meta name="description" content="Mo Metas"/>
 </svelte:head>
 
-<h1>Metas</h1>
 <div>components/app/mo/mo/MoMetaMos.svelte </div>
-<h1>Metas</h1>
 <div>mos[{mos?.length}]: {mos?.map(m => ' ' + m.name )}</div>
-<Mos {moMeta} {mos} />
+<Mos {moMeta} {mos}  />

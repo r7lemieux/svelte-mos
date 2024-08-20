@@ -46,7 +46,13 @@ export const modelReady = (listModel) => {
   return true;
 };
 const goToView = (mo) => {
-  goto(`/mo/${mo.moDef.name}/${mo.id}`);
+  goto(`/mo/${mo.moDef.name}/${mo.id}`).then((r) => {
+    console.log(`==>MosGrid.svelte:67 r`, r);
+    return r;
+  }).catch((e) => {
+    console.log(`==>MosGrid.svelte:71 catch e`, e);
+    throw e;
+  });
 };
 const buildGridOptions = () => {
   if (!model)
@@ -59,8 +65,8 @@ const buildGridOptions = () => {
     const colDef = def.buildColDef();
     return colDef;
   });
-  const viewClumnDefs = buildIconColDef(CgArrowRight, goToView);
-  columnDefs.push(viewClumnDefs);
+  const viewColumnDefs = buildIconColDef(CgArrowRight, goToView);
+  columnDefs.push(viewColumnDefs);
   const rowData = model.mos;
   const defaultColDef = {
     resizable: true

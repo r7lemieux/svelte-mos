@@ -37,7 +37,7 @@
     onChange(fieldDef.name, value)
   }
 </script>
-<div class="field" style="margin-left:{level*12}px;">
+<div class="field ArrayField" style="margin-left:{level*12}px;">
   <label for={fname}>{fd.getDisplayName()}</label>
   <span class=" tree-line {showDetails?'open':'closed'}"></span>
   <span class="value">

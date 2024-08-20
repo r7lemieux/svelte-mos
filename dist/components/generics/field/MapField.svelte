@@ -1,5 +1,5 @@
 <script>import MapValueField from "./MapValueField.svelte";
-import { afterUpdate } from "svelte";
+import { afterUpdate, onMount } from "svelte";
 import { sizeLabels } from "../../../services/common/util/dom.utils";
 export let fieldDef;
 export let value;
@@ -27,9 +27,16 @@ const deleteItem = (i) => {
   value = value.filter((item, index) => index != i);
 };
 afterUpdate(sizeLabels);
+let height;
+onMount(() => {
+  const ele = document.querySelector(".field");
+  console.log(`==>SimpleField.svelte:21 ele `, ele);
+  height = ele.offsetHeight;
+  console.log(`==>SimpleField.svelte:21  height `, height);
+});
 </script>
-<div class="field">
-  <label for={fname}>{fd.getDisplayName()}</label>
+<div class="field MapField">
+  <label for={fname}>{fd.getDisplayName()} {height}</label>
   <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
 <!--    <span class="top tree-line1"/>-->
 <!--    <span class="arrow {showDetails?'open':'closed'}"/>-->
@@ -67,7 +74,7 @@ afterUpdate(sizeLabels);
 }
 .field .tree-line.open {
   border-bottom: 2px solid #88A;
-  width: 9px;
+  width: 10px;
   position: relative;
   left: 1px;
 }
@@ -80,7 +87,7 @@ afterUpdate(sizeLabels);
 .field label {
   flex: 120px 1 0;
   display: flex;
-  margin: 0 5px 7px 0;
+  margin: 0 8px 7px 0;
   justify-content: flex-end;
   width: 120px;
   color: #244;
@@ -89,12 +96,13 @@ afterUpdate(sizeLabels);
 }
 .field .value {
   flex: 200px 4 2;
+  margin-left: 3px;
 }
 .field input {
   height: 2rem;
   border: none;
   border-bottom: 1px solid #E1E2FF;
-  padding: 0 0.5rem;
+  padding: 0 0.3rem;
   width: 100%;
 }
 .field input[disabled] {
@@ -113,6 +121,7 @@ afterUpdate(sizeLabels);
   align-items: center;
   height: 2rem;
   align-self: center;
+  margin: 0 0.5rem 0 0.4rem;
   width: 35px;
   font-family: "Courier 10 Pitch", serif;
   font-size: smaller;
@@ -143,7 +152,6 @@ afterUpdate(sizeLabels);
 }
 .field .detail-icon {
   position: relative;
-  top: 2px;
 }
 .field input.array-item {
   height: 2rem;

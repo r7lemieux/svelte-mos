@@ -40,6 +40,10 @@
     goto(`/mo/${moMeta.name}/${mo.id}/edit`)
     // history.replaceState(history.state, '', `/mo/${moMeta.name}/${mo.id}/edit`);
   }
+  const cancel = () => {
+    viewMode = 'view'
+    goto(`/mo/${moMeta.name}/${mo.id}`)
+  }
   const save = () => {
     moMeta.dataSource?.saveMo(mo).then(mo => {
       goto(`/mo/${moMeta.name}/${mo.id}`)
@@ -59,6 +63,7 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
+<h1>MoMetaMo component</h1>
 <div class="mo">
   <div class="fields">
     {#each fieldDefs as fieldDef}
@@ -72,6 +77,7 @@
       <button on:click={edit}>Edit</button>
     {:else if viewMode === 'edit'}
       <button on:click={save}>Save</button>
+      <button on:click={cancel}>Cancel</button>
     {:else if viewMode === 'create'}
       <button on:click={create}>Create</button>
     {/if}
@@ -92,6 +98,7 @@
 
     button
       height: 2rem
+      margin: 0.5rem
 
 
 </style>

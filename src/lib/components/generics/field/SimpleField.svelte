@@ -2,6 +2,7 @@
   import type {MoViewMode} from  '$lib/constants/ui'
   import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
   import './field.sass'
+  import { afterUpdate, onMount } from 'svelte'
   export let fieldDef: FieldDefinition<never>
   export let value
   export let level
@@ -16,9 +17,17 @@
     const value = event.srcElement.value
     onChange(fieldId, value)
   }
+  let height
+  onMount(() => {
+
+    const ele = document.querySelector('.field')
+    console.log(`==>SimpleField.svelte:21 ele `, ele)
+    height = ele.offsetHeight
+    console.log(`==>SimpleField.svelte:21  height `, height)
+  })
 </script>
-<div class="field" style="margin-left:{level*12}px;">
-  <label for={fname}>{fd.getDisplayName()}</label>
+<div class="field SimpleField" style="margin-left:{level*12}px;">
+  <label for={fname}>{fd.getDisplayName()} {height}</label>
   <span class=" tree-line"></span>
   <span class="value simple-value">
     <input type={fd.inputType} name={fd.name} id="{fd.name}" value={fd.valueToString(value) || ''} on:change={changed}

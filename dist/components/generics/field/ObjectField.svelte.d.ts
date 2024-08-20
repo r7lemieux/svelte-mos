@@ -1,7 +1,9 @@
 import { SvelteComponent } from "svelte";
 import type { MoViewMode } from '../../../constants/ui';
+import type { FieldDefinition } from '../../../models/index.js';
 declare const __propDef: {
     props: {
+        fieldDef: FieldDefinition<never>;
         value: any;
         level: any;
         viewMode: MoViewMode;

@@ -40,8 +40,8 @@ export class MoMeta implements MoMetaInterface {
         name: given_name,
       })
       name = given_name
-    } else if (this.dataSource && this.dataSource.name) {
-      name = this.moDef.name + '.' + this.dataSource.name
+    // } else if (this.dataSource && this.dataSource.name) {
+    //   name = this.moDef.name + '.' + this.dataSource.name
     } else {
       name = this.moDef.name
     }

@@ -1,8 +1,11 @@
-<script>import { afterUpdate } from "svelte";
-import { sizeLabels } from "../../../services/common/util/dom.utils";
+<script>import { afterUpdate, onMount } from "svelte";
+import { setHeightToParent, sizeLabels } from "../../../services/common/util/dom.utils";
+import Field from "./Field.svelte";
+export let fieldDef;
 export let value;
 export let level;
 export let viewMode;
+const fd = fieldDef;
 $:
   disabled = viewMode === "view";
 const size = Object.keys(value).length;
@@ -14,6 +17,7 @@ let changed = (event) => {
   onChange(fieldId, value2);
 };
 let showDetails = false;
+const displayName = value.getDisplayName ? value.getDisplayName() : value.name || value.constructor.name;
 const toogle = () => {
   showDetails = !showDetails;
   sizeLabels();
@@ -21,29 +25,41 @@ const toogle = () => {
 const deleteItem = (key) => {
   delete value[key];
 };
-afterUpdate(sizeLabels);
+afterUpdate(() => {
+  sizeLabels();
+  setHeightToParent(".tree-line");
+});
+const getParentHeight = (ele) => ele.parentElement.offsetHeight;
+const getParentHeight1 = (e) => {
+  console.log(`==>ObjectField.svelte:45 e`, e);
+  return 15;
+};
+const seTreeLineHeight = (ele) => ele.parentElement.offsetHeight;
+const keys = Object.keys(value).filter((k) => typeof value[k] !== "function");
 </script>
-<!--<div class="field">-->
+<div class="field ObjectField">
 <!--  <label for={name}>{name}</label>-->
-<!--  <span class="tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>-->
-<!--  </span>-->
-<!--  <span class="value">-->
-<!--      <span class="count" on:click={toogle} on:keypress={toogle}>-->
-<!--        <span>{size}</span>-->
-<!--          <span class="detail-icon detail-arrow {showDetails?'open':'closed'}">-->
-<!--        </span>-->
-<!--      </span>-->
-<!--  </span>-->
-<!--</div>-->
-<!--{#if showDetails}-->
-  {#each Object.keys(value).sort() as key}
-    <div class="field" style="margin-left:{(level+1)*12}px;">
+  <label for={fd.name}>{fd.getDisplayName()}</label>
+  <span class="tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>
+  </span>
+  <span class="value">
+      <span class="count" on:click={toogle} on:keypress={toogle}>
+        <span>{size}</span>
+          <span class="detail-icon detail-arrow {showDetails?'open':'closed'}"></span>
+      </span>
+      <span class="name">{displayName}</span>
+  </span>
+</div>
+{#if showDetails}
+  {#each keys.sort() as key}
+<!--    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />-->
+        <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
       <label for="{key}">{key}</label>
       <span class="tree-line"></span>
       <span class="value">{value[key]?.toString()}</span>
     </div>
   {/each}
-<!--{/if}-->
+{/if}
 <style>@charset "UTF-8";
 .field {
   display: flex;
@@ -57,7 +73,7 @@ afterUpdate(sizeLabels);
 }
 .field .tree-line.open {
   border-bottom: 2px solid #88A;
-  width: 9px;
+  width: 10px;
   position: relative;
   left: 1px;
 }
@@ -70,7 +86,7 @@ afterUpdate(sizeLabels);
 .field label {
   flex: 120px 1 0;
   display: flex;
-  margin: 0 5px 7px 0;
+  margin: 0 8px 7px 0;
   justify-content: flex-end;
   width: 120px;
   color: #244;
@@ -79,12 +95,13 @@ afterUpdate(sizeLabels);
 }
 .field .value {
   flex: 200px 4 2;
+  margin-left: 3px;
 }
 .field input {
   height: 2rem;
   border: none;
   border-bottom: 1px solid #E1E2FF;
-  padding: 0 0.5rem;
+  padding: 0 0.3rem;
   width: 100%;
 }
 .field input[disabled] {
@@ -103,6 +120,7 @@ afterUpdate(sizeLabels);
   align-items: center;
   height: 2rem;
   align-self: center;
+  margin: 0 0.5rem 0 0.4rem;
   width: 35px;
   font-family: "Courier 10 Pitch", serif;
   font-size: smaller;
@@ -133,7 +151,6 @@ afterUpdate(sizeLabels);
 }
 .field .detail-icon {
   position: relative;
-  top: 2px;
 }
 .field input.array-item {
   height: 2rem;
@@ -156,4 +173,16 @@ afterUpdate(sizeLabels);
   top: 4px;
   right: -8px;
   margin: 0 -30px;
+}
+
+.ObjectField label {
+  align-self: center;
+}
+.ObjectField .value .name {
+  position: relative;
+  bottom: -0.1rem;
+}
+
+.ObjectField-Details label {
+  align-self: start;
 }</style>

@@ -1,10 +1,11 @@
 import type {FieldDefinitionInterface} from './FieldDefinition.interface'
 import {ErrorName} from  '../../services/common/message/errorName'
 import {OK, Rezult} from  '../../services/common/message/rezult'
-import { objectReplacer, toDisplayString } from '../../services/common/util/string.utils';
+import { objectReplacer, objectToString, toDisplayString } from '../../services/common/util/string.utils'
 import type {ColDef} from 'ag-grid-community'
 import {copyOwnProperties} from  '../../services/common/util/ts.utils'
 import type {InputTypes} from  '../../services/common/util/dom.utils'
+import type { ValueFormatterFunc } from 'ag-grid-community/dist/lib/entities/colDef.js'
 
 // Singleton
 export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> {
@@ -104,22 +105,36 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> {
     }
   }
 
+  gridToString(gridFields) {
+      if (!gridFields) return null
+      const data = gridFields.data
+      // if (f === undefined && this.canBeUndefined) return null
+      console.log(`==>FieldDefinition.ts:112 data`, data)
+      if (data === undefined) return null
+      const v = data[this.name]
+      return this.valueToString(v)
+  }
   valueToString(v) {
+    console.log(`==>FieldDefinition.ts:114 v`, v)
     if (v === undefined && this.canBeUndefined) return v
     if (v === null && this.canBeNull) return 'null'
+    console.log(`==>FieldDefinition.ts:116 this.type`, this.type)
     switch (this.type) {
       case 'map':
-        return Array.from(v.entries()).toString()
+        console.log(`==>FieldDefinition.ts:121 valueToString map`, v)
+        return Array.from(Object.entries(v)).toString()
       case 'boolean':
         return v ? 'Y' : 'N'
       case 'date':
       case 'object':
       case 'array':
-        return JSON.stringify(v, objectReplacer)
+        console.log(`==>FieldDefinition.ts:128 valueToString`, objectToString(v))
+        return objectToString(v)
       case 'string':
       case 'int':
       case 'float':
       default:
+        console.log(`==>FieldDefinition.ts:134 valueToString string`, v)
         return v.toString()
     }
   }
@@ -191,6 +206,7 @@ export class FieldDefinition<Type> implements FieldDefinitionInterface<Type> {
     colDef.field = colDef.field || this.name
     colDef.cellClass = colDef.cellClass || this.name
     colDef.headerName = colDef?.headerName || this.displayName || toDisplayString(this.name)
+    colDef.valueFormatter = this.gridToString.bind(this)
     return colDef
   }
 

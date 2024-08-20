@@ -21,11 +21,13 @@ const createMo = () => {
 const f2 = (k, v) => k && v && (k = "dataSource") ? "" + v : v;
 console.log(`==>Mos.svelte:31 `);
 let aaa = "initial";
+let names = "";
 onMount(() => {
   console.log(`==>Mos.svelte:33 `, moListModel.mos);
   aaa = "onMount";
   displayName = moMeta.moDef?.getDisplayName();
   console.log(`==>Mos.svelte:35 displayName`, displayName);
+  names = mos.map((m) => `moMeta: ${m.name} moDef ${m.moDef?.name} dataSource ${m.dataSource?.name}`);
   modelReady(moListModel);
 });
 afterUpdate(() => {
@@ -43,10 +45,12 @@ afterUpdate(() => {
     <button on:click={createMo}>Create {displayName}</button>
   {/if}
 </div>
-<MosGrid bind:modelReady/>
 
-<div>Mos.svelte moListModel: {JSON.stringify(moListModel, f2)}</div>
+<div>Mos.svelte</div>
+<div>{names}</div>
+<!--<div>moListModel: {JSON.stringify(moListModel, null, 2)}</div>-->
 <div>aaa {aaa}</div>
+<MosGrid bind:modelReady/>
 
 <style>.grid-top {
   display: flex;

@@ -29,6 +29,14 @@ export const sizeLabels = () => {
   }
 }
 
+export const setHeightToParent = (selector) => {
+  const elements = document.querySelectorAll(selector)
+  for (let ele of elements) {
+    const height = ele.parentElement.offsetHeight
+    ele.style.height = height + 'px'
+  }
+}
+
 export function extractViewMode(page): MoViewMode {
   const pathParts = page.url.pathname.split('/')
   const pathTail = pathParts[pathParts.length - 1]

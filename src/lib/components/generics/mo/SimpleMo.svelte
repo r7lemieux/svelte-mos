@@ -69,6 +69,7 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
+<h1>SimpleMo</h1>
 <div class="mo">
   <div class="fields">
   {#each fieldDefs as fieldDef}

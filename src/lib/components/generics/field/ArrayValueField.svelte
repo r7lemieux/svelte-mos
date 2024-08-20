@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { MoViewMode } from '$lib/constants/ui.js'
   import type { FieldDefinition } from '$lib/models/fields/FieldDefinition.js'
+  import { onMount } from 'svelte'
 
   export let fieldDef: FieldDefinition<never>
   export let value
@@ -23,8 +24,15 @@
     onChange(index, val)
     event.srcElement.value = ''
   }
+  let height
+  onMount(() => {
+    const ele = document.querySelector('.field')
+    console.log(`==>SimpleField.svelte:21 ele `, ele)
+    height = ele.offsetHeight
+    console.log(`==>SimpleField.svelte:21  height `, height)
+  })
 </script>
-<div class="field" style="margin-left:{level*12}px;">
+<div class="field ArrayValueField" style="margin-left:{level*12}px;">
   <label for={fname}></label>
   <span class="tree-line" />
   <!--{showDetails?'open':'closed'}"></span>-->

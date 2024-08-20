@@ -8,8 +8,9 @@ import type { MoInterface } from './MoInterface';
 export declare class MoMetaMo extends Mo implements MoMetaInterface {
     name: string;
     moDef: MoDefinitionInterface;
-    dataSource: DataSource;
+    dataSource?: DataSource;
     constructor(moMeta: MoMetaInterface);
+    toDisplayString: () => string;
     newMo: () => MoInterface;
     objToMo: (obj: any) => MoInterface;
     documentToMo: (doc: any) => MoInterface;

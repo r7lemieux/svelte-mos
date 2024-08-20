@@ -6,6 +6,7 @@
   import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
   import MO from  '$lib/components/generics/mo/MO.svelte'
   import ObjectField from  '$lib/components/generics/field/ObjectField.svelte'
+  import { onMount } from 'svelte'
 
   export let fieldDef: FieldDefinition<never>
   export let value
@@ -31,10 +32,17 @@
     onChange(key, val)
     event.srcElement.value = ''
   }
+  let height
+  onMount(() => {
+    const ele = document.querySelector('.field')
+    console.log(`==>SimpleField.svelte:21 ele `, ele)
+    height = ele.offsetHeight
+    console.log(`==>SimpleField.svelte:21  height `, height)
+  })
 </script>
-<div class="field" style="margin-left:{level*12}px;">
-  <label for={fname}>{key}</label>
-  <span class="tree-line" ></span>
+<div class="field MapValueField" style="margin-left:{level*12}px;">
+  <label for={fname}>{key} {height}</label>
+  <span class="tree-line" style="height: calc({height}px"></span>
 
   <span class="value">
     {#if valueType === 'mo'}

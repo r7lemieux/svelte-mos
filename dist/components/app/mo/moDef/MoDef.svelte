@@ -50,6 +50,7 @@ const deleteItem = (fname, i) => {
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
+<h1>MoDef component</h1>
 <div class="mo">
   <div class="fields">
     {#each fieldDefs as fieldDef}

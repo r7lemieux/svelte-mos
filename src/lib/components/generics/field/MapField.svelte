@@ -2,7 +2,7 @@
   import type {MoViewMode} from  '$lib/constants/ui'
   import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
   import MapValueField from  '$lib/components/generics/field/MapValueField.svelte'
-  import {afterUpdate} from 'svelte'
+  import { afterUpdate, onMount } from 'svelte'
   import {sizeLabels} from  '$lib/services/common/util/dom.utils'
 
   export let fieldDef: FieldDefinition<never>
@@ -32,10 +32,16 @@
   }
 
   afterUpdate(sizeLabels)
-
+  let height
+  onMount(() => {
+    const ele = document.querySelector('.field')
+    console.log(`==>SimpleField.svelte:21 ele `, ele)
+    height = ele.offsetHeight
+    console.log(`==>SimpleField.svelte:21  height `, height)
+  })
 </script>
-<div class="field">
-  <label for={fname}>{fd.getDisplayName()}</label>
+<div class="field MapField">
+  <label for={fname}>{fd.getDisplayName()} {height}</label>
   <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
 <!--    <span class="top tree-line1"/>-->
 <!--    <span class="arrow {showDetails?'open':'closed'}"/>-->
