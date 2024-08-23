@@ -12,6 +12,10 @@ export class MoListModel {
     mos = [];
     fieldDefs;
     constructor(moMeta) {
+        if (!moMeta)
+            console.trace(`==>MoList.model.ts:20 no moMeta`);
+        if (!moMeta)
+            throw new Rezult(ErrorName.missing_param);
         this.moMeta = moMeta;
         this.moDef = moMeta.moDef;
     }

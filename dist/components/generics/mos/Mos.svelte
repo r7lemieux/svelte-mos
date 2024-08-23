@@ -7,9 +7,15 @@ import { goto } from "$app/navigation";
 import { MoMeta, moMetaMoMeta } from "../../../models/index.js";
 export let mos = [];
 export let moMeta;
-moMeta = moMeta || mos[0].moMeta;
-if (!mos) {
-  moMeta.dataSource?.getMos().then((allMos) => mos = allMos);
+moMeta = moMeta || mos[0]?.moMeta;
+console.log(`==>Mos.svelte:15 mos`, mos);
+console.log(`==>Mos.svelte:16 moMeta`, moMeta);
+if (moMeta && !mos) {
+  moMeta.dataSource?.getMos().then((allMos) => {
+    console.log(`==>Mos.svelte:20 moDefMoMeta`, moDefMoMeta);
+    mos = allMos;
+    console.log(`==>Mos.svelte:22 mos`, mos);
+  });
 }
 let displayName = moMeta?.moDef.getDisplayName();
 let modelReady;
@@ -49,7 +55,6 @@ afterUpdate(() => {
 <div>Mos.svelte</div>
 <div>{names}</div>
 <!--<div>moListModel: {JSON.stringify(moListModel, null, 2)}</div>-->
-<div>aaa {aaa}</div>
 <MosGrid bind:modelReady/>
 
 <style>.grid-top {

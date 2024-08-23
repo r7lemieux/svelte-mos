@@ -1,10 +1,13 @@
-import type { Mo } from '../../models/managedObjects/Mo.js';
+import type { Mo } from '../../models/generic/Mo';
+import type { MoMeta } from '../../models/generic/MoMeta';
 import type { DataSource } from './DataSource';
 export declare class HeapDataSource implements DataSource {
+    moMeta: MoMeta;
     records: {
         [key: string]: Mo;
     };
     keyname: string;
+    constructor(moMeta: any);
     getMo: (key: any) => Promise<Mo | undefined>;
     saveMo: (mo: any) => Promise<any>;
     updateMo: (mo: any) => Promise<any>;

@@ -63,7 +63,8 @@
 {#if showDetails}
   {#each keys.sort() as key}
 <!--    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />-->
-        <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
+      <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
+
       <label for="{key}">{key}</label>
       <span class="tree-line"></span>
       <span class="value">{value[key]?.toString()}</span>

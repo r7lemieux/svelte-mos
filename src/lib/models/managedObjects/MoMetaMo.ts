@@ -48,7 +48,7 @@ export class MoMetaMo extends Mo implements MoMetaInterface {
 
 export const moMetaMoDef = new MoDefinition('moMetaMo')
 moMetaMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
-const moDefFieldDef = from(BaseFieldDefs.Object).chainSetName('moDef')
+const moDefFieldDef = from(BaseFieldDefs.Mo).chainSetName('moDef')
 moDefFieldDef.mapValueType = 'object'
 moMetaMoDef.addFieldDef(moDefFieldDef)
 const dataSourceFieldDef = from(BaseFieldDefs.Object).chainSetName('dataSource')

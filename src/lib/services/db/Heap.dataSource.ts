@@ -1,11 +1,18 @@
-import type { Mo } from '$lib/models/managedObjects/Mo.js';
-import { Rezult } from '$lib/services/common/message/rezult';
-import { ErrorName } from '$lib/services/common/message/errorName';
-import type { DataSource } from '$lib/services/db/DataSource';
+import {DbService} from  '$lib/services/db/db.service'
+import type {Mo} from  '$lib/models/generic/Mo'
+import type {MoMeta} from  '$lib/models/generic/MoMeta'
+import {Rezult} from  '$lib/services/common/message/rezult'
+import {ErrorName} from  '$lib/services/common/message/errorName'
+import type {DataSource} from  '$lib/services/db/DataSource'
 
 export class HeapDataSource implements DataSource {
+  moMeta: MoMeta
   records: {[key:string]: Mo} = {}
   keyname = 'id'
+
+  constructor(moMeta) {
+    this.moMeta = moMeta
+  }
 
   getMo = async (key: any): Promise<Mo | undefined> => {
       return this.records[key]

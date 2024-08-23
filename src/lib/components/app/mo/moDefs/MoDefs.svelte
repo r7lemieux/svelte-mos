@@ -5,18 +5,15 @@
   import type {Mo} from '$lib/models/managedObjects/Mo.js'
   import { moDefMoMeta } from '$lib/models/index.js'
   export let mos
-  const moDef = moDefDef
-  // const mos = data.mos
   let modelReady: (model: MoListModel) => boolean
   const moListModel = new MoListModel(moDefMoMeta)
-  // onMount(() => {
-  //   modelReady(moListModel)
-  // })
+  const moMeta = moDefMoMeta
+  console.log(`==>MoDefs.svelte:11 mos`, mos)
 </script>
 <svelte:head>
   <title>Mo Definitions</title>
   <meta name="description" content="Mo Definitons"/>
 </svelte:head>
 
-<Mos {moDef} {mos} />
+<Mos {moMeta} {mos} />
 

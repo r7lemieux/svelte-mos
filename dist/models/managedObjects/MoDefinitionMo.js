@@ -2,15 +2,20 @@ import { Mo } from './Mo';
 import { from } from '../fields/FieldDefinition';
 import { BaseFieldDefs } from '../fields/CommonFieldDefinition';
 import { MoMeta } from './MoMeta';
-import { MoDefinition } from './MoDefinition';
+import { moDefDef, MoDefinition } from './MoDefinition';
+import { HeapDataSource } from '../../services/db/Heap.dataSource';
 export class MoDefinitionMo extends Mo {
     moDef;
     constructor(moDef) {
         super(moDefMoMeta);
+        this.moDef = moDef;
+        this.id = this.name = moDef.name;
+        this.getDiplayName = this.moDef.getDisplayName;
     }
 }
 export const moDefMoDef = new MoDefinition('moDefMo');
-const fieldDefsFieldDef = from(BaseFieldDefs.Map).chainSetName('moDef');
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'));
+const fieldDefsFieldDef = from(BaseFieldDefs.Object).chainSetName('moDef');
 fieldDefsFieldDef.mapValueType = 'object';
 moDefMoDef.addFieldDef(fieldDefsFieldDef);
 export const moDefMoMeta = new MoMeta(moDefMoDef);
@@ -18,14 +23,9 @@ Object.assign(moDefMoDef, {
     name: 'moDefMo',
     dbName: 'moDefMo',
     displayName: 'Mo Definition Mo',
-    keyFieldnames: ['moDefMo'],
-    gridFieldnames: ['moDefMo'],
     moClass: MoDefinitionMo,
-    hasId: true,
-    idType: 'number',
-    gdriveFilePath: 'system/moDefs',
-    gdriveFileId: null,
     canCreate: false,
+    moDef: moDefDef
 });
 moDefMoMeta.documentToMo = doc => {
     const moDefMo = new MoDefinitionMo(moDefMoDef);
@@ -33,3 +33,6 @@ moDefMoMeta.documentToMo = doc => {
     Object.assign(moDefMo, obj);
     return moDefMo;
 };
+moDefMoMeta.dataSource = new HeapDataSource();
+moDefMoMeta.dataSource.name = 'moDefMoMeta';
+moDefMoMeta.dataSource.keyname = 'name';

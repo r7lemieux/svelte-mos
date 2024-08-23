@@ -15,7 +15,10 @@ export class MoListModel {
   moDef: MoDefinitionInterface
   mos: Mo[] = []
   fieldDefs: Map<string, FieldDefinition<any>>
+
   constructor(moMeta: MoMetaInterface) {
+    if (!moMeta) console.trace(`==>MoList.model.ts:20 no moMeta`)
+    if (!moMeta) throw new Rezult(ErrorName.missing_param)
     this.moMeta = moMeta
     this.moDef = moMeta.moDef
   }

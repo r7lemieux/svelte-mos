@@ -5,6 +5,7 @@ export const registerMoDef = (moDef) => {
     const moDefMo = new MoDefinitionMo(moDef);
     moDefMo.name = moDef.id = moDef.name;
     moDefMoMeta.dataSource?.saveMo(moDefMo);
+    console.log(`==>MoDefinitionMos.ts:10 moDefMoMeta`, moDefMoMeta);
 };
 export const getMoDefMo = (moname) => {
     return moDefMeta.dataSource?.getMo(moname)
