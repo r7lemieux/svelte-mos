@@ -167,7 +167,12 @@ moDefDef.addFieldDef(fieldDefsFieldDef)
 const moClassFieldDef = from(BaseFieldDefs.Name).chainSetName('moClass')
 moClassFieldDef.gridColDef.field = undefined
 moClassFieldDef.gridColDef.valueGetter = params => params.data.moClass.name
-moClassFieldDef.valueToString = v => v.name
+moClassFieldDef.valueToString = v => {
+  if (!v) {
+  console.log(`==>MoDefinition.ts:172 v `, v)
+}
+  v => v.name
+}
 moDefDef.addFieldDef(moClassFieldDef)
 // export const moDefMeta: MoMetaInterface = new MoMeta(moDefDef)
 Object.assign(moDefDef, {

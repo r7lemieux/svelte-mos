@@ -193,7 +193,7 @@ export const CommonFieldDefs = {
   jobTitle: from(BaseFieldDefs.Name),
   time: from(BaseFieldDefs.Date),
   link: from(BaseFieldDefs.URL),
-
+  mo: from(BaseFieldDefs.Object),
   id: from(BaseFieldDefs.Id),
   url: from(BaseFieldDefs.URL),
   icon: from(BaseFieldDefs.Icon),

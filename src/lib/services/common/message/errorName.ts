@@ -32,6 +32,7 @@ export enum ErrorName {
   'missing_field',
   'missing_implementation',
   'missing_param',
+  'missing_value',
   'not_implemented_in_default',
   'not_implemented_in_subclass',
   'req_invalid_action',

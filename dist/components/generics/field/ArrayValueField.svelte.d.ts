@@ -6,7 +6,7 @@ declare const __propDef: {
         fieldDef: FieldDefinition<never>;
         value: any;
         viewMode: MoViewMode;
-        single?: boolean | undefined;
+        single?: boolean;
         onChange: any;
         index: any;
         deleteItem: any;

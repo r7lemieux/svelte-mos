@@ -3,8 +3,7 @@ export let fieldDef;
 export let value;
 export let viewMode;
 export let single = false;
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 const fd = fieldDef;
 const fname = fieldDef.name;
 export let onChange;

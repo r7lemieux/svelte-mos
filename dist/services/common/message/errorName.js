@@ -33,14 +33,15 @@ export var ErrorName;
     ErrorName[ErrorName["missing_field"] = 30] = "missing_field";
     ErrorName[ErrorName["missing_implementation"] = 31] = "missing_implementation";
     ErrorName[ErrorName["missing_param"] = 32] = "missing_param";
-    ErrorName[ErrorName["not_implemented_in_default"] = 33] = "not_implemented_in_default";
-    ErrorName[ErrorName["not_implemented_in_subclass"] = 34] = "not_implemented_in_subclass";
-    ErrorName[ErrorName["req_invalid_action"] = 35] = "req_invalid_action";
-    ErrorName[ErrorName["req_missing_id"] = 36] = "req_missing_id";
-    ErrorName[ErrorName["req_no_id"] = 37] = "req_no_id";
-    ErrorName[ErrorName["server_error"] = 38] = "server_error";
-    ErrorName[ErrorName["spreadsheet_no_name"] = 39] = "spreadsheet_no_name";
-    ErrorName[ErrorName["type5_error"] = 40] = "type5_error";
+    ErrorName[ErrorName["missing_value"] = 33] = "missing_value";
+    ErrorName[ErrorName["not_implemented_in_default"] = 34] = "not_implemented_in_default";
+    ErrorName[ErrorName["not_implemented_in_subclass"] = 35] = "not_implemented_in_subclass";
+    ErrorName[ErrorName["req_invalid_action"] = 36] = "req_invalid_action";
+    ErrorName[ErrorName["req_missing_id"] = 37] = "req_missing_id";
+    ErrorName[ErrorName["req_no_id"] = 38] = "req_no_id";
+    ErrorName[ErrorName["server_error"] = 39] = "server_error";
+    ErrorName[ErrorName["spreadsheet_no_name"] = 40] = "spreadsheet_no_name";
+    ErrorName[ErrorName["type5_error"] = 41] = "type5_error";
 })(ErrorName || (ErrorName = {}));
 export const ErrorDef = {
     ok: { httpCode: 200 },

@@ -8,13 +8,9 @@ import { MoMeta, moMetaMoMeta } from "../../../models/index.js";
 export let mos = [];
 export let moMeta;
 moMeta = moMeta || mos[0]?.moMeta;
-console.log(`==>Mos.svelte:15 mos`, mos);
-console.log(`==>Mos.svelte:16 moMeta`, moMeta);
 if (moMeta && !mos) {
   moMeta.dataSource?.getMos().then((allMos) => {
-    console.log(`==>Mos.svelte:20 moDefMoMeta`, moDefMoMeta);
     mos = allMos;
-    console.log(`==>Mos.svelte:22 mos`, mos);
   });
 }
 let displayName = moMeta?.moDef.getDisplayName();
@@ -25,14 +21,11 @@ const createMo = () => {
   goto(`/mo/${moMeta.name}/create`);
 };
 const f2 = (k, v) => k && v && (k = "dataSource") ? "" + v : v;
-console.log(`==>Mos.svelte:31 `);
 let aaa = "initial";
 let names = "";
 onMount(() => {
-  console.log(`==>Mos.svelte:33 `, moListModel.mos);
   aaa = "onMount";
   displayName = moMeta.moDef?.getDisplayName();
-  console.log(`==>Mos.svelte:35 displayName`, displayName);
   names = mos.map((m) => `moMeta: ${m.name} moDef ${m.moDef?.name} dataSource ${m.dataSource?.name}`);
   modelReady(moListModel);
 });

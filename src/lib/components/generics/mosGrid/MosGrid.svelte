@@ -9,9 +9,9 @@
   import type {MoListModel} from '$lib/models/managedObjects/MoList.model.js'
   import {BtnCellRenderer} from  '$lib/components/common/BtnCellRenderer'
   import {buildIconColDef, IconCellRenderer} from  '$lib/components/common/IconCellRenderer'
-  import CgArrowRight from 'svelte-icons-pack/cg/CgArrowRight'
+  import {CgArrowRight} from 'svelte-icons-pack/cg'
   import {goto} from '$app/navigation'
-  import AiOutlineArrowRight from "svelte-icons-pack/ai/AiOutlineArrowRight"
+  import {AiOutlineArrowRight} from 'svelte-icons-pack/ai'
 
   export let height = '100px'
   export let gridId = 'grid'
@@ -62,7 +62,7 @@
    * ------------
    */
   const goToView = (mo) => {
-    goto(`/mo/${mo.moDef.name}/${mo.id}`)
+    goto(`/mo/${mo.moMeta.name}/${mo.id}`)
       .then(r => {
         console.log(`==>MosGrid.svelte:67 r`, r)
         return r

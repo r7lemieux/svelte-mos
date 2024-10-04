@@ -41,7 +41,7 @@
   })
 </script>
 <div class="field MapField">
-  <label for={fname}>{fd.getDisplayName()} {height}</label>
+  <label for={fname}>{fd.getDisplayName()} </label>
   <span class=" tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle} role="button" tabindex="0">
 <!--    <span class="top tree-line1"/>-->
 <!--    <span class="arrow {showDetails?'open':'closed'}"/>-->

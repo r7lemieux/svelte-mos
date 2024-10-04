@@ -13,7 +13,7 @@
   const fd = fieldDef
 
   $: disabled = viewMode === 'view'
-  const size = Object.keys(value).length
+  const size = value? Object.keys(value).length : 0
   const ui = {}
   export let onChange
   let changed = event => {
@@ -23,7 +23,9 @@
   }
   let showDetails = false
 
-  const displayName = (value.getDisplayName)?value.getDisplayName():null || value.name || value.constructor.name
+  const displayName = value?
+		((value.getDisplayName)? value.getDisplayName():null || value.name || value.constructor.name):
+		null
   const toogle = () => {
     showDetails = !showDetails
     sizeLabels()
@@ -44,12 +46,14 @@
   }
   const seTreeLineHeight = (ele: Element) => ele.parentElement.offsetHeight
 
-  const keys = Object.keys(value).filter(k => typeof value[k] !== 'function')
-
+  const keys = value?
+		(Object.keys(value).filter(k => typeof value[k] !== 'function')):
+		[]
 </script>
+
 <div class="field ObjectField">
 <!--  <label for={name}>{name}</label>-->
-  <label for={fd.name}>{fd.getDisplayName()}</label>
+  <label for={fd.name}>{fd.displayName}</label>
   <span class="tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>
   </span>
   <span class="value">
@@ -62,7 +66,11 @@
 </div>
 {#if showDetails}
   {#each keys.sort() as key}
-<!--    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />-->
+    <!--<div>fieldDef {fieldDef.name}:  {value}</div>
+-->
+    <!--
+    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />
+    -->
       <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
 
       <label for="{key}">{key}</label>
@@ -71,6 +79,7 @@
     </div>
   {/each}
 {/if}
+
 <style lang="sass">
   @use 'field'
   .ObjectField

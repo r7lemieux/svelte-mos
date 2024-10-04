@@ -4,9 +4,9 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { onMount } from "svelte";
 import { BtnCellRenderer } from "../../common/BtnCellRenderer";
 import { buildIconColDef, IconCellRenderer } from "../../common/IconCellRenderer";
-import CgArrowRight from "svelte-icons-pack/cg/CgArrowRight";
+import { CgArrowRight } from "svelte-icons-pack/cg";
 import { goto } from "$app/navigation";
-import AiOutlineArrowRight from "svelte-icons-pack/ai/AiOutlineArrowRight";
+import { AiOutlineArrowRight } from "svelte-icons-pack/ai";
 export let height = "100px";
 export let gridId = "grid";
 let grid;
@@ -15,8 +15,7 @@ let displayName = "";
 let gridOptions;
 let emptyGrid = false;
 onMount(() => {
-  if (model)
-    buildGrid();
+  if (model) buildGrid();
 });
 const buildGrid = () => {
   const eGridDiv = window.document.getElementById(gridId);
@@ -31,8 +30,7 @@ const buildGrid = () => {
   }
 };
 export const modelReady = (listModel) => {
-  if (!listModel)
-    return false;
+  if (!listModel) return false;
   displayName = listModel.moDef.getDisplayName();
   emptyGrid = !listModel?.mos?.length;
   if (model && model.getName() === listModel.getName()) {
@@ -46,7 +44,7 @@ export const modelReady = (listModel) => {
   return true;
 };
 const goToView = (mo) => {
-  goto(`/mo/${mo.moDef.name}/${mo.id}`).then((r) => {
+  goto(`/mo/${mo.moMeta.name}/${mo.id}`).then((r) => {
     console.log(`==>MosGrid.svelte:67 r`, r);
     return r;
   }).catch((e) => {
@@ -55,8 +53,7 @@ const goToView = (mo) => {
   });
 };
 const buildGridOptions = () => {
-  if (!model)
-    return {};
+  if (!model) return {};
   let gridFieldDefs = Array.from(model.getFieldDefs().values());
   if (model.moDef.gridFieldnames) {
     gridFieldDefs = gridFieldDefs.filter((d) => model?.moDef.gridFieldnames?.indexOf(d.name) !== -1);

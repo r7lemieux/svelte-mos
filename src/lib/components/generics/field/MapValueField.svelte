@@ -1,9 +1,11 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
   import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
-  import Icon from 'svelte-icons-pack/Icon.svelte'
-  import AiOutlineCaretDown from 'svelte-icons-pack/ai/AiOutlineCaretDown'
-  import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
+  // import Icon from 'svelte-icons-pack/Icon.svelte'
+  // import AiOutlineCaretDown from 'svelte-icons-pack/ai/AiOutlineCaretDown'
+  // import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
+	import { AiOutlineCaretDown } from 'svelte-icons-pack/ai'
+	import { AiOutlineCaretRight } from 'svelte-icons-pack/ai'
   import MO from  '$lib/components/generics/mo/MO.svelte'
   import ObjectField from  '$lib/components/generics/field/ObjectField.svelte'
   import { onMount } from 'svelte'
@@ -41,7 +43,7 @@
   })
 </script>
 <div class="field MapValueField" style="margin-left:{level*12}px;">
-  <label for={fname}>{key} {height}</label>
+  <label for={fname}>{key}</label>
   <span class="tree-line" style="height: calc({height}px"></span>
 
   <span class="value">

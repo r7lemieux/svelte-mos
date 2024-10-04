@@ -5,8 +5,8 @@ declare const __propDef: {
     props: {
         fieldDef: FieldDefinition<never>;
         value: any;
-        viewMode?: MoViewMode | undefined;
-        level?: number | undefined;
+        viewMode?: MoViewMode;
+        level?: number;
         onChange: (fieldId: string, value: any) => void;
     };
     events: {

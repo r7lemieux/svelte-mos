@@ -5,7 +5,7 @@ import type { Mo } from '../../../models/managedObjects/Mo.js';
 import { type MoMetaInterface } from '../../../models/index.js';
 declare const __propDef: {
     props: {
-        mos?: Mo[] | undefined;
+        mos?: Mo[];
         moMeta: MoMetaInterface;
     };
     events: {

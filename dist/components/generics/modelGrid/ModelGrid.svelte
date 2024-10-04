@@ -8,8 +8,7 @@ let grid;
 let model = null;
 let gridOptions;
 onMount(() => {
-  if (model)
-    buildGrid();
+  if (model) buildGrid();
 });
 const buildGrid = () => {
   const eGridDiv = window.document.getElementById(gridId);
@@ -24,8 +23,7 @@ const buildGrid = () => {
   }
 };
 export const modelReady = (listModel) => {
-  if (!listModel)
-    return false;
+  if (!listModel) return false;
   if (model && model.getName() === listModel.getName()) {
     gridOptions?.api?.setRowData(listModel.mos);
     return true;
@@ -37,8 +35,7 @@ export const modelReady = (listModel) => {
   return true;
 };
 const buildGridOptions = () => {
-  if (!model)
-    return {};
+  if (!model) return {};
   let gridFieldDefs = Array.from(model.getFieldDefs().values());
   if (model.moDef.gridFieldnames) {
     gridFieldDefs = gridFieldDefs.filter((d) => model?.moDef.gridFieldnames?.indexOf(d.name) !== -1);

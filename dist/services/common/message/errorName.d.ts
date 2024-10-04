@@ -32,14 +32,15 @@ export declare enum ErrorName {
     'missing_field' = 30,
     'missing_implementation' = 31,
     'missing_param' = 32,
-    'not_implemented_in_default' = 33,
-    'not_implemented_in_subclass' = 34,
-    'req_invalid_action' = 35,
-    'req_missing_id' = 36,
-    'req_no_id' = 37,
-    'server_error' = 38,
-    'spreadsheet_no_name' = 39,
-    'type5_error' = 40
+    'missing_value' = 33,
+    'not_implemented_in_default' = 34,
+    'not_implemented_in_subclass' = 35,
+    'req_invalid_action' = 36,
+    'req_missing_id' = 37,
+    'req_no_id' = 38,
+    'server_error' = 39,
+    'spreadsheet_no_name' = 40,
+    'type5_error' = 41
 }
 export declare const ErrorDef: {
     ok: {

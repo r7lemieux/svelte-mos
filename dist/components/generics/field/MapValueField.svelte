@@ -1,6 +1,5 @@
-<script>import Icon from "svelte-icons-pack/Icon.svelte";
-import AiOutlineCaretDown from "svelte-icons-pack/ai/AiOutlineCaretDown";
-import AiOutlineCaretRight from "svelte-icons-pack/ai/AiOutlineCaretRight";
+<script>import { AiOutlineCaretDown } from "svelte-icons-pack/ai";
+import { AiOutlineCaretRight } from "svelte-icons-pack/ai";
 import MO from "../mo/MO.svelte";
 import ObjectField from "./ObjectField.svelte";
 import { onMount } from "svelte";
@@ -8,8 +7,7 @@ export let fieldDef;
 export let value;
 export let valueType;
 export let viewMode;
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 const fd = fieldDef;
 const fname = fieldDef.name;
 export let onChange;
@@ -37,7 +35,7 @@ onMount(() => {
 });
 </script>
 <div class="field MapValueField" style="margin-left:{level*12}px;">
-  <label for={fname}>{key} {height}</label>
+  <label for={fname}>{key}</label>
   <span class="tree-line" style="height: calc({height}px"></span>
 
   <span class="value">

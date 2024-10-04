@@ -1,5 +1,6 @@
 import { DbService } from './db.service';
 import type { Mo } from '../../models/generic/Mo';
+import type { MoMeta } from '../../models/generic/MoMeta';
 export declare class HeapDbService implements DbService {
     records: {
         [tableName: string]: {

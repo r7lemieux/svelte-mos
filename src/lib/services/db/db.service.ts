@@ -2,7 +2,6 @@
 import type {Mo} from '$lib/models/managedObjects/Mo.js'
 import {Rezult} from  '$lib/services/common/message/rezult'
 import {ErrorName} from  '$lib/services/common/message/errorName'
-import type {MoListModel} from '$lib/models/managedObjects/MoList.model.js'
 import type {MoDefinition} from '$lib/models/managedObjects/MoDefinition'
 import type {DataSource} from  '$lib/services/db/DataSource'
 import type {DbServiceInterface} from '$lib/services/db/db.service.interface'

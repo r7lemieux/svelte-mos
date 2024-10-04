@@ -8,8 +8,7 @@ import { extractViewMode } from "../../../../services/common/util/dom.utils.js";
 import { MoMetaMo } from "../../../../models/managedObjects/MoMetaMo.js";
 export let mo;
 let viewMode = extractViewMode($page);
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 let moMeta = mo;
 const title = toDisplayString(moMeta.name);
 const fieldDefs = Array.from(mo.moMeta.moDef.fieldDefs.values());
@@ -17,11 +16,10 @@ const ui = {};
 const onChange = (fieldId, val) => {
   const fieldPathNames = fieldId.split(".");
   let targetObj = mo;
-  if (fieldPathNames.length === 0)
-    throw new Rezult(ErrorName.missing_param, {
-      method: "Mo.svelte.onChange()",
-      fieldId
-    });
+  if (fieldPathNames.length === 0) throw new Rezult(ErrorName.missing_param, {
+    method: "Mo.svelte.onChange()",
+    fieldId
+  });
   let fname = fieldPathNames.pop();
   for (const pathName of fieldPathNames) {
     const pathval = Array.isArray(pathName) ? Number.parseInt(pathName) : pathName;

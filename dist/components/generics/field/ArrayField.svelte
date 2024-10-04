@@ -1,12 +1,10 @@
-<script>import AiOutlineCaretDown from "svelte-icons-pack/ai/AiOutlineCaretDown";
-import AiOutlineCaretRight from "svelte-icons-pack/ai/AiOutlineCaretRight";
-import Icon from "svelte-icons-pack/Icon.svelte";
+<script>import { AiOutlineCaretDown } from "svelte-icons-pack/ai";
+import { AiOutlineCaretRight } from "svelte-icons-pack/ai";
 import ArrayValueField from "./ArrayValueField.svelte";
 export let fieldDef;
 export let value;
 export let viewMode;
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 const fd = fieldDef;
 const fname = fieldDef.name;
 export let onChange;

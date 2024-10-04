@@ -18,7 +18,7 @@
   $: disabled = viewMode === 'view'
   let moDef = mo.moDef
   const title = toDisplayString(moDef.name)
-  const fieldDefs = Array.from(mo.moDef.fieldDefs.values())
+  const fieldDefs = Array.from(mo.moMeta.moDef.fieldDefs.values())
   const ui = {}
 
   const onChange = (fieldId: string, val: any) => {
@@ -59,6 +59,7 @@
     mo[fname] = mo[fname].filter((item,index) => index != i)
   }
 </script>
+
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
@@ -81,6 +82,7 @@
     {/if}
   </div>
 </div>
+
 <style lang="sass">
   .mo
     max-width: 40rem

@@ -8,20 +8,18 @@ import { ErrorName } from "../../../../services/common/message/errorName";
 import { extractViewMode } from "../../../../services/common/util/dom.utils.js";
 export let mo;
 let viewMode = extractViewMode($page);
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 let moDef = mo.moDef;
 const title = toDisplayString(moDef.name);
-const fieldDefs = Array.from(mo.moDef.fieldDefs.values());
+const fieldDefs = Array.from(mo.moMeta.moDef.fieldDefs.values());
 const ui = {};
 const onChange = (fieldId, val) => {
   const fieldPathNames = fieldId.split(".");
   let targetObj = mo;
-  if (fieldPathNames.length === 0)
-    throw new Rezult(ErrorName.missing_param, {
-      method: "Mo.svelte.onChange()",
-      fieldId
-    });
+  if (fieldPathNames.length === 0) throw new Rezult(ErrorName.missing_param, {
+    method: "Mo.svelte.onChange()",
+    fieldId
+  });
   let fname = fieldPathNames.pop();
   for (const pathName of fieldPathNames) {
     const pathval = Array.isArray(pathName) ? Number.parseInt(pathName) : pathName;
@@ -47,6 +45,7 @@ const deleteItem = (fname, i) => {
   mo[fname] = mo[fname].filter((item, index) => index != i);
 };
 </script>
+
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
@@ -69,6 +68,7 @@ const deleteItem = (fname, i) => {
     {/if}
   </div>
 </div>
+
 <style>.mo {
   max-width: 40rem;
   padding: 0 1rem 0 0;

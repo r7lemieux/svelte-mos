@@ -4,7 +4,7 @@ import type { DataSource } from '../../services/db/DataSource'
 import type { MoDefinitionInterface } from './MoDefinitionInterface'
 import { MoMeta } from './MoMeta.js'
 import { moDefDef, MoDefinition } from './MoDefinition'
-import { BaseFieldDefs } from '../fields/CommonFieldDefinition.js'
+import { BaseFieldDefs, CommonFieldDefs } from '../fields/CommonFieldDefinition.js'
 import { from } from '../fields/FieldDefinition.js'
 import { HeapDataSource } from '../../services/db/Heap.dataSource.js'
 import { Mo } from './Mo';
@@ -46,9 +46,9 @@ export class MoMetaMo extends Mo implements MoMetaInterface {
   getDisplayName = () => this.moDef.getDisplayName()
 }
 
-export const moMetaMoDef = new MoDefinition('moMetaMo')
+export const moMetaMoDef = new MoDefinition('moMeta')
 moMetaMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
-const moDefFieldDef = from(BaseFieldDefs.Mo).chainSetName('moDef')
+const moDefFieldDef = from(CommonFieldDefs.mo).chainSetName('moDef')
 moDefFieldDef.mapValueType = 'object'
 moMetaMoDef.addFieldDef(moDefFieldDef)
 const dataSourceFieldDef = from(BaseFieldDefs.Object).chainSetName('dataSource')
@@ -61,6 +61,7 @@ Object.assign(moMetaMoDef, {
 })
 export const moMetaMoMeta = new MoMeta(moMetaMoDef)
 moMetaMoMeta.moDef.name = 'moMeta'
+moMetaMoMeta.name = 'moMeta'
 moMetaMoDef.documentToMo = doc => {
   const moMetaMo = new MoMetaMo({} as MoMetaInterface)
   const obj = JSON.parse(doc.json)

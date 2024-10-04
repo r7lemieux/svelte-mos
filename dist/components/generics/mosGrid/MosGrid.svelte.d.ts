@@ -4,10 +4,10 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import type { MoListModel } from '../../../models/managedObjects/MoList.model.js';
 declare const __propDef: {
     props: {
-        height?: string | undefined;
-        gridId?: string | undefined;
-        model?: MoListModel | null | undefined;
-        modelReady?: ((listModel: MoListModel) => boolean) | undefined;
+        height?: string;
+        gridId?: string;
+        model?: MoListModel | null;
+        modelReady?: (listModel: MoListModel) => boolean;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -6,9 +6,8 @@ export let value;
 export let level;
 export let viewMode;
 const fd = fieldDef;
-$:
-  disabled = viewMode === "view";
-const size = Object.keys(value).length;
+$: disabled = viewMode === "view";
+const size = value ? Object.keys(value).length : 0;
 const ui = {};
 export let onChange;
 let changed = (event) => {
@@ -17,7 +16,7 @@ let changed = (event) => {
   onChange(fieldId, value2);
 };
 let showDetails = false;
-const displayName = value.getDisplayName ? value.getDisplayName() : value.name || value.constructor.name;
+const displayName = value ? value.getDisplayName ? value.getDisplayName() : value.name || value.constructor.name : null;
 const toogle = () => {
   showDetails = !showDetails;
   sizeLabels();
@@ -35,11 +34,12 @@ const getParentHeight1 = (e) => {
   return 15;
 };
 const seTreeLineHeight = (ele) => ele.parentElement.offsetHeight;
-const keys = Object.keys(value).filter((k) => typeof value[k] !== "function");
+const keys = value ? Object.keys(value).filter((k) => typeof value[k] !== "function") : [];
 </script>
+
 <div class="field ObjectField">
 <!--  <label for={name}>{name}</label>-->
-  <label for={fd.name}>{fd.getDisplayName()}</label>
+  <label for={fd.name}>{fd.displayName}</label>
   <span class="tree-line {showDetails?'open':'closed'}" on:click={toogle} on:keypress={toogle}>
   </span>
   <span class="value">
@@ -52,14 +52,20 @@ const keys = Object.keys(value).filter((k) => typeof value[k] !== "function");
 </div>
 {#if showDetails}
   {#each keys.sort() as key}
-<!--    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />-->
-        <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
+    <!--<div>fieldDef {fieldDef.name}:  {value}</div>
+-->
+    <!--
+    <Field {fieldDef} {value} {viewMode} {onChange} level={level + 1 } />
+    -->
+      <div class="field ObjectField-Details" style="margin-left:{(level+1)*12}px;">
+
       <label for="{key}">{key}</label>
       <span class="tree-line"></span>
       <span class="value">{value[key]?.toString()}</span>
     </div>
   {/each}
 {/if}
+
 <style>@charset "UTF-8";
 .field {
   display: flex;

@@ -1,5 +1,4 @@
 import { SvelteComponent } from "svelte";
-import { MoMetaMo } from '../../../../models/managedObjects/MoMetaMo.js';
 declare const __propDef: {
     props: {
         mo: MoMetaMo;

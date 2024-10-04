@@ -18,21 +18,47 @@ export class MoDefinitionMo extends Mo implements MoDefinitionInterface {
   }
   // getDisplayName = () => this.moDef.getDisplayName()
 }
-export const moDefMoDef = new MoDefinition('moDefMo')
+export const moDefMoDef = new MoDefinition('moDef')
 moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
-const fieldDefsFieldDef = from(BaseFieldDefs.Object).chainSetName('moDef')
-fieldDefsFieldDef.mapValueType = 'object'
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Id).chainSetName('id'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('name'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('dbName'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('displayName'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Array).chainSetName('keyFieldnames'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Array).chainSetName('gridFieldnames'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.NullableBoolean).chainSetName('hasId'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('idType'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.UrlPath).chainSetName('gdriveFilePath'))
+moDefMoDef.addFieldDef(from(BaseFieldDefs.Name).chainSetName('gdriveFileId'))
+const moClassFieldDef = from(BaseFieldDefs.Name).chainSetName('moClass')
+const fieldDefsFieldDef = from(BaseFieldDefs.Map).chainSetName('fieldDefs')
+// fieldDefsFieldDef.mapValueType = 'object'
 moDefMoDef.addFieldDef(fieldDefsFieldDef)
-export const moDefMoMeta: MoMetaInterface = new MoMeta(moDefMoDef)
-
+moClassFieldDef.gridColDef.field = undefined
+moClassFieldDef.gridColDef.valueGetter = params => params.data.moClass.name
+moClassFieldDef.valueToString = v => {
+  if (!v) {
+    console.log(`==>MoDefinition.ts:172 v `, v)
+  }
+  v => v.name
+}
+moDefMoDef.addFieldDef(moClassFieldDef)
+// export const moDefMeta: MoMetaInterface = new MoMeta(moDefDef)
 Object.assign(moDefMoDef, {
-  name: 'moDefMo',
-  dbName: 'moDefMo',
-  displayName: 'Mo Definition Mo',
+  name: 'moDef',
+  dbName: 'moDef',
+  displayName: 'Mo Definition',
+  keyFieldnames: ['moName'],
+  gridFieldnames: ['name', 'gdriveFilePath'],
   moClass: MoDefinitionMo,
+  hasId: true,
+  idType: 'string',
+  gdriveFilePath: 'system/resources/modefs',
+  gdriveFileId: null,
   canCreate: false,
-  moDef: moDefDef
 })
+
+export const moDefMoMeta: MoMetaInterface = new MoMeta(moDefMoDef)
 
 moDefMoMeta.documentToMo  = doc => {
   const moDefMo = new MoDefinitionMo(moDefMoDef)

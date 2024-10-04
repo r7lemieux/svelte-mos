@@ -20,6 +20,7 @@ export declare const CommonFieldDefs: {
     jobTitle: FieldDefinition<any>;
     time: FieldDefinition<any>;
     link: FieldDefinition<any>;
+    mo: FieldDefinition<any>;
     id: FieldDefinition<any>;
     url: FieldDefinition<any>;
     icon: FieldDefinition<any>;

@@ -1,9 +1,10 @@
 <script lang="ts">
   import type {MoViewMode} from  '$lib/constants/ui'
   import type {FieldDefinition} from '$lib/models/fields/FieldDefinition.js'
-  import AiOutlineCaretDown from 'svelte-icons-pack/ai/AiOutlineCaretDown'
-  import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
-  import Icon from 'svelte-icons-pack/Icon.svelte'
+	import { AiOutlineCaretDown } from 'svelte-icons-pack/ai'
+	import { AiOutlineCaretRight } from 'svelte-icons-pack/ai'
+  // import AiOutlineCaretDown from 'svelte-icons-pack/ai/AiOutlineCaretDown'
+  // import AiOutlineCaretRight from 'svelte-icons-pack/ai/AiOutlineCaretRight'
   import ArrayValueField from  '$lib/components/generics/field/ArrayValueField.svelte'
 
   export let fieldDef: FieldDefinition<never>

@@ -10,16 +10,13 @@ export let value;
 export let viewMode = extractViewMode();
 export let level = 1;
 export let onChange;
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 const fd = fieldDef;
 function extractViewMode() {
   const pathParts = $page.url.pathname.split("/");
   const pathTail = pathParts[pathParts.length - 1];
-  if (pathTail === "edit")
-    return "edit";
-  if (pathTail === "create")
-    return "create";
+  if (pathTail === "edit") return "edit";
+  if (pathTail === "create") return "create";
   return "view";
 }
 afterUpdate(sizeLabels);

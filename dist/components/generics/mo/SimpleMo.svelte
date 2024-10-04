@@ -7,8 +7,7 @@ import { Rezult } from "../../../services/common/message/rezult";
 import { ErrorName } from "../../../services/common/message/errorName";
 export let mo;
 let viewMode = extractViewMode();
-$:
-  disabled = viewMode === "view";
+$: disabled = viewMode === "view";
 let moMeta = mo.moMeta;
 let moDef = mo.moMeta.moDef;
 const title = toDisplayString(moDef.name);
@@ -17,20 +16,17 @@ const ui = {};
 function extractViewMode() {
   const pathParts = $page.url.pathname.split("/");
   const pathTail = pathParts[pathParts.length - 1];
-  if (pathTail === "edit")
-    return "edit";
-  if (pathTail === "create")
-    return "create";
+  if (pathTail === "edit") return "edit";
+  if (pathTail === "create") return "create";
   return "view";
 }
 const onChange = (fieldId, val) => {
   const fieldPathNames = fieldId.split(".");
   let targetObj = mo;
-  if (fieldPathNames.length === 0)
-    throw new Rezult(ErrorName.missing_param, {
-      method: "Mo.svelte.onChange()",
-      fieldId
-    });
+  if (fieldPathNames.length === 0) throw new Rezult(ErrorName.missing_param, {
+    method: "Mo.svelte.onChange()",
+    fieldId
+  });
   let fname = fieldPathNames.pop();
   for (const pathName of fieldPathNames) {
     const pathval = Array.isArray(pathName) ? Number.parseInt(pathName) : pathName;

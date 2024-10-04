@@ -19,15 +19,12 @@
   }
   let height
   onMount(() => {
-
     const ele = document.querySelector('.field')
-    console.log(`==>SimpleField.svelte:21 ele `, ele)
     height = ele.offsetHeight
-    console.log(`==>SimpleField.svelte:21  height `, height)
   })
 </script>
 <div class="field SimpleField" style="margin-left:{level*12}px;">
-  <label for={fname}>{fd.getDisplayName()} {height}</label>
+  <label for={fname}>{fd.getDisplayName()} </label>
   <span class=" tree-line"></span>
   <span class="value simple-value">
     <input type={fd.inputType} name={fd.name} id="{fd.name}" value={fd.valueToString(value) || ''} on:change={changed}
