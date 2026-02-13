@@ -1,6 +1,6 @@
 // import { Mo } from './Mo.js'
 import type {MoMetaInterface} from './MoMetaInterface.js'
-import type {DataSourceInterface} from '../../services/db/DataSource.interface.js'
+import type {DataSourceInterface, DeleteMoParams, SaveMoParams} from '../../services/db/DataSource.interface.js'
 import type {MoDefinitionInterface} from './MoDefinitionInterface.js'
 import {MoMeta} from './MoMeta.js'
 import {moDefDef, MoDefinition} from './MoDefinition.js'
@@ -111,8 +111,8 @@ export class MoMetaMo implements MoidInterface, MoMetaInterface {
         return newMo
     }
 
-    save = () => this._moMeta.dataSource.saveMo(this as MoInterface)
-    delete = () => this._moMeta.dataSource.deleteMo(this.id)
+    save = (params?:SaveMoParams) => this._moMeta.dataSource.saveMo(this as MoInterface)
+    delete = (params?:DeleteMoParams) => this._moMeta.dataSource.deleteMo(this.id)
 
     static fromMoDef = (moDef: MoDefinitionInterface) => new MoMeta(moDef)
     static moMeta = {} as MoMeta // taking a wild chance expecting MoMetaMoDef to fill it before anyone uses it.

@@ -5,6 +5,7 @@ import type {MoInterface} from './MoInterface.js'
 import type {MoidInterface} from './MoidInterface.js'
 import {moToObject} from '../../services/mo/moTransport.implementation.js'
 import {Moid} from './Moid.js'
+import type {DeleteMoParams, SaveMoParams} from '../../services/db/DataSource.interface.js'
 
 // import {initMoDefDef} from './MoDefinition.js'
 
@@ -94,8 +95,8 @@ export class Mo implements MoInterface {
    }
    return newMo
   }
-  save = () => this._moMeta.dataSource.saveMo(this)
-  delete = () => this._moMeta.dataSource.deleteMo(this.id)
+  save = (params?: SaveMoParams) => this._moMeta.dataSource.saveMo(this, params)
+  delete = (params?: DeleteMoParams ) => this._moMeta.dataSource.deleteMo(this.id, params)
 }
 
 

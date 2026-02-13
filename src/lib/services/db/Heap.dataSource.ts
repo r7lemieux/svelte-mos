@@ -65,9 +65,12 @@ export class HeapDataSource<M extends MoInterface> implements DataSourceInterfac
         return newMos.filter(newMo => !oldMos.find(oldMo => newMo.isSameAs(oldMo)))
     }
 
-    saveMo = async (mo: M, params?: SaveMoParams) => {
+    saveMo = async (mo: M, params: SaveMoParams = {pending:[]} ): Promise<M> => {
         // console.log(`==>Heap.dataSource.ts:saveMo mo.id`, mo.id, this.nextId)
         if (!mo) throw new Rezult(ErrorName.missing_param)
+        const moStr = mo.toShortStr()
+        if (params.pending?.includes(moStr)) return Promise.resolve(mo)
+        params.pending?.push(mo.toShortStr())
         const oldMo1 = this.records[mo.id]
         const newMo1 = mo
         const newMoid1 = mo.toMoid()
@@ -112,8 +115,8 @@ export class HeapDataSource<M extends MoInterface> implements DataSourceInterfac
                             }
                             if (!newMo2 && !params?.datafill) throw new Rezult(ErrorName.missing_reverse_mo, {moDef: this.moDef?.name, oldMo2id, fieldname1, newMo2id, fieldname2}, 'HeapDataSource.saveMo missing newMo2')
                         }
-                        oldMo2?._moMeta.dataSource.saveMo(oldMo2)
-                        newMo2?._moMeta.dataSource.saveMo(newMo2)
+                        oldMo2.save(params)
+                        newMo2.save(params)
                     }
                 } else {
                     const oldMos2: MoidInterface[] = oldMo1[fieldname2]
@@ -150,11 +153,11 @@ export class HeapDataSource<M extends MoInterface> implements DataSourceInterfac
             }
         }
         this.records[newMo1[this.keyname!]] = newMo1
-        return Promise.resolve(this.records[mo[this.keyname!]])
+        return Promise.resolve(this.records[mo[this.keyname!]]) as Promise<M>
     }
 
     updateMo = async (mo: M) => {
-        return this.saveMo(mo)
+        return0 this.saveMo(mo) as Promise<M>
     }
 
     addMo = async (mo: M) => {
@@ -256,7 +259,7 @@ export class HeapDataSource<M extends MoInterface> implements DataSourceInterfac
                                 } else {
                                     mo2[fieldname2] = undefined
                                 }
-                                return rel.moMeta2.dataSource.saveMo(mo2, {pending: params.pendingUpdates})
+                                return mo2.save({pending: params.pendingUpdates})
                             })
                     })
                 }).flat(3)
