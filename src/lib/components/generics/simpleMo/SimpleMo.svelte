@@ -37,8 +37,8 @@
   let fieldDefs: FieldDefinitionInterface<any>[] = $derived(Array.from(moMeta.moDef.fieldDefs.values()) as FieldDefinition<any>[])
   let showFieldDefs = $derived(moMeta.moDef.showFieldnames.map(fn => fieldDefs.find(fd => fd.name === fn))) as FieldDefinition<any>[]
   let uiPath = $derived([...parentUiPath, mo._moMeta.name + '-' + mo.id])
-  let fetchError = $derived(() => sfetchError)
-  setContext('currentMo', (mo))
+  let fetchError = $derived(() => sfetchError);
+  (() => setContext('currentMo', mo))()
   let formElm: HTMLFormElement
   let sfetchError = $state(OK)
 

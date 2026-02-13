@@ -159,7 +159,7 @@ export class HeapDataSource<M extends MoInterface> implements DataSourceInterfac
     }
 
     updateMo = async (mo: M) => {
-        return0 this.saveMo(mo) as Promise<M>
+        return this.saveMo(mo) as Promise<M>
     }
 
     addMo = async (mo: M) => {
